@@ -1,0 +1,85 @@
+{
+	"code": "soil-slab",
+	"class": "BlockSoil",
+	"variantgroups": [
+		{ "loadFromProperties": "abstract/fertility" },
+		{ "loadFromProperties": "abstract/grasscoverage" }
+	],
+	"behaviors": [{ "name": "MyceliumHost" }],
+	"creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
+	"shape": { "base": "game:block/basic/cube" },
+	"drawtypeByType": {
+		"*-none": "Cube",
+		"*": "TopSoil"
+	},
+	"renderpassByType": {
+		"*-none": "Opaque",
+		"*": "TopSoil"
+	},
+	"blockmaterial": "Soil",
+	"textures": {
+		"all": { "base": "game:block/soil/fert{fertility}" },
+		"snowed": {"base": "game:block/plant/grasscoverage/snow/normal"},
+		"specialSecondTexture": {"base": "game:block/plant/grasscoverage/{grasscoverage}"}
+	},
+	"attributes": {
+		"mapColorCode": "land",
+		"ignoreTintInventory": true,
+		"growthBlockLayer": "l1soilwithgrass",
+		"growthLightLevel": 7,
+		"preventsDecay": true,
+		"tallGrassGrowthChance": 0.3,
+		"spreadsGrassByType": {
+			"*-none": false,
+			"*": true
+		}
+	},
+	"texturesInventory": {
+		"down": {"base": "game:block/soil/fert{fertility}"},
+		"horizontals": {
+			"base": "game:block/soil/fert{fertility}",
+			"overlays": ["game:block/plant/grasscoverage/inventory/side_{grasscoverage}"]
+		},
+		"up": {
+			"base": "game:block/soil/fert{fertility}",
+			"overlays": ["game:block/plant/grasscoverage/inventory/top_{grasscoverage}"]
+		}
+	},
+	"climateColorMapByType": {
+		"*-none": null,
+		"*": "climatePlantTint"
+	},
+	"seasonColorMapByType": {
+		"*-none": null,
+		"*": "seasonalGrass"
+	},
+	"frostableByType": {
+		"*-none": false,
+		"*": true
+	},
+	"replaceable": 400,
+	"fertility": 100,
+	"resistance": 1.8,
+    "sideSolidOpaqueAo": { "all": false, "down": true },
+	"sideAo": { "all": true },
+	"emitSideAoByType": { "all": false, "down": true },
+    "collisionbox": { "x1": 0, "y1": 0, "z1": 0,   "x2": 1, "y2": 0.5, "z2": 1 },
+	"selectionbox": { "x1": 0, "y1": 0, "z1": 0,   "x2": 1, "y2": 0.5, "z2": 1 },
+	"sounds": {
+		"place": "game:block/dirt",
+		"break": "game:block/dirt",
+		"hit": "game:block/dirt",
+		"walk": "game:walk/grass"
+	},
+	"drops": [ {
+		"type": "block",
+		"code": "game:soil-{fertility}-none",
+		"quantity": { "avg": 1, "var": 0 }
+	} ],
+	"heldTpIdleAnimation": "holdbothhandslarge", "heldRightReadyAnimation": "heldblockready", "heldTpUseAnimation": "twohandplaceblock",
+	"tpHandTransform": {
+		"translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
+		"rotation": { "x": -2, "y": 25, "z": -78 },
+		"scale": 0.4
+	}
+}
