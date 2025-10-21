@@ -2,6 +2,7 @@
 using System.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source;
 
@@ -30,6 +31,12 @@ public class TerrainSlabsModSystem : ModSystem
         {
             harmonyInstance.PatchAll();
         }
+    }
+
+    public override void StartServerSide(ICoreServerAPI api)
+    {
+        ReplaceWithTerrainSlabsCommand.Register(api);
+        ReplaceBlockWithTerrainSlabCommand.Register(api);
     }
 
     public override void Dispose()

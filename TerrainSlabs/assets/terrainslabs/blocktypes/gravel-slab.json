@@ -1,5 +1,5 @@
 {
-	"code": "gravel-slab",
+	"code": "gravel",
 	"behaviors": [{"name": "UnstableFalling", "properties": { "fallSound": "game:effect/rockslide", "dustIntensity": 1, "fallSidewaysChance": 0.75 }}],	
 	"variantgroups": [
 		{ "loadFromProperties": "block/rock", "code": "rock" }

@@ -1,5 +1,5 @@
 {
-	"code": "soil-slab",
+	"code": "soil",
 	"class": "BlockSoilSlab",
 	"variantgroups": [
 		{ "loadFromProperties": "abstract/fertility" },

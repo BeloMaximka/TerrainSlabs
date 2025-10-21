@@ -1,5 +1,5 @@
 {
-	"code": "sand-slab",
+	"code": "sand",
 	"behaviors": [{"name": "UnstableFalling", "properties": { "fallSound": "game:effect/rockslide", "dustIntensity": 1, "fallSidewaysChance": 0.75 }}],	
 	"variantgroups": [
 		{ "loadFromProperties": "block/rock", "code": "rock" }
