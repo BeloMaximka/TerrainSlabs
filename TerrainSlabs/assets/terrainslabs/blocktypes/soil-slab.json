@@ -1,13 +1,13 @@
 {
 	"code": "soil-slab",
-	"class": "SoilSlab",
+	"class": "BlockSoilSlab",
 	"variantgroups": [
 		{ "loadFromProperties": "abstract/fertility" },
 		{ "loadFromProperties": "abstract/grasscoverage" }
 	],
 	"behaviors": [{ "name": "MyceliumHost" }],
 	"creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
-	"shapeByType": { "base": "game:block/basic/slab/slab-down" },
+	"shape": { "base": "game:block/basic/slab/slab-down" },
 	"drawtypeByType": {
 		"*-none": "Json",
 		"*": "TopSoil"

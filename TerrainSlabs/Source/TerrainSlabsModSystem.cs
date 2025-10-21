@@ -20,7 +20,8 @@ public class TerrainSlabsModSystem : ModSystem
 
     public override void Start(ICoreAPI api)
     {
-        api.RegisterBlockClass(nameof(SoilSlab), typeof(SoilSlab));
+        api.RegisterBlockClass(nameof(BlockSoilSlab), typeof(BlockSoilSlab));
+        api.RegisterBlockClass(nameof(BlockTallGrassOffset), typeof(BlockTallGrassOffset));
     }
 
     public override void StartClientSide(ICoreClientAPI api)
