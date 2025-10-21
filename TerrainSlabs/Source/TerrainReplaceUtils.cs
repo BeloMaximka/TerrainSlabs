@@ -8,7 +8,7 @@ namespace TerrainSlabs.Source;
 public static class TerrainReplaceUtil
 {
     // TODO: move to config
-    private static readonly List<string> blocksToReplace = ["soil-*", "sand-*", "gravel-*"];
+    private static readonly List<string> blocksToReplace = ["soil-*", "sand-*", "gravel-*", "forestfloor-*"];
     private static readonly List<string> topObjectToOffset = ["tallgrass-*"];
 
     public static Dictionary<int, Block> GetTerrainReplacementMap(ICoreAPI api) =>
@@ -58,7 +58,7 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         posBuffer.Z = pos.Z;
         posBuffer.dimension = pos.dimension;
 
-        posBuffer.Y = accessor.GetRainMapHeightAt(posBuffer);
+        posBuffer.Y = accessor.GetTerrainMapheightAt(posBuffer);
         if (terrainReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out Block? slab) && HasExposedSide(posBuffer))
         {
             accessor.SetBlock(slab.Id, posBuffer);
