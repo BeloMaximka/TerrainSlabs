@@ -25,7 +25,7 @@ public static class ReplaceBlockWithTerrainSlabCommand
         BlockPos position = ((Vec3d)args.Parsers[0].GetValue()).AsBlockPos;
         IBlockAccessor accessor = args.Caller.Entity.Api.World.BlockAccessor;
         TerrainSlabReplacer replacer = new(args.Caller.Entity.Api, accessor);
-
+        position.Y = accessor.GetTerrainMapheightAt(position);
         replacer.TryReplaceWithSlab(position);
 
         return TextCommandResult.Success("Done.");

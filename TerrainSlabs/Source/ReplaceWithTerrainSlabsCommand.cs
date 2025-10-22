@@ -32,6 +32,7 @@ public static class ReplaceWithTerrainSlabsCommand
         {
             for (int z = 0; z < radus; z++)
             {
+                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
                 replacer.TryReplaceWithSlab(position);
                 position.Z++;
             }

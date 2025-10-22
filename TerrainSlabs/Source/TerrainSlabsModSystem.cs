@@ -35,6 +35,7 @@ public class TerrainSlabsModSystem : ModSystem
 
     public override void StartServerSide(ICoreServerAPI api)
     {
+        WorldGenUtils.RegisterSlabReplacementWorldGenEvent(api);
         ReplaceWithTerrainSlabsCommand.Register(api);
         ReplaceBlockWithTerrainSlabCommand.Register(api);
     }
