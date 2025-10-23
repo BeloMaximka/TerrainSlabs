@@ -90,12 +90,12 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         posBuffer.Z = pos.Z;
         posBuffer.dimension = pos.dimension;
 
-        if (terrainReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int slabId) && slabId != 0 && HasExposedSide(posBuffer))
+        if (terrainReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int slabId) && HasExposedSide(posBuffer))
         {
             accessor.SetBlock(slabId, posBuffer);
 
             posBuffer.Y++;
-            if (topReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int blockWithOffsetId) && slabId != 0)
+            if (topReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int blockWithOffsetId))
             {
                 accessor.SetBlock(blockWithOffsetId, posBuffer);
             }
@@ -104,6 +104,14 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
 
     private bool HasExposedSide(BlockPos pos)
     {
+        pos.Y++;
+        if (IsTopSolid(pos))
+        {
+            pos.Y--;
+            return false;
+        }
+        pos.Y--;
+
         pos.X++;
         if (IsExposeBlock(pos, BlockFacing.indexEAST))
         {
@@ -135,6 +143,11 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         pos.Z++;
 
         return false;
+    }
+
+    private bool IsTopSolid(BlockPos pos)
+    {
+        return accessor.GetBlock(pos).SideSolid[BlockFacing.indexDOWN];
     }
 
     private bool IsExposeBlock(BlockPos pos, int faceIndex)
