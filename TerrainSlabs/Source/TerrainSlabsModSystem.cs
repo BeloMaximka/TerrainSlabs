@@ -53,6 +53,10 @@ public class TerrainSlabsModSystem : ModSystem
                     slabBlock.Code.Domain = "terrainslabs";
                     slabBlock.SideOpaque.Fill(false);
                     slabBlock.SideOpaque[BlockFacing.indexDOWN] = true;
+                    slabBlock.SideSolid[BlockFacing.indexEAST] = false;
+                    slabBlock.SideSolid[BlockFacing.indexWEST] = false;
+                    slabBlock.SideSolid[BlockFacing.indexNORTH] = false;
+                    slabBlock.SideSolid[BlockFacing.indexSOUTH] = false;
                     slabBlock.EmitSideAo = 0;
                     foreach (var box in slabBlock.CollisionBoxes)
                     {
