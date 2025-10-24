@@ -20,8 +20,7 @@ public static class SoilSlabGrassOverlayPatch
       MeshData[] meshPools,
       int rotIndex)
     {
-
-        if (vars.block.Code.Domain.Length != 12) // yes i am insane
+        if (!SlabGroupHelper.IsSlab(vars.block.BlockId))
         {
             return true;
         }
