@@ -31,7 +31,7 @@ public static class SystemSelectedBlockOutlinePatch
             return true;
         }
         Block solidBlock = ___game.WorldMap.RelaxedBlockAccess.GetBlock(pos);
-        if (solidBlock.SideSolid.OnSide(BlockFacing.DOWN))
+        if (solidBlock.SideSolid.OnSide(BlockFacing.DOWN) || solidBlock.SideSolid.OnSide(BlockFacing.UP))
         {
             return true;
         }

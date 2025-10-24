@@ -30,6 +30,11 @@ public static class AABBIntersectionTestPatch
             return true;
         }
         pos.Up();
+        Block solidBlock = __instance.bsTester.blockAccessor.GetBlock(pos);
+        if (solidBlock.SideSolid.OnSide(BlockFacing.DOWN) || solidBlock.SideSolid.OnSide(BlockFacing.UP))
+        {
+            return true;
+        }
 
         Block block = __instance.bsTester.blockAccessor.GetBlock(pos, 2);
         Cuboidf[] cuboidfArray;

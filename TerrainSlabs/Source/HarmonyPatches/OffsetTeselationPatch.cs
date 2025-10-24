@@ -56,7 +56,7 @@ public static class OffsetTeselationPatch
         // Our code
         if (
             SlabGroupHelper.IsSlab(___currentChunkBlocksExt[___vars.extIndex3d + TileSideEnum.MoveIndex[5]].BlockId)
-            && !block.SideSolid.OnSide(BlockFacing.DOWN)
+            && !block.SideSolid.OnSide(BlockFacing.UP) && !block.SideSolid.OnSide(BlockFacing.DOWN)
         )
             ___vars.finalY -= 0.5f;
         // Our code ends, looks like a good candidate for Transpiler, but I am afraid of them
