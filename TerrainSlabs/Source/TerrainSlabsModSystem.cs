@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 using System.Linq;
+using TerrainSlabs.Source.Commands;
+using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;

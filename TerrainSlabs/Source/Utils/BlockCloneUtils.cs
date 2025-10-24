@@ -5,7 +5,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Utils;
 
 public static class BlockCloneUtils
 {

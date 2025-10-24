@@ -1,9 +1,10 @@
 ﻿using HarmonyLib;
+using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.HarmonyPatches;
 
 // This is so ugly but I suck and graphical programming
 [HarmonyPatch]
@@ -27,11 +28,11 @@ public static class SoilSlabGrassOverlayPatch
 
         TextureAtlasPosition textureAtlasPosition1 = vars.textureAtlasPositionsByTextureSubId[textureSubId];
         TextureAtlasPosition textureAtlasPosition2 = vars.textureAtlasPositionsByTextureSubId[textureSubIdSecond];
-        MeshData meshPool = meshPools[(int)textureAtlasPosition1.atlasNumber];
+        MeshData meshPool = meshPools[textureAtlasPosition1.atlasNumber];
         int verticesCount = meshPool.VerticesCount;
-        float lx = (float)vars.lx;
-        float ly = (float)vars.ly;
-        float lz = (float)vars.lz;
+        float lx = vars.lx;
+        float ly = vars.ly;
+        float lz = vars.lz;
 
         // Scale factor for height (0.5 -> half height)
         const float heightScale = 0.5f;
@@ -49,7 +50,7 @@ public static class SoilSlabGrassOverlayPatch
         meshPool.AddVertexWithFlags(lx + quadOffset4.X, ly + quadOffset4.Y * heightScale, lz + quadOffset4.Z, textureAtlasPosition1.x1, textureAtlasPosition1.y2, vars.CurrentLightRGBByCorner[2], flags);
 
         float x1 = textureAtlasPosition2.x1;
-        float u = textureAtlasPosition2.x1 + (float)(((double)textureAtlasPosition2.x2 - (double)textureAtlasPosition2.x1) / 2.0);
+        float u = textureAtlasPosition2.x1 + (float)((textureAtlasPosition2.x2 - (double)textureAtlasPosition2.x1) / 2.0);
         float y1 = textureAtlasPosition2.y1;
         bool isTop = (flags & BlockFacing.ALLFACES[BlockFacing.indexUP].NormalPackedFlags) != 0;
         float y2 = isTop ? textureAtlasPosition2.y2 : textureAtlasPosition2.y2 - (textureAtlasPosition2.y2 - textureAtlasPosition2.y1) / 2;

@@ -3,7 +3,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Utils;
 
 public static class WorldGenUtils
 {

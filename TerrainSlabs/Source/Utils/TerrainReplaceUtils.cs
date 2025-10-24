@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Utils;
 
 public static class TerrainReplaceUtil
 {
@@ -11,7 +11,7 @@ public static class TerrainReplaceUtil
 
     private static Dictionary<int, int> GetBlockToReplaceMap(ICoreAPI api, string cacheKey)
     {
-        return ObjectCacheUtil.GetOrCreate<Dictionary<int, int>>(
+        return ObjectCacheUtil.GetOrCreate(
             api,
             cacheKey,
             () =>

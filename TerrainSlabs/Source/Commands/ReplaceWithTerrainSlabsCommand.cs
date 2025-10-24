@@ -1,7 +1,8 @@
-﻿using Vintagestory.API.Common;
+﻿using TerrainSlabs.Source.Utils;
+using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Commands;
 
 public static class ReplaceWithTerrainSlabsCommand
 {

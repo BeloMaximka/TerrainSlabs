@@ -1,11 +1,12 @@
 ﻿using HarmonyLib;
+using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Client;
 using Vintagestory.API.Client.Tesselation;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.HarmonyPatches;
 
 [HarmonyPatch]
 public static class OffsetTeselationPatch
@@ -49,8 +50,8 @@ public static class OffsetTeselationPatch
         ___vars.drawFaceFlags = faceflags;
         ___vars.posX = posX;
         ___vars.lx = lX;
-        ___vars.finalX = (float)lX;
-        ___vars.finalY = (float)___vars.ly;
+        ___vars.finalX = lX;
+        ___vars.finalY = ___vars.ly;
 
         // Our code
         if (SlabGroupHelper.IsSlab(___currentChunkBlocksExt[___vars.extIndex3d + TileSideEnum.MoveIndex[5]].BlockId) && !block.SideSolid.OnSide(BlockFacing.UP))
@@ -62,7 +63,7 @@ public static class OffsetTeselationPatch
                 ___currentChunkBlocksExt,
                 ___vars.extIndex3d
             );
-        ___vars.finalZ = (float)___vars.lz;
+        ___vars.finalZ = ___vars.lz;
         int index = ___vars.blockId = block.BlockId;
         ___vars.textureSubId = 0;
         ___vars.VertexFlags = block.VertexFlags.All;
@@ -70,8 +71,8 @@ public static class OffsetTeselationPatch
         ___vars.fastBlockTextureSubidsByFace = ___fastBlockTextureSubidsByBlockAndFace[index];
         if (block.RandomDrawOffset != 0)
         {
-            ___vars.finalX += (float)(GameMath.oaatHash(posX, 0, posZ) % 12) / (float)(24.0 + 12.0 * (double)block.RandomDrawOffset);
-            ___vars.finalZ += (float)(GameMath.oaatHash(posX, 1, posZ) % 12) / (float)(24.0 + 12.0 * (double)block.RandomDrawOffset);
+            ___vars.finalX += GameMath.oaatHash(posX, 0, posZ) % 12 / (float)(24.0 + 12.0 * block.RandomDrawOffset);
+            ___vars.finalZ += GameMath.oaatHash(posX, 1, posZ) % 12 / (float)(24.0 + 12.0 * block.RandomDrawOffset);
         }
         if (block.ShapeUsesColormap || block.LoadColorMapAnyway || block.Frostable)
         {
@@ -89,10 +90,10 @@ public static class OffsetTeselationPatch
             ColorMap colorMapResolved2 = block.ClimateColorMapResolved;
             int climateMapIndex = colorMapResolved2 != null ? colorMapResolved2.RectIndex + 1 : 0;
             int adjustedTemperature = Climate.GetAdjustedTemperature(
-                currentClimateRegion >> 16 & (int)byte.MaxValue,
+                currentClimateRegion >> 16 & byte.MaxValue,
                 ___vars.posY - ___seaLevel
             );
-            int rainFall = Climate.GetRainFall(currentClimateRegion >> 8 & (int)byte.MaxValue, ___vars.posY);
+            int rainFall = Climate.GetRainFall(currentClimateRegion >> 8 & byte.MaxValue, ___vars.posY);
             int num5 = block.Frostable ? 1 : 0;
             ColorMapData colorMapData = new ColorMapData(seasonMapIndex, climateMapIndex, adjustedTemperature, rainFall, num5 != 0);
             vars.ColorMapData = colorMapData;
@@ -142,54 +143,54 @@ public static class OffsetTeselationPatch
                 ___vars.OceanityFlagTL =
                     block1 != block || block5 != block || block3 != block
                         ? 0
-                        : (int)
+                        :
                             (byte)
                                 GameMath.BiLerp(
                                     ___currentOceanityMapTL,
                                     ___currentOceanityMapTR,
                                     ___currentOceanityMapBL,
                                     ___currentOceanityMapBR,
-                                    (float)___vars.lx / 32f,
-                                    (float)___vars.lz / 32f
+                                    ___vars.lx / 32f,
+                                    ___vars.lz / 32f
                                 ) << 2;
                 ___vars.OceanityFlagTR =
                     block1 != block || block7 != block || block4 != block
                         ? 0
-                        : (int)
+                        :
                             (byte)
                                 GameMath.BiLerp(
                                     ___currentOceanityMapTL,
                                     ___currentOceanityMapTR,
                                     ___currentOceanityMapBL,
                                     ___currentOceanityMapBR,
-                                    (float)(___vars.lx + 1) / 32f,
-                                    (float)___vars.lz / 32f
+                                    (___vars.lx + 1) / 32f,
+                                    ___vars.lz / 32f
                                 ) << 2;
                 ___vars.OceanityFlagBL =
                     block2 != block || block6 != block || block3 != block
                         ? 0
-                        : (int)
+                        :
                             (byte)
                                 GameMath.BiLerp(
                                     ___currentOceanityMapTL,
                                     ___currentOceanityMapTR,
                                     ___currentOceanityMapBL,
                                     ___currentOceanityMapBR,
-                                    (float)___vars.lx / 32f,
-                                    (float)(___vars.lz + 1) / 32f
+                                    ___vars.lx / 32f,
+                                    (___vars.lz + 1) / 32f
                                 ) << 2;
                 ___vars.OceanityFlagBR =
                     block2 != block || block8 != block || block4 != block
                         ? 0
-                        : (int)
+                        :
                             (byte)
                                 GameMath.BiLerp(
                                     ___currentOceanityMapTL,
                                     ___currentOceanityMapTR,
                                     ___currentOceanityMapBL,
                                     ___currentOceanityMapBR,
-                                    (float)(___vars.lx + 1) / 32f,
-                                    (float)(___vars.lz + 1) / 32f
+                                    (___vars.lx + 1) / 32f,
+                                    (___vars.lz + 1) / 32f
                                 ) << 2;
             }
             else

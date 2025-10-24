@@ -4,7 +4,7 @@ using System.Reflection;
 using Vintagestory.API.Server;
 using Vintagestory.Server;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Utils;
 
 #pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
 
