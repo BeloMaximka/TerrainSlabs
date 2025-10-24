@@ -6,6 +6,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 
 namespace TerrainSlabs.Source;
 
@@ -36,7 +37,8 @@ public class TerrainSlabsModSystem : ModSystem
     {
         if (api is ICoreServerAPI sapi)
         {
-            string[] slabCodes = ["soil-*", "sand-*", "gravel-*", "forestfloor-*"]; // TODO: Move to config and filter gravel so we don't create 1-8 variant
+            // TODO: Move to config and get rid of tuples. Currently it is (wildcard, excludeWildcard)
+            (string, string)[] slabCodes = [("soil-*", ""), ("sand-*", "sand-*-*"), ("gravel-*", "gravel-*-*"), ("forestfloor-*", "")];
             bool idsNonSequential = false;
             int prevBlockId = 0;
             int slabIdStart = 0;
@@ -44,8 +46,8 @@ public class TerrainSlabsModSystem : ModSystem
             AssetLocation slabShapeCode = new("block/basic/slab/slab-down");
             foreach (var wildcard in slabCodes)
             {
-                Block[] blocks = sapi.World.SearchBlocks(wildcard);
-                foreach (var block in blocks)
+                Block[] blocks = sapi.World.SearchBlocks(wildcard.Item1);
+                foreach (var block in blocks.Where(block => wildcard.Item2.Length == 0 || !WildcardUtil.Match(new(wildcard.Item2), block.Code)))
                 {
                     Block slabBlock = block.ProperClone();
                     slabBlock.Code.Domain = "terrainslabs";
