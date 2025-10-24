@@ -3,6 +3,7 @@ using Vintagestory.API.Server;
 using Vintagestory.Server;
 
 namespace TerrainSlabs.Source.Utils;
+
 public static class SlabGroupHelper
 {
     private static int slabIdStart;

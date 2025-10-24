@@ -54,7 +54,10 @@ public static class OffsetTeselationPatch
         ___vars.finalY = ___vars.ly;
 
         // Our code
-        if (SlabGroupHelper.IsSlab(___currentChunkBlocksExt[___vars.extIndex3d + TileSideEnum.MoveIndex[5]].BlockId) && !block.SideSolid.OnSide(BlockFacing.UP))
+        if (
+            SlabGroupHelper.IsSlab(___currentChunkBlocksExt[___vars.extIndex3d + TileSideEnum.MoveIndex[5]].BlockId)
+            && !block.SideSolid.OnSide(BlockFacing.UP)
+        )
             ___vars.finalY -= 0.5f;
         // Our code ends, looks like a good candidate for Transpiler, but I am afraid of them
         else if (block is IDrawYAdjustable drawYadjustable)
@@ -143,55 +146,51 @@ public static class OffsetTeselationPatch
                 ___vars.OceanityFlagTL =
                     block1 != block || block5 != block || block3 != block
                         ? 0
-                        :
-                            (byte)
-                                GameMath.BiLerp(
-                                    ___currentOceanityMapTL,
-                                    ___currentOceanityMapTR,
-                                    ___currentOceanityMapBL,
-                                    ___currentOceanityMapBR,
-                                    ___vars.lx / 32f,
-                                    ___vars.lz / 32f
-                                ) << 2;
+                        : (byte)
+                            GameMath.BiLerp(
+                                ___currentOceanityMapTL,
+                                ___currentOceanityMapTR,
+                                ___currentOceanityMapBL,
+                                ___currentOceanityMapBR,
+                                ___vars.lx / 32f,
+                                ___vars.lz / 32f
+                            ) << 2;
                 ___vars.OceanityFlagTR =
                     block1 != block || block7 != block || block4 != block
                         ? 0
-                        :
-                            (byte)
-                                GameMath.BiLerp(
-                                    ___currentOceanityMapTL,
-                                    ___currentOceanityMapTR,
-                                    ___currentOceanityMapBL,
-                                    ___currentOceanityMapBR,
-                                    (___vars.lx + 1) / 32f,
-                                    ___vars.lz / 32f
-                                ) << 2;
+                        : (byte)
+                            GameMath.BiLerp(
+                                ___currentOceanityMapTL,
+                                ___currentOceanityMapTR,
+                                ___currentOceanityMapBL,
+                                ___currentOceanityMapBR,
+                                (___vars.lx + 1) / 32f,
+                                ___vars.lz / 32f
+                            ) << 2;
                 ___vars.OceanityFlagBL =
                     block2 != block || block6 != block || block3 != block
                         ? 0
-                        :
-                            (byte)
-                                GameMath.BiLerp(
-                                    ___currentOceanityMapTL,
-                                    ___currentOceanityMapTR,
-                                    ___currentOceanityMapBL,
-                                    ___currentOceanityMapBR,
-                                    ___vars.lx / 32f,
-                                    (___vars.lz + 1) / 32f
-                                ) << 2;
+                        : (byte)
+                            GameMath.BiLerp(
+                                ___currentOceanityMapTL,
+                                ___currentOceanityMapTR,
+                                ___currentOceanityMapBL,
+                                ___currentOceanityMapBR,
+                                ___vars.lx / 32f,
+                                (___vars.lz + 1) / 32f
+                            ) << 2;
                 ___vars.OceanityFlagBR =
                     block2 != block || block8 != block || block4 != block
                         ? 0
-                        :
-                            (byte)
-                                GameMath.BiLerp(
-                                    ___currentOceanityMapTL,
-                                    ___currentOceanityMapTR,
-                                    ___currentOceanityMapBL,
-                                    ___currentOceanityMapBR,
-                                    (___vars.lx + 1) / 32f,
-                                    (___vars.lz + 1) / 32f
-                                ) << 2;
+                        : (byte)
+                            GameMath.BiLerp(
+                                ___currentOceanityMapTL,
+                                ___currentOceanityMapTR,
+                                ___currentOceanityMapBL,
+                                ___currentOceanityMapBR,
+                                (___vars.lx + 1) / 32f,
+                                (___vars.lz + 1) / 32f
+                            ) << 2;
             }
             else
             {

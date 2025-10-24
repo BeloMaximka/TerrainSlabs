@@ -12,14 +12,16 @@ public static class SoilSlabGrassOverlayPatch
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(TopsoilTesselator), "DrawBlockFaceTopSoil")]
-    public static bool HandleItemWithBuildingMode(TCTCache vars,
-      int flags,
-      FastVec3f[] quadOffsets,
-      int colorMapDataValue,
-      int textureSubId,
-      int textureSubIdSecond,
-      MeshData[] meshPools,
-      int rotIndex)
+    public static bool HandleItemWithBuildingMode(
+        TCTCache vars,
+        int flags,
+        FastVec3f[] quadOffsets,
+        int colorMapDataValue,
+        int textureSubId,
+        int textureSubIdSecond,
+        MeshData[] meshPools,
+        int rotIndex
+    )
     {
         if (!SlabGroupHelper.IsSlab(vars.block.BlockId))
         {
@@ -38,16 +40,48 @@ public static class SoilSlabGrassOverlayPatch
         const float heightScale = 0.5f;
 
         FastVec3f quadOffset1 = quadOffsets[7];
-        meshPool.AddVertexWithFlags(lx + quadOffset1.X, ly + quadOffset1.Y * heightScale, lz + quadOffset1.Z, textureAtlasPosition1.x2, textureAtlasPosition1.y2, vars.CurrentLightRGBByCorner[3], flags);
+        meshPool.AddVertexWithFlags(
+            lx + quadOffset1.X,
+            ly + quadOffset1.Y * heightScale,
+            lz + quadOffset1.Z,
+            textureAtlasPosition1.x2,
+            textureAtlasPosition1.y2,
+            vars.CurrentLightRGBByCorner[3],
+            flags
+        );
 
         FastVec3f quadOffset2 = quadOffsets[5];
-        meshPool.AddVertexWithFlags(lx + quadOffset2.X, ly + quadOffset2.Y * heightScale, lz + quadOffset2.Z, textureAtlasPosition1.x2, textureAtlasPosition1.y1, vars.CurrentLightRGBByCorner[1], flags);
+        meshPool.AddVertexWithFlags(
+            lx + quadOffset2.X,
+            ly + quadOffset2.Y * heightScale,
+            lz + quadOffset2.Z,
+            textureAtlasPosition1.x2,
+            textureAtlasPosition1.y1,
+            vars.CurrentLightRGBByCorner[1],
+            flags
+        );
 
         FastVec3f quadOffset3 = quadOffsets[4];
-        meshPool.AddVertexWithFlags(lx + quadOffset3.X, ly + quadOffset3.Y * heightScale, lz + quadOffset3.Z, textureAtlasPosition1.x1, textureAtlasPosition1.y1, vars.CurrentLightRGBByCorner[0], flags);
+        meshPool.AddVertexWithFlags(
+            lx + quadOffset3.X,
+            ly + quadOffset3.Y * heightScale,
+            lz + quadOffset3.Z,
+            textureAtlasPosition1.x1,
+            textureAtlasPosition1.y1,
+            vars.CurrentLightRGBByCorner[0],
+            flags
+        );
 
         FastVec3f quadOffset4 = quadOffsets[6];
-        meshPool.AddVertexWithFlags(lx + quadOffset4.X, ly + quadOffset4.Y * heightScale, lz + quadOffset4.Z, textureAtlasPosition1.x1, textureAtlasPosition1.y2, vars.CurrentLightRGBByCorner[2], flags);
+        meshPool.AddVertexWithFlags(
+            lx + quadOffset4.X,
+            ly + quadOffset4.Y * heightScale,
+            lz + quadOffset4.Z,
+            textureAtlasPosition1.x1,
+            textureAtlasPosition1.y2,
+            vars.CurrentLightRGBByCorner[2],
+            flags
+        );
 
         float x1 = textureAtlasPosition2.x1;
         float u = textureAtlasPosition2.x1 + (float)((textureAtlasPosition2.x2 - (double)textureAtlasPosition2.x1) / 2.0);

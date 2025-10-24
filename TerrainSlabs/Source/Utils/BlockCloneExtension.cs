@@ -7,7 +7,7 @@ using Vintagestory.API.MathTools;
 
 namespace TerrainSlabs.Source.Utils;
 
-public static class BlockCloneUtils
+public static class BlockCloneExtension
 {
     // Vanilla Clone() fucking crashes with NRE (and does not clone all fields properly)
     public static Block ProperClone(this Block block)

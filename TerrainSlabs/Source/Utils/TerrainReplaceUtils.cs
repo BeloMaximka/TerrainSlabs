@@ -5,7 +5,7 @@ using Vintagestory.API.Util;
 
 namespace TerrainSlabs.Source.Utils;
 
-public static class TerrainReplaceUtil
+public static class TerrainReplaceUtils
 {
     public static Dictionary<int, int> GetTerrainReplacementMap(ICoreAPI api) => GetBlockToReplaceMap(api, "TSblocksToReplace");
 
@@ -38,7 +38,7 @@ public static class TerrainReplaceUtil
 public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
 {
     private readonly BlockPos posBuffer = new(0);
-    private readonly Dictionary<int, int> terrainReplacementMap = TerrainReplaceUtil.GetTerrainReplacementMap(api);
+    private readonly Dictionary<int, int> terrainReplacementMap = TerrainReplaceUtils.GetTerrainReplacementMap(api);
 
     public void TryReplaceWithSlab(BlockPos pos)
     {
