@@ -31,7 +31,7 @@ public static class AABBIntersectionTestPatch
         }
         pos.Up();
         Block solidBlock = __instance.bsTester.blockAccessor.GetBlock(pos);
-        if (solidBlock.SideSolid.OnSide(BlockFacing.DOWN) || solidBlock.SideSolid.OnSide(BlockFacing.UP))
+        if (!SlabGroupHelper.ShouldOffset(solidBlock))
         {
             return true;
         }

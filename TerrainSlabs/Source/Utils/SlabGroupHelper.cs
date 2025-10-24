@@ -1,4 +1,5 @@
 ﻿using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.Server;
 
@@ -8,11 +9,22 @@ public static class SlabGroupHelper
 {
     private static int slabIdStart;
     private static int slabIdEnd;
+    private static int chiselBlockId;
+
+    public static void SetChiselBlockId(int id)
+    {
+        chiselBlockId = id;
+    }
 
     public static void UpdateIdRange(int start, int end)
     {
         slabIdStart = start;
         slabIdEnd = end;
+    }
+
+    public static bool ShouldOffset(Block block)
+    {
+        return !block.SideSolid.OnSide(BlockFacing.DOWN) && !block.SideSolid.OnSide(BlockFacing.UP) && block.BlockId != chiselBlockId;
     }
 
     public static bool IsSlab(int blockId)

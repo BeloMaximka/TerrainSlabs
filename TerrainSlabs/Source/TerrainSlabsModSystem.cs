@@ -37,6 +37,8 @@ public class TerrainSlabsModSystem : ModSystem
     {
         if (api is ICoreServerAPI sapi)
         {
+            SlabGroupHelper.SetChiselBlockId(sapi.World.GetBlock("game:chiseledblock")?.BlockId ?? 0);
+
             // TODO: Move to config and get rid of tuples. Currently it is (wildcard, excludeWildcard)
             (string, string)[] slabCodes = [("soil-*", ""), ("sand-*", "sand-*-*"), ("gravel-*", "gravel-*-*"), ("forestfloor-*", "")];
             bool idsNonSequential = false;
