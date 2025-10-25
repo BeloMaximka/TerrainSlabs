@@ -2,7 +2,6 @@
 using System.Linq;
 using TerrainSlabs.Source.Commands;
 using TerrainSlabs.Source.Utils;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -20,14 +19,6 @@ public class TerrainSlabsModSystem : ModSystem
     {
         harmonyInstance = new(Mod.Info.ModID);
         if (api.Side == EnumAppSide.Client && !harmonyInstance.GetPatchedMethods().Any())
-        {
-            harmonyInstance.PatchAll();
-        }
-    }
-
-    public override void StartClientSide(ICoreClientAPI api)
-    {
-        if (!harmonyInstance.GetPatchedMethods().Any())
         {
             harmonyInstance.PatchAll();
         }
