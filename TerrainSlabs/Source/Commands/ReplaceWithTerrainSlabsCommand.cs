@@ -23,7 +23,7 @@ public static class ReplaceWithTerrainSlabsCommand
     private static TextCommandResult OnHandle(TextCommandCallingArgs args)
     {
         int radus = (int)args.Parsers[0].GetValue();
-        var bulkAccessor = args.Caller.Entity.Api.World.GetBlockAccessorBulkMinimalUpdate(true);
+        var bulkAccessor = args.Caller.Entity.Api.World.GetBlockAccessorMapChunkLoading(true);
         var position = args.Caller.Entity.Pos.AsBlockPos.Copy();
 
         TerrainSlabReplacer replacer = new(args.Caller.Entity.Api, bulkAccessor);

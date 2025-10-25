@@ -1,63 +1,84 @@
-﻿using Vintagestory.API.Common;
+﻿using System;
+using System.Collections;
+using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
-using Vintagestory.Server;
+using Vintagestory.GameContent;
+using Vintagestory.GameContent.Mechanics;
 
 namespace TerrainSlabs.Source.Utils;
 
 public static class SlabGroupHelper
 {
-    private static int slabIdStart;
-    private static int slabIdEnd;
-    private static int chiselBlockId;
+    private static BitArray isSlab = null!;
+    static BitArray shoulfOffset = null!;
 
-    public static void SetChiselBlockId(int id)
+    public static void InitFlags(ICoreAPI api)
     {
-        chiselBlockId = id;
-    }
-
-    public static void UpdateIdRange(int start, int end)
-    {
-        slabIdStart = start;
-        slabIdEnd = end;
-    }
-
-    public static bool ShouldOffset(Block block)
-    {
-        return !block.SideSolid.OnSide(BlockFacing.DOWN) && !block.SideSolid.OnSide(BlockFacing.UP) && block.BlockId != chiselBlockId;
+        isSlab = new(api.World.Blocks.Count);
+        shoulfOffset = new(api.World.Blocks.Count);
+        foreach (Block block in api.World.Blocks)
+        {
+            if (block.Code.Domain == "terrainslabs")
+            {
+                isSlab[block.BlockId] = true;
+            }
+            else if (ShouldOffset(api, block))
+            {
+                shoulfOffset[block.BlockId] = true;
+            }
+        }
     }
 
     public static bool IsSlab(int blockId)
     {
-        return blockId >= slabIdStart && blockId <= slabIdEnd;
+        return isSlab[blockId];
     }
 
-    public static void RemapSlabIdIntoGroup(ICoreServerAPI sapi)
+    public static bool IsSlab(Block block)
     {
-        ServerSystemBlockIdRemapper? remapper = sapi.GetSystem<ServerSystemBlockIdRemapper>();
-        if (remapper is null)
+        return isSlab[block.BlockId];
+    }
+
+    public static bool ShouldOffset(int blockId)
+    {
+        return shoulfOffset[blockId];
+    }
+
+    public static bool ShouldOffset(Block block)
+    {
+        return shoulfOffset[block.BlockId];
+    }
+
+    /// <summary>
+    /// This check is expensive
+    /// </summary>
+    private static bool ShouldOffset(ICoreAPI api, Block block)
+    {
+        if (block.SideSolid.OnSide(BlockFacing.DOWN) || block.SideSolid.OnSide(BlockFacing.UP))
         {
-            sapi.Logger.Error("Unable to get {0} from {1}", nameof(ServerSystemBlockIdRemapper), nameof(ICoreServerAPI));
-            return;
+            return false;
         }
 
-        slabIdStart = 200;
-        slabIdEnd = slabIdStart - 1;
-        var blockMap = remapper.LoadStoredBlockCodesById();
-        Block[] slabBlocks = sapi.World.SearchBlocks(new("terrainslabs:*"));
-        foreach (var slabBlock in slabBlocks)
+        if (
+            block is BlockKnappingSurface
+            || block is BlockClayForm
+            || block is BlockMPBase
+            || block is IBlockItemFlow
+            || block is ICustomTreeFellingBehavior
+        )
         {
-            slabIdEnd++;
-            blockMap[slabBlock.Id] = blockMap[slabIdEnd];
-            blockMap[slabIdEnd] = slabBlock.Code;
-
-            Block blockToMove = sapi.World.Blocks[slabIdEnd];
-            blockToMove.BlockId = slabBlock.BlockId;
-            sapi.World.Blocks[slabBlock.Id] = blockToMove;
-
-            slabBlock.BlockId = slabIdEnd;
-            sapi.World.Blocks[slabIdEnd] = slabBlock;
+            return false;
         }
-        remapper.StoreBlockCodesById(blockMap);
+
+        foreach (var beBehavior in block.BlockEntityBehaviors)
+        {
+            Type? type = api.ClassRegistry.GetBlockEntityBehaviorClass(beBehavior.Name);
+            if (type is not null && typeof(BEBehaviorAnimatable).IsAssignableFrom(type))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

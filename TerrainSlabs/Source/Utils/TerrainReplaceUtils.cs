@@ -56,7 +56,7 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private bool HasExposedSide(BlockPos pos)
     {
         pos.Y++;
-        if (IsTopSolid(pos))
+        if (ShouldOffset(pos))
         {
             pos.Y--;
             return false;
@@ -96,9 +96,9 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         return false;
     }
 
-    private bool IsTopSolid(BlockPos pos)
+    private bool ShouldOffset(BlockPos pos)
     {
-        return accessor.GetBlock(pos).SideSolid[BlockFacing.indexDOWN];
+        return SlabGroupHelper.ShouldOffset(accessor.GetBlock(pos).BlockId);
     }
 
     private bool IsExposeBlock(BlockPos pos, int faceIndex)
