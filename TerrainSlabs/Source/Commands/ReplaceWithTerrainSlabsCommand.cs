@@ -40,19 +40,19 @@ public static class ReplaceWithTerrainSlabsCommand
         {
             for (int z = 0; z < range; z++)
             {
-                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
-
-                if (bulkAccessor.IsNotTraversable(position))
+                if (!AreNeigbourBlocksLoaded(bulkAccessor, position))
                 {
+                    position.Z++;
                     continue;
                 }
+
+                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
                 if (replacer.TryReplaceWithSlab(position))
                 {
                     replacedCount++;
                     if (highlightBlocks)
                     {
                         changedBlockPos.Add(position.Copy());
-
                     }
                 }
                 position.Z++;
@@ -69,5 +69,40 @@ public static class ReplaceWithTerrainSlabsCommand
         }
 
         return TextCommandResult.Success($"Replaced {replacedCount} blocks");
+    }
+
+    public static bool AreNeigbourBlocksLoaded(IBlockAccessor accessor, BlockPos pos)
+    {
+        pos.X++;
+        if (accessor.GetChunkAtBlockPos(pos) is null)
+        {
+            pos.X--;
+            return false;
+        }
+        pos.X -= 2;
+
+        if (accessor.GetChunkAtBlockPos(pos) is null)
+        {
+            pos.X++;
+            return false;
+        }
+        pos.X++;
+
+        pos.Z++;
+        if (accessor.GetChunkAtBlockPos(pos) is null)
+        {
+            pos.Z--;
+            return false;
+        }
+        pos.Z -= 2;
+
+        if (accessor.GetChunkAtBlockPos(pos) is null)
+        {
+            pos.Z++;
+            return false;
+        }
+        pos.Z++;
+
+        return true;
     }
 }
