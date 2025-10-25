@@ -40,7 +40,7 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private readonly BlockPos posBuffer = new(0);
     private readonly Dictionary<int, int> terrainReplacementMap = TerrainReplaceUtils.GetTerrainReplacementMap(api);
 
-    public void TryReplaceWithSlab(BlockPos pos)
+    public bool TryReplaceWithSlab(BlockPos pos)
     {
         posBuffer.X = pos.X;
         posBuffer.Y = pos.Y;
@@ -50,13 +50,15 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         if (terrainReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int slabId) && HasExposedSide(posBuffer))
         {
             accessor.SetBlock(slabId, posBuffer);
+            return true;
         }
+        return false;
     }
 
     private bool HasExposedSide(BlockPos pos)
     {
         pos.Y++;
-        if (ShouldOffset(pos))
+        if (!ShouldOffset(pos))
         {
             pos.Y--;
             return false;

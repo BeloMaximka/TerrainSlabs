@@ -2,6 +2,7 @@
 using System.Collections;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using Vintagestory.GameContent.Mechanics;
 
@@ -64,7 +65,8 @@ public static class SlabGroupHelper
             || block is BlockClayForm
             || block is BlockMPBase
             || block is IBlockItemFlow
-            || block is ICustomTreeFellingBehavior
+            || block is ITreeGenerator
+            || block is BlockFruitTreePart
         )
         {
             return false;
