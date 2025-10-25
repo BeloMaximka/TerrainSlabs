@@ -1,0 +1,90 @@
+{
+	"code": "rawclay",
+	"class": "BlockSoilDeposit",
+	"variantgroups": [
+		{ "code":"type", "states": ["blue","red", "fire"] },
+		{ "code":"grasscoverage", "states": ["none", "verysparse"] }
+	],
+	"shape": { "base": "game:block/basic/slab/slab-down" },
+	"drawtype": "TopSoil",
+	"renderpass": "TopSoil",
+	"blockmaterial": "Soil",
+	"attributes": {
+		"mapColorCode": "land",
+		"ignoreTintInventory": true,
+		"placeBelowBlockCode": "soil-low-none",
+		"growthBlockLayer": "l1soilwithgrass",
+		"growthLightLevel": 7,
+		"preventsDecay": true,
+		"tallGrassGrowthChance": 0.6,
+		"spreadsGrassByType": {
+			"*-verysparse": true,
+			"*-none": false
+		}
+	},
+	"creativeinventory": { "general": ["*"], "terrain": ["*"] },
+	"replaceable": 700,
+	"resistance": 4,
+    "faceCullMode":  "FlushExceptTop",
+	"sideOpaque":  {
+		"all":  false,
+		"down":  true
+	},
+	"sideSolid":  {
+		"all":  false,
+        "up": true,
+		"down":  true
+	},
+    "emitSideAo": { "all": false },
+	"selectionbox":  { "x1":  0, "y1":  0, "z1": 0, "x2":  1, "y2":  0.5, "z2":  1 },
+	"collisionbox":  { "x1":  0, "y1":  0, "z1": 0, "x2":  1, "y2":  0.5, "z2":  1 },
+	"textures": {
+		"all": {"base": "game:block/soil/{type}clay"},
+		"snowed": {"base": "game:block/plant/grasscoverage/snow/normal"},
+		"specialSecondTexture": {"base": "game:block/plant/grasscoverage/{grasscoverage}"}
+	},
+	"texturesInventory": {
+		"down": {"base": "game:block/soil/{type}clay"},
+		"horizontals": {
+			"base": "game:block/soil/{type}clay",
+			"overlays": ["game:block/plant/grasscoverage/inventory/side_{grasscoverage}"]
+		},
+		"up": {
+			"base": "game:block/soil/{type}clay",
+			"overlays": ["game:block/plant/grasscoverage/inventory/top_{grasscoverage}"]
+		}
+	},
+	"climateColorMapByType": {
+		"*-none": null,
+		"*": "climatePlantTint"
+	},
+	"seasonColorMapByType": {
+		"*-none": null,
+		"*": "seasonalGrass"
+	},
+	"frostable": true,
+	"sounds": {
+		"place": "game:block/dirt",
+		"break": "game:block/dirt",
+		"hit": "game:block/dirt"
+	},
+	"fertility": 5,
+	"drops": [
+		{ 
+			"type": "item", 
+			"code": "game:clay-{type}",
+			"quantity": { "avg": 4.5, "var": 1 }
+		},
+		{
+			"type": "block",
+			"code": "game:ethoslab",
+			"quantity": { "avg": 0.000001 }
+		}
+	],
+	"heldTpIdleAnimation": "holdbothhandslarge", "heldRightReadyAnimation": "heldblockready", "heldTpUseAnimation": "twohandplaceblock",
+	"tpHandTransform": {
+		"translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
+		"rotation": { "x": -2, "y": 25, "z": -78 },
+		"scale": 0.4
+	}
+}
