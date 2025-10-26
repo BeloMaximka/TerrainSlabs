@@ -1,0 +1,38 @@
+[
+  {
+    "ingredientPattern": "B,B",
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "game:soil-*-none",
+        "name": "fertility"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "terrainslabs:soil-{fertility}-none",
+      "quantity": 2
+    }
+  },
+  {
+    "ingredientPattern": "B",
+    "width": 1,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "terrainslabs:soil-*-none",
+        "name": "fertility"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "game:soil-{fertility}-none",
+      "quantity": 1
+    }
+  }
+]

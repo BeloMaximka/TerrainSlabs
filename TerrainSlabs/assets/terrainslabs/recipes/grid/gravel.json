@@ -1,0 +1,70 @@
+[
+  {
+    "ingredientPattern": "B,B",
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "game:gravel-*",
+        "name": "rock",
+        "allowedVariants": [
+          "andesite",
+          "chalk",
+          "chert",
+          "conglomerate",
+          "limestone",
+          "claystone",
+          "granite",
+          "sandstone",
+          "shale",
+          "basalt",
+          "peridotite",
+          "phyllite",
+          "slate",
+          "bauxite"
+        ]
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "terrainslabs:gravel-{rock}",
+      "quantity": 2
+    }
+  },
+  {
+    "ingredientPattern": "B",
+    "width": 1,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "terrainslabs:gravel-*",
+        "name": "rock",
+        "allowedVariants": [
+          "andesite",
+          "chalk",
+          "chert",
+          "conglomerate",
+          "limestone",
+          "claystone",
+          "granite",
+          "sandstone",
+          "shale",
+          "basalt",
+          "peridotite",
+          "phyllite",
+          "slate",
+          "bauxite"
+        ]
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "game:gravel-{rock}",
+      "quantity": 1
+    }
+  }
+]
