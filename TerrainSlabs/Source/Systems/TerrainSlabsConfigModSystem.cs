@@ -1,4 +1,6 @@
 ﻿using ConfigLib;
+using System;
+using TerrainSlabs.Source.Commands;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
@@ -11,27 +13,62 @@ public class ServerSettings
 
 internal class TerrainSlabsConfigModSystem : ModSystem
 {
+    private const string fileName = "terrainslabs_server.json";
+
+    public override bool ShouldLoad(EnumAppSide forSide) => forSide == EnumAppSide.Server;
+
     public ServerSettings ServerSettings { get; private set; } = new();
 
     public override void StartServerSide(ICoreServerAPI api)
     {
+        LoadConfig(api);
+        ChangeConfigCommand.Register(api);
+
         if (api.ModLoader.IsModEnabled("configlib"))
         {
             SubscribeToConfigChange(api);
         }
     }
 
-    private void SubscribeToConfigChange(ICoreAPI api)
+    public void SaveConfig(ICoreServerAPI api)
     {
-        ConfigLibModSystem system = api.ModLoader.GetModSystem<ConfigLibModSystem>();
+        api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
+    }
+
+    private void LoadConfig(ICoreServerAPI api)
+    {
+        try
+        {
+            ServerSettings settings = api.LoadModConfig<ServerSettings>(fileName);
+            if (settings is not null)
+            {
+                ServerSettings = settings;
+            }
+            else
+            {
+                api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
+            }
+        }
+        catch (Exception e)
+        {
+            Mod.Logger.Warning("Could not load config from {0}, loading default settings instead.", fileName);
+            Mod.Logger.Warning(e);
+        }
+    }
+
+    private void SubscribeToConfigChange(ICoreServerAPI sapi)
+    {
+        ConfigLibModSystem system = sapi.ModLoader.GetModSystem<ConfigLibModSystem>();
 
         var config = system.GetConfig(Mod.Info.ModID);
         config?.AssignSettingsValues(ServerSettings);
 
         system.SettingChanged += (domain, config, setting) =>
         {
-            if (domain != Mod.Info.ModID) return;
+            if (domain != Mod.Info.ModID)
+                return;
             setting.AssignSettingValue(ServerSettings);
+            SaveConfig(sapi);
         };
     }
 }
