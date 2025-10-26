@@ -1,5 +1,8 @@
-# Bugs
+# TODO
 
+- Aquatic update
+
+# Bugs
 
 - Infinite falling blocks caused by slabs (4x4 inclosed area)
 - Gravity does apply to slabs for soil mode (probably bcse behaviors are hardcoded )
