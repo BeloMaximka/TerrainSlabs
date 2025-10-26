@@ -39,6 +39,7 @@ public class TerrainSlabsModSystem : ModSystem
         WorldGenUtils.RegisterSlabReplacementWorldGenEvent(api);
         ReplaceWithTerrainSlabsCommand.Register(api);
         ReplaceBlockWithTerrainSlabCommand.Register(api);
+        RevertSlabPlacementCommand.Register(api);
     }
 
     public override void Dispose()
