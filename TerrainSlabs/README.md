@@ -1,3 +1,8 @@
+# Regex to clean localization files
+
+`	"(?!block-(?:soil-|gravel-|sand-|rawclay-|cob-|forestfloor-|peat-))(?:\\.|[^"\\])*":\s*"(?:\\.|[^"\\])*",?
+`
+
 # TODO
 
 - Aquatic update
