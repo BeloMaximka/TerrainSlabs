@@ -6,7 +6,7 @@ using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
-namespace TerrainSlabs.Source;
+namespace TerrainSlabs.Source.Systems;
 
 public class TerrainSlabsModSystem : ModSystem
 {

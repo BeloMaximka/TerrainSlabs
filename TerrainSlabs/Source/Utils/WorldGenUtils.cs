@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Common;
+﻿using TerrainSlabs.Source.Systems;
+using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -22,16 +23,23 @@ public static class WorldGenUtils
 
     private static ChunkColumnGenerationDelegate GetSmoothTerrainDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
     {
+        ServerSettings settings = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>().ServerSettings;
         TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
-        return (request) => SmoothTerrainChunkColumn(request, blockAccessor, slabReplacer);
+        return (request) => SmoothTerrainChunkColumn(request, blockAccessor, slabReplacer, settings);
     }
 
     private static void SmoothTerrainChunkColumn(
         IChunkColumnGenerateRequest request,
         IBlockAccessor blockAccessor,
-        TerrainSlabReplacer slabReplacer
+        TerrainSlabReplacer slabReplacer,
+        ServerSettings settings
     )
     {
+        if (!settings.EnableWorldGen)
+        {
+            return;
+        }
+
         BlockPos blockPos = new(Dimensions.NormalWorld);
         for (var x = 0; x < GlobalConstants.ChunkSize; x++)
         {

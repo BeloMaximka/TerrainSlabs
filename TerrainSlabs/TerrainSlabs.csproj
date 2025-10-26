@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="configlib">
+      <HintPath>WhyNuGetExists\configlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="VintagestoryAPI">
       <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
       <Private>false</Private>
@@ -50,16 +54,16 @@
     </Reference>
   </ItemGroup>
 
-<ItemGroup>
-  <Content Include="modinfo.json">
+  <ItemGroup>
+    <Content Include="modinfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
+    </Content>
+  </ItemGroup>
 
-<ItemGroup>
-  <Content Include="modicon.png">
+  <ItemGroup>
+    <Content Include="modicon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
+    </Content>
+  </ItemGroup>
 
 </Project>

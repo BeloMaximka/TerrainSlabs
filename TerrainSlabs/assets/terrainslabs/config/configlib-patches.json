@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "settings": [
+    {
+      "code": "enable_world_gen",
+      "type": "boolean",
+      "ingui": "terrainslabs:enable_world_gen",
+      "comment": "Enables of disables smoothing terrain during chunk generation",
+      "default": true
+    }
+  ]
+}

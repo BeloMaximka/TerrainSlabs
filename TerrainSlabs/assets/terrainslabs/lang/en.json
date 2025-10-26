@@ -1,4 +1,5 @@
 {
+  "terrainslabs:enable_world_gen": "Enable worldgen",
   "block-rawclay-blue-none": "Blue clay in soil",
   "block-rawclay-fire-none": "Fire clay",
   "block-rawclay-red-none": "Red clay in soil",
