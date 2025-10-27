@@ -67,6 +67,7 @@ public static class SlabGroupHelper
             || block is IBlockItemFlow
             || block is ITreeGenerator
             || block is BlockFruitTreePart
+            || block is BlockStalagSection
         )
         {
             return false;

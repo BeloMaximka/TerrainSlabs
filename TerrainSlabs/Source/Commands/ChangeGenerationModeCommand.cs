@@ -4,18 +4,18 @@ using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source.Commands;
 
-public static class ChangeConfigCommand
+public static class ChangeGenerationModeCommand
 {
     public static void Register(ICoreServerAPI sapi)
     {
         sapi.ChatCommands.GetOrCreate("tslab")
             .WithAlias("ts")
             .RequiresPrivilege(Privilege.buildblockseverywhere)
-            .BeginSubCommand("config")
-            .WithAlias("c")
+            .BeginSubCommand("genmode")
+            .WithAlias("g")
             .BeginSubCommand("set")
             .WithAlias("s")
-            .WithArgs(sapi.ChatCommands.Parsers.Word("name"), sapi.ChatCommands.Parsers.Word("value"))
+            .WithArgs(sapi.ChatCommands.Parsers.Word("value"))
             .HandleWith(OnHandle);
     }
 
@@ -25,22 +25,17 @@ public static class ChangeConfigCommand
         {
             return TextCommandResult.Error($"Must be called on server");
         }
-
         TerrainSlabsConfigModSystem configSystem = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>();
-        string settingName = (string)args.Parsers[0].GetValue();
 
-        if (settingName != nameof(configSystem.ServerSettings.EnableWorldGen))
+        if (!TerrainSmoothMode.TryParse((string)args.Parsers[0].GetValue(), out TerrainSmoothMode value))
         {
-            return TextCommandResult.Error($"Incorrect setting name. ");
+            return TextCommandResult.Error(
+                $"Incorrect setting value. Supported values are: {string.Join(", ", System.Enum.GetNames(typeof(TerrainSmoothMode)))}"
+            );
         }
 
-        if (!bool.TryParse((string)args.Parsers[1].GetValue(), out bool value))
-        {
-            return TextCommandResult.Error($"Incorrect setting value.");
-        }
-
-        configSystem.ServerSettings.EnableWorldGen = value;
+        configSystem.ServerSettings.SmoothMode = value;
         configSystem.SaveConfig(sapi);
-        return TextCommandResult.Success($"Updated {nameof(configSystem.ServerSettings.EnableWorldGen)} to {value}.");
+        return TextCommandResult.Success($"Set {nameof(configSystem.ServerSettings.SmoothMode)} to {value}.");
     }
 }

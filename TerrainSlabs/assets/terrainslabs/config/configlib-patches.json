@@ -2,11 +2,16 @@
   "version": 1,
   "settings": [
     {
-      "code": "enable_world_gen",
-      "type": "boolean",
-      "ingui": "terrainslabs:enable_world_gen",
-      "comment": "Enables of disables smoothing terrain during chunk generation",
-      "default": true
+      "code": "smooth_mode",
+      "type": "integer",
+      "ingui": "World generation mode",
+      "comment": "0 - disable, 1 - smooth only surface (cheap), 2 - smooth whole chunk (more expensive, but affects caves)",
+      "default": 2,
+      "range": {
+        "min": 0,
+        "max": 2,
+        "step": 1
+    }
     }
   ]
 }

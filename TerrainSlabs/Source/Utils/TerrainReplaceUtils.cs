@@ -37,25 +37,9 @@ public static class TerrainReplaceUtils
 
 public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
 {
-    private readonly BlockPos posBuffer = new(0);
     private readonly Dictionary<int, int> terrainReplacementMap = TerrainReplaceUtils.GetTerrainReplacementMap(api);
 
     public bool TryReplaceWithSlab(BlockPos pos)
-    {
-        posBuffer.X = pos.X;
-        posBuffer.Y = pos.Y;
-        posBuffer.Z = pos.Z;
-        posBuffer.dimension = pos.dimension;
-
-        if (terrainReplacementMap.TryGetValue(accessor.GetBlock(posBuffer).Id, out int slabId) && HasExposedSide(posBuffer))
-        {
-            accessor.SetBlock(slabId, posBuffer);
-            return true;
-        }
-        return false;
-    }
-
-    private bool HasExposedSide(BlockPos pos)
     {
         pos.Y++;
         if (!ShouldOffset(pos))
@@ -65,6 +49,17 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         }
         pos.Y--;
 
+
+        if (terrainReplacementMap.TryGetValue(accessor.GetBlock(pos).Id, out int slabId) && HasExposedSide(pos))
+        {
+            accessor.SetBlock(slabId, pos);
+            return true;
+        }
+        return false;
+    }
+
+    private bool HasExposedSide(BlockPos pos)
+    {
         pos.X++;
         if (IsExposeBlock(pos, BlockFacing.indexEAST))
         {
@@ -106,6 +101,6 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private bool IsExposeBlock(BlockPos pos, int faceIndex)
     {
         Block block = accessor.GetBlock(pos);
-        return block.Code.Domain != "terrainslabs" && !block.SideSolid[faceIndex] && block.MatterState != EnumMatterState.Liquid;
+        return !SlabGroupHelper.IsSlab(block.BlockId) && !block.SideSolid[faceIndex] && block.MatterState != EnumMatterState.Liquid;
     }
 }

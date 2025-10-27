@@ -6,9 +6,30 @@ using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source.Systems;
 
+public enum TerrainSmoothMode
+{
+    None,
+    Surface,
+    Column,
+}
+
 public class ServerSettings
 {
-    public bool EnableWorldGen { get; set; } = true;
+    private TerrainSmoothMode smoothMode = TerrainSmoothMode.Column;
+    public event Action<TerrainSmoothMode>? SmoothModeChanged;
+
+    public TerrainSmoothMode SmoothMode
+    {
+        get => smoothMode;
+        set => SetField(ref smoothMode, value, SmoothModeChanged);
+    }
+
+    private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
+    {
+        if (Equals(field, value)) return;
+        field = value;
+        onChanged?.Invoke(value);
+    }
 }
 
 internal class TerrainSlabsConfigModSystem : ModSystem
@@ -22,7 +43,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
     public override void StartServerSide(ICoreServerAPI api)
     {
         LoadConfig(api);
-        ChangeConfigCommand.Register(api);
+        ChangeGenerationModeCommand.Register(api);
 
         if (api.ModLoader.IsModEnabled("configlib"))
         {

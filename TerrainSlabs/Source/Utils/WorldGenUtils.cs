@@ -13,33 +13,53 @@ public static class WorldGenUtils
         sapi.Event.GetWorldgenBlockAccessor(
             (provider) =>
             {
-                var handlers = sapi.Event.GetRegisteredWorldGenHandlers("standard");
-                handlers
-                    .OnChunkColumnGen[(int)EnumWorldGenPass.PreDone]
-                    .Add(GetSmoothTerrainDelegate(sapi, provider.GetBlockAccessor(true)));
+                var genHandlers = sapi.Event.GetRegisteredWorldGenHandlers("standard").OnChunkColumnGen[(int)EnumWorldGenPass.PreDone];
+                var accessor = provider.GetBlockAccessor(true);
+
+                var settings = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>().ServerSettings;
+                var generationDelegate = GetGenerationDelegate(settings.SmoothMode, sapi, accessor);
+                genHandlers.Add(generationDelegate);
+
+                settings.SmoothModeChanged += (mode) =>
+                {
+                    genHandlers.Remove(generationDelegate);
+                    generationDelegate = GetGenerationDelegate(mode, sapi, accessor);
+                    genHandlers.Add(generationDelegate);
+                };
             }
         );
     }
 
-    private static ChunkColumnGenerationDelegate GetSmoothTerrainDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
-    {
-        ServerSettings settings = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>().ServerSettings;
-        TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
-        return (request) => SmoothTerrainChunkColumn(request, blockAccessor, slabReplacer, settings);
-    }
-
-    private static void SmoothTerrainChunkColumn(
-        IChunkColumnGenerateRequest request,
-        IBlockAccessor blockAccessor,
-        TerrainSlabReplacer slabReplacer,
-        ServerSettings settings
+    private static ChunkColumnGenerationDelegate GetGenerationDelegate(
+        TerrainSmoothMode mode,
+        ICoreServerAPI sapi,
+        IBlockAccessor blockAccessor
     )
     {
-        if (!settings.EnableWorldGen)
+        return mode switch
         {
-            return;
-        }
+            TerrainSmoothMode.Surface => GetSmoothSurfaceDelegate(sapi, blockAccessor),
+            _ => SkipWorldGenPass,
+        };
+    }
 
+    private static void SkipWorldGenPass(IChunkColumnGenerateRequest request)
+    {
+        // do nothing
+    }
+
+    private static ChunkColumnGenerationDelegate GetSmoothSurfaceDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
+    {
+        TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
+        return (request) => SmoothTerrainChunkSurface(request, blockAccessor, slabReplacer);
+    }
+
+    private static void SmoothTerrainChunkSurface(
+        IChunkColumnGenerateRequest request,
+        IBlockAccessor blockAccessor,
+        TerrainSlabReplacer slabReplacer
+    )
+    {
         BlockPos blockPos = new(Dimensions.NormalWorld);
         for (var x = 0; x < GlobalConstants.ChunkSize; x++)
         {
