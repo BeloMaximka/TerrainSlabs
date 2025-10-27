@@ -1,7 +1,7 @@
 {
   "code": "rock",
+  "class": "BlockTerrainSlab",
   "behaviors": [
-    { "name": "BreakIfFloating" },
     {
       "name": "UnstableRock",
       "propertiesByType": {
@@ -27,7 +27,8 @@
           "impactDamageMul": 6
         }
       }
-    }
+    },
+    { "name": "RestrictTopAttachment" }
   ],
   "storageFlags": 5,
   "attributes": {

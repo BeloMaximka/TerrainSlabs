@@ -1,6 +1,13 @@
 {
   "code": "crackedrock",
-  "behaviors": [{ "name": "BreakIfFloating" }, { "name": "UnstableRock" }],
+  "class": "BlockTerrainSlab",
+  "behaviors": [
+    {
+      "name": "UnstableRock",
+      "properties": { "collapsedBlock": "game:crackedrock-{rock}" }
+    },
+    { "name": "RestrictTopAttachment" }
+  ],
   "storageFlags": 5,
   "attributes": {
     "propickable": true,

@@ -1,13 +1,13 @@
 {
   "code": "soil",
-  "class": "BlockSoil",
+  "class": "BlockSoilSlab",
   "variantgroups": [
     { "loadFromProperties": "abstract/fertility" },
     { "loadFromProperties": "abstract/grasscoverage" }
   ],
   "behaviors": [
     { "name": "MyceliumHost" },
-    { "name": "RestrictTopAttachmentBlockBehavior" }
+    { "name": "RestrictTopAttachment" }
   ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },

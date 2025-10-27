@@ -1,15 +1,17 @@
 {
   "code": "sand",
+  "class": "BlockTerrainSlab",
   "behaviors": [
     {
-      "name": "UnstableFalling",
+      "name": "UnstableFallingSlab",
       "properties": {
+        "fallingBlock": "game:sand-{rock}",
         "fallSound": "game:effect/rockslide",
         "dustIntensity": 1,
         "fallSidewaysChance": 0.75
       }
     },
-    { "name": "RestrictTopAttachmentBlockBehavior" }
+    { "name": "RestrictTopAttachment" }
   ],
   "variantgroups": [{ "loadFromProperties": "block/rock", "code": "rock" }],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },

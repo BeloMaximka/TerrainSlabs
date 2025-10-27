@@ -6,6 +6,8 @@
 # TODO
 
 - Aquatic update
+- Fix breaking boxes
+- Update translations
 
 # Bugs
 

@@ -1,7 +1,7 @@
 {
   "code": "peat",
-  "class": "BlockSoilDeposit",
-  "behaviors": [],
+  "class": "BlockSoilDepositSlab",
+  "behaviors": [{ "name": "RestrictTopAttachment" }],
   "variantgroups": [
     { "code": "grasscoverage", "states": ["none", "verysparse"] }
   ],

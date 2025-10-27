@@ -4,7 +4,7 @@ using Vintagestory.API.MathTools;
 
 namespace TerrainSlabs.Source.BlockBehaviors;
 
-public class RestrictTopAttachmentBlockBehavior(Block block) : BlockBehavior(block)
+public class BlockBehaviorRestrictTopAttachment(Block block) : BlockBehavior(block)
 {
     public override bool CanAttachBlockAt(
         IBlockAccessor world,

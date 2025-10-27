@@ -1,0 +1,123 @@
+[
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {
+      "name": "UnstableFallingSlab",
+      "properties": {
+        "fallingBlock": "game:soil-{fertility}-{grasscoverage}",
+        "fallSound": "game:effect/rockslide",
+        "fallSideways": true,
+        "dustIntensity": 0.25
+      }
+    },
+    "file": "terrainslabs:blocktypes/soil.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {
+      "name": "UnstableFallingSlab",
+      "properties": {
+        "fallingBlock": "game:forestfloor-{grass}",
+        "fallSound": "game:effect/rockslide",
+        "fallSideways": true,
+        "dustIntensity": 0.25
+      }
+    },
+    "file": "terrainslabs:blocktypes/forestfloor.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/0/properties",
+    "value": {
+      "fallSound": "game:effect/rockslide",
+      "fallSideways": true,
+      "dustIntensity": 1,
+      "fallSidewaysChance": 0.75
+    },
+    "file": "terrainslabs:blocktypes/sand.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/0/properties",
+    "value": {
+      "fallSound": "game:effect/rockslide",
+      "fallSideways": true,
+      "dustIntensity": 0.75
+    },
+    "file": "terrainslabs:blocktypes/gravel.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/attributes/allowUnstablePlacement",
+    "value": true,
+    "file": "terrainslabs:blocktypes/soil.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/attributes/allowUnstablePlacement",
+    "value": true,
+    "file": "terrainslabs:blocktypes/forestfloor.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {
+      "name": "UnstableFallingSlab",
+      "properties": {
+        "fallSound": "game:effect/rockslide",
+        "fallSideways": true,
+        "dustIntensity": 1
+      }
+    },
+    "file": "terrainslabs:blocktypes/snowblock.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/attributes/allowUnstablePlacement",
+    "value": true,
+    "file": "terrainslabs:blocktypes/snowblock.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {
+      "name": "UnstableFallingSlab",
+      "properties": {
+        "fallingBlock": "game:peat-{grasscoverage}",
+        "fallSound": "game:effect/rockslide",
+        "fallSideways": true,
+        "dustIntensity": 0.25
+      }
+    },
+    "file": "terrainslabs:blocktypes/peat.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  },
+  {
+    "op": "add",
+    "path": "/attributes/allowUnstablePlacement",
+    "value": true,
+    "file": "terrainslabs:blocktypes/peat.json",
+    "condition": { "when": "blockGravity", "isValue": "sandgravelsoil" },
+    "side": "Server"
+  }
+]

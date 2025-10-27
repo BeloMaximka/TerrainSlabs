@@ -1,10 +1,11 @@
 {
   "code": "rawclay",
-  "class": "BlockSoilDeposit",
+  "class": "BlockSoilDepositSlab",
   "variantgroups": [
     { "code": "type", "states": ["blue", "red", "fire"] },
     { "code": "grasscoverage", "states": ["none", "verysparse"] }
   ],
+  "behaviors": [{ "name": "RestrictTopAttachment" }],
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "drawtype": "TopSoil",
   "renderpass": "TopSoil",

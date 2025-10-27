@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System.Linq;
 using TerrainSlabs.Source.BlockBehaviors;
+using TerrainSlabs.Source.Blocks;
 using TerrainSlabs.Source.Commands;
 using TerrainSlabs.Source.Commands.BlockReplacement;
 using TerrainSlabs.Source.Utils;
@@ -26,7 +27,14 @@ public class TerrainSlabsModSystem : ModSystem
 
     public override void Start(ICoreAPI api)
     {
-        api.RegisterBlockBehaviorClass(nameof(RestrictTopAttachmentBlockBehavior), typeof(RestrictTopAttachmentBlockBehavior));
+        api.RegisterBlockClass(nameof(BlockTerrainSlab), typeof(BlockTerrainSlab));
+        api.RegisterBlockClass(nameof(BlockForestFloorSlab), typeof(BlockForestFloorSlab));
+        api.RegisterBlockClass(nameof(BlockSoilSlab), typeof(BlockTerrainSlab));
+        api.RegisterBlockClass(nameof(BlockSoilDepositSlab), typeof(BlockTerrainSlab));
+
+        api.RegisterBlockBehaviorClass("RestrictTopAttachment", typeof(BlockBehaviorRestrictTopAttachment));
+        api.RegisterBlockBehaviorClass("UnstableFallingSlab", typeof(BlockBehaviorUnstableFallingSlab));
+
         RecalculateSlabFlagsCommand.Register(api);
     }
 

@@ -1,12 +1,12 @@
 {
   "code": "forestfloor",
-  "class": "BlockForestFloor",
+  "class": "BlockForestFloorSlab",
   "variantgroups": [
     { "code": "grass", "states": ["0", "1", "2", "3", "4", "5", "6", "7"] }
   ],
   "behaviors": [
     { "name": "MyceliumHost" },
-    { "name": "RestrictTopAttachmentBlockBehavior" }
+    { "name": "RestrictTopAttachment" }
   ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },
