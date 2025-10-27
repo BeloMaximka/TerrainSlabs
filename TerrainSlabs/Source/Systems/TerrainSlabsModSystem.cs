@@ -2,6 +2,7 @@
 using System.Linq;
 using TerrainSlabs.Source.BlockBehaviors;
 using TerrainSlabs.Source.Commands;
+using TerrainSlabs.Source.Commands.BlockReplacement;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
@@ -37,9 +38,10 @@ public class TerrainSlabsModSystem : ModSystem
     public override void StartServerSide(ICoreServerAPI api)
     {
         WorldGenUtils.RegisterSlabReplacementWorldGenEvent(api);
-        ReplaceWithTerrainSlabsCommand.Register(api);
-        ReplaceBlockWithTerrainSlabCommand.Register(api);
-        RevertSlabPlacementCommand.Register(api);
+        SmoothSurfaceCommand.Register(api);
+        SmoothColumnCommand.Register(api);
+        SmoothBlockCommand.Register(api);
+        UnsmoothSurfaceCommand.Register(api);
     }
 
     public override void Dispose()

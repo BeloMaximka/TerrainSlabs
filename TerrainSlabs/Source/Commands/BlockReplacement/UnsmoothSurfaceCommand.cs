@@ -3,9 +3,9 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
-namespace TerrainSlabs.Source.Commands;
+namespace TerrainSlabs.Source.Commands.BlockReplacement;
 
-public static class RevertSlabPlacementCommand
+public static class UnsmoothSurfaceCommand
 {
     public static void Register(ICoreServerAPI api)
     {

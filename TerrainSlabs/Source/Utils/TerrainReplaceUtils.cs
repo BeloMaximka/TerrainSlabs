@@ -50,7 +50,7 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         pos.Y--;
 
 
-        if (terrainReplacementMap.TryGetValue(accessor.GetBlock(pos).Id, out int slabId) && HasExposedSide(pos))
+        if (terrainReplacementMap.TryGetValue(accessor.GetBlockId(pos), out int slabId) && HasExposedSide(pos))
         {
             accessor.SetBlock(slabId, pos);
             return true;
@@ -95,7 +95,7 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
 
     private bool ShouldOffset(BlockPos pos)
     {
-        return SlabGroupHelper.ShouldOffset(accessor.GetBlock(pos).BlockId);
+        return SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos));
     }
 
     private bool IsExposeBlock(BlockPos pos, int faceIndex)

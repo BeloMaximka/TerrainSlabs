@@ -5,7 +5,7 @@ using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source.Commands;
 
-public static class ReplaceBlockWithTerrainSlabCommand
+public static class SmoothBlockCommand
 {
     public static void Register(ICoreServerAPI api)
     {

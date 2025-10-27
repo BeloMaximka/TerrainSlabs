@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace TerrainSlabs.Source.Commands;
+namespace TerrainSlabs.Source.Commands.BlockReplacement;
 
-public static class ReplaceWithTerrainSlabsCommand
+public static class SmoothColumnCommand
 {
     public static void Register(ICoreServerAPI api)
     {
@@ -15,15 +16,16 @@ public static class ReplaceWithTerrainSlabsCommand
             .RequiresPrivilege(Privilege.buildblockseverywhere)
             .BeginSubCommand("smooth")
             .WithAlias("s")
-            .BeginSubCommand("surface")
-            .WithAlias("s")
+            .BeginSubCommand("column")
+            .WithAlias("c")
             .RequiresPlayer()
             .WithArgs(api.ChatCommands.Parsers.Int("range"), api.ChatCommands.Parsers.OptionalBool("highlightBlocks", "true"))
-            .HandleWith(OnHandle);
+            .HandleWith(SmoothSurface);
     }
 
-    private static TextCommandResult OnHandle(TextCommandCallingArgs args)
+    private static TextCommandResult SmoothSurface(TextCommandCallingArgs args)
     {
+        Stopwatch sw = Stopwatch.StartNew();
         int range = (int)args.Parsers[0].GetValue();
         bool highlightBlocks = (bool)args.Parsers[1].GetValue();
         range = 1 + range * 2;
@@ -40,21 +42,26 @@ public static class ReplaceWithTerrainSlabsCommand
         {
             for (int z = 0; z < range; z++)
             {
-                if (!AreNeigbourBlocksLoaded(bulkAccessor, position))
+                if (!bulkAccessor.AreNeigbourBlocksLoaded(position))
                 {
                     position.Z++;
                     continue;
                 }
 
-                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
-                if (replacer.TryReplaceWithSlab(position))
+                position.Y = bulkAccessor.GetChunkAtBlockPos(position).MapChunk.YMax;
+                while (position.Y > 10)
                 {
-                    replacedCount++;
-                    if (highlightBlocks)
+                    if (replacer.TryReplaceWithSlab(position))
                     {
-                        changedBlockPos.Add(position.Copy());
+                        replacedCount++;
+                        if (highlightBlocks)
+                        {
+                            changedBlockPos.Add(position.Copy());
+                        }
                     }
+                    position.Y--;
                 }
+
                 position.Z++;
             }
             position.Z -= range;
@@ -68,41 +75,7 @@ public static class ReplaceWithTerrainSlabsCommand
             args.Caller.Entity.Api.World.HighlightBlocks(args.Caller.Player, 1, changedBlockPos);
         }
 
-        return TextCommandResult.Success($"Replaced {replacedCount} blocks");
-    }
-
-    public static bool AreNeigbourBlocksLoaded(IBlockAccessor accessor, BlockPos pos)
-    {
-        pos.X++;
-        if (accessor.GetChunkAtBlockPos(pos) is null)
-        {
-            pos.X--;
-            return false;
-        }
-        pos.X -= 2;
-
-        if (accessor.GetChunkAtBlockPos(pos) is null)
-        {
-            pos.X++;
-            return false;
-        }
-        pos.X++;
-
-        pos.Z++;
-        if (accessor.GetChunkAtBlockPos(pos) is null)
-        {
-            pos.Z--;
-            return false;
-        }
-        pos.Z -= 2;
-
-        if (accessor.GetChunkAtBlockPos(pos) is null)
-        {
-            pos.Z++;
-            return false;
-        }
-        pos.Z++;
-
-        return true;
+        sw.Stop();
+        return TextCommandResult.Success($"Replaced {replacedCount} blocks in {sw.ElapsedMilliseconds} ms");
     }
 }
