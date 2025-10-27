@@ -15,6 +15,8 @@ public enum TerrainSmoothMode
 
 public class ServerSettings
 {
+    public bool DebugMode { get; set; } = false;
+
     private TerrainSmoothMode smoothMode = TerrainSmoothMode.Column;
     public event Action<TerrainSmoothMode>? SmoothModeChanged;
 
@@ -75,6 +77,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
             Mod.Logger.Warning("Could not load config from {0}, loading default settings instead.", fileName);
             Mod.Logger.Warning(e);
         }
+        TerrainSlabsGlobalValues.DebugMode = ServerSettings.DebugMode;
     }
 
     private void SubscribeToConfigChange(ICoreServerAPI sapi)

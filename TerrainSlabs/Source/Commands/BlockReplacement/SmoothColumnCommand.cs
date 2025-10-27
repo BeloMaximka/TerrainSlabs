@@ -48,7 +48,7 @@ public static class SmoothColumnCommand
                     continue;
                 }
 
-                position.Y = bulkAccessor.GetChunkAtBlockPos(position).MapChunk.YMax;
+                position.Y = bulkAccessor.GetTerrainMapheightAt(position) + TerrainSlabsGlobalValues.YBufferForStructures;
                 while (position.Y > 10)
                 {
                     if (replacer.TryReplaceWithSlab(position))

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using Vintagestory.API.Common;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using Vintagestory.GameContent.Mechanics;
@@ -55,7 +54,7 @@ public static class SlabGroupHelper
     /// </summary>
     private static bool ShouldOffset(ICoreAPI api, Block block)
     {
-        if (block.SideSolid.OnSide(BlockFacing.DOWN) || block.SideSolid.OnSide(BlockFacing.UP))
+        if (block.SideSolid.Any)
         {
             return false;
         }
@@ -68,7 +67,14 @@ public static class SlabGroupHelper
             || block is ITreeGenerator
             || block is BlockFruitTreePart
             || block is BlockStalagSection
+            || block is BlockMicroBlock
+            || block is BlockFullCoating
         )
+        {
+            return false;
+        }
+
+        if (block.Code.Domain == "game" && block.Code.Path.StartsWith("lognarrow")) // TODO: Move to config
         {
             return false;
         }

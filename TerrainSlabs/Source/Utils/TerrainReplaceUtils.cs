@@ -2,6 +2,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
 namespace TerrainSlabs.Source.Utils;
 
@@ -50,6 +51,12 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         pos.Y--;
 
 
+        var decors = accessor.GetSubDecors(pos);
+        if (decors is not null && decors.Count != 0)
+        {
+            return false;
+        }
+
         if (terrainReplacementMap.TryGetValue(accessor.GetBlockId(pos), out int slabId) && HasExposedSide(pos))
         {
             accessor.SetBlock(slabId, pos);
@@ -61,14 +68,14 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private bool HasExposedSide(BlockPos pos)
     {
         pos.X++;
-        if (IsExposeBlock(pos, BlockFacing.indexEAST))
+        if (IsExposeBlock(pos, BlockFacing.indexWEST))
         {
             pos.X--;
             return true;
         }
         pos.X -= 2;
 
-        if (IsExposeBlock(pos, BlockFacing.indexWEST))
+        if (IsExposeBlock(pos, BlockFacing.indexEAST))
         {
             pos.X++;
             return true;
@@ -76,14 +83,14 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         pos.X++;
 
         pos.Z++;
-        if (IsExposeBlock(pos, BlockFacing.indexSOUTH))
+        if (IsExposeBlock(pos, BlockFacing.indexNORTH))
         {
             pos.Z--;
             return true;
         }
         pos.Z -= 2;
 
-        if (IsExposeBlock(pos, BlockFacing.indexNORTH))
+        if (IsExposeBlock(pos, BlockFacing.indexSOUTH))
         {
             pos.Z++;
             return true;
@@ -101,6 +108,6 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private bool IsExposeBlock(BlockPos pos, int faceIndex)
     {
         Block block = accessor.GetBlock(pos);
-        return !SlabGroupHelper.IsSlab(block.BlockId) && !block.SideSolid[faceIndex] && block.MatterState != EnumMatterState.Liquid;
+        return !SlabGroupHelper.IsSlab(block.BlockId) && !block.SideSolid[faceIndex] && block.MatterState != EnumMatterState.Liquid && block is not BlockMicroBlock;
     }
 }

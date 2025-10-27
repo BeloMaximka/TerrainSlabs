@@ -1,4 +1,6 @@
-﻿using TerrainSlabs.Source.Systems;
+﻿using System;
+using System.Diagnostics;
+using TerrainSlabs.Source.Systems;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
@@ -10,6 +12,9 @@ public static class WorldGenUtils
 {
     public static void RegisterSlabReplacementWorldGenEvent(ICoreServerAPI sapi)
     {
+#if DEBUG
+        RuntimeEnv.DebugOutOfRangeBlockAccess = true;
+#endif
         sapi.Event.GetWorldgenBlockAccessor(
             (provider) =>
             {
@@ -39,6 +44,7 @@ public static class WorldGenUtils
         return mode switch
         {
             TerrainSmoothMode.Surface => GetSmoothSurfaceDelegate(sapi, blockAccessor),
+            TerrainSmoothMode.Column => GetSmoothColumnDelegate(sapi, blockAccessor),
             _ => SkipWorldGenPass,
         };
     }
@@ -51,15 +57,20 @@ public static class WorldGenUtils
     private static ChunkColumnGenerationDelegate GetSmoothSurfaceDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
     {
         TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
-        return (request) => SmoothTerrainChunkSurface(request, blockAccessor, slabReplacer);
+        return (request) => SmoothTerrainChunkSurface(sapi, request, slabReplacer, blockAccessor);
     }
 
     private static void SmoothTerrainChunkSurface(
+        ICoreAPI api,
         IChunkColumnGenerateRequest request,
-        IBlockAccessor blockAccessor,
-        TerrainSlabReplacer slabReplacer
+        TerrainSlabReplacer slabReplacer,
+        IBlockAccessor blockAccessor
     )
     {
+#if DEBUG
+        Stopwatch sw = Stopwatch.StartNew();
+#endif
+
         BlockPos blockPos = new(Dimensions.NormalWorld);
         for (var x = 0; x < GlobalConstants.ChunkSize; x++)
         {
@@ -71,5 +82,61 @@ public static class WorldGenUtils
                 slabReplacer.TryReplaceWithSlab(blockPos);
             }
         }
+
+#if DEBUG
+        sw.Stop();
+        if (TerrainSlabsGlobalValues.DebugMode)
+        {
+            api.Logger.Debug(
+                "[terrainslabs] Took {0} ms to smooth a chunk surface",
+                Math.Round((double)sw.ElapsedTicks / Stopwatch.Frequency * 1000, 4)
+            );
+        }
+#endif
+    }
+
+    private static ChunkColumnGenerationDelegate GetSmoothColumnDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
+    {
+        TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
+        return (request) => SmoothTerrainChunkColumn(sapi, request, slabReplacer, blockAccessor);
+    }
+
+    private static void SmoothTerrainChunkColumn(
+        ICoreAPI api,
+        IChunkColumnGenerateRequest request,
+        TerrainSlabReplacer slabReplacer,
+        IBlockAccessor blockAccessor
+    )
+    {
+#if DEBUG
+        Stopwatch sw = Stopwatch.StartNew();
+#endif
+        BlockPos blockPos = new(Dimensions.NormalWorld);
+        for (var x = 0; x < GlobalConstants.ChunkSize; x++)
+        {
+            for (var z = 0; z < GlobalConstants.ChunkSize; z++)
+            {
+                blockPos.X = request.ChunkX * GlobalConstants.ChunkSize + x;
+                blockPos.Z = request.ChunkZ * GlobalConstants.ChunkSize + z;
+                blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos) + TerrainSlabsGlobalValues.YBufferForStructures;
+
+                while (blockPos.Y > 10)
+                {
+                    slabReplacer.TryReplaceWithSlab(blockPos);
+                    blockPos.Y--;
+                }
+            }
+        }
+
+#if DEBUG
+        sw.Stop();
+        if (TerrainSlabsGlobalValues.DebugMode)
+        {
+            api.Logger.Debug(
+                "[terrainslabs] Took {0} ms to smooth a chunk column",
+                Math.Round((double)sw.ElapsedTicks / Stopwatch.Frequency * 1000, 4)
+            );
+        }
+#endif
     }
 }
