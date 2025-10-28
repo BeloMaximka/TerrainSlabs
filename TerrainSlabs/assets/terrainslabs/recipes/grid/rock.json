@@ -1,0 +1,38 @@
+[
+  {
+    "ingredientPattern": "B,B",
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "game:rock-*",
+        "name": "rock"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "terrainslabs:rock-{rock}",
+      "quantity": 2
+    }
+  },
+  {
+    "ingredientPattern": "B",
+    "width": 1,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "terrainslabs:rock-*",
+        "name": "rock"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "game:rock-{rock}",
+      "quantity": 1
+    }
+  }
+]

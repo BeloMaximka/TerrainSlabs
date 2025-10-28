@@ -1,0 +1,38 @@
+[
+  {
+    "ingredientPattern": "B,B",
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "game:crackedrock-*",
+        "name": "rock"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "terrainslabs:crackedrock-{rock}",
+      "quantity": 2
+    }
+  },
+  {
+    "ingredientPattern": "B",
+    "width": 1,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "terrainslabs:crackedrock-*",
+        "name": "rock"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "game:crackedrock-{rock}",
+      "quantity": 1
+    }
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "ingredientPattern": "B,B",
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "game:muddygravel"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "terrainslabs:muddygravel",
+      "quantity": 2
+    }
+  },
+  {
+    "ingredientPattern": "B",
+    "width": 1,
+    "height": 1,
+    "shapeless": true,
+    "ingredients": {
+      "B": {
+        "type": "block",
+        "code": "terrainslabs:muddygravel"
+      }
+    },
+    "output": {
+      "type": "block",
+      "code": "game:muddygravel",
+      "quantity": 1
+    }
+  }
+]
