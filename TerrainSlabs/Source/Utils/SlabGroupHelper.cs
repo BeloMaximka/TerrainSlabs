@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using Vintagestory.GameContent.Mechanics;
 
@@ -47,6 +49,20 @@ public static class SlabGroupHelper
     public static bool ShouldOffset(Block block)
     {
         return shoulfOffset[block.BlockId];
+    }
+
+    public static double GetYOffsetValue(IBlockAccessor accessor, BlockPos pos)
+    {
+        return GetYOffsetFromBlocks(accessor.GetBlock(pos), accessor.GetBlockBelow(pos));
+    }
+
+    public static double GetYOffsetFromBlocks(Block block, Block blockBelow)
+    {
+        if (SlabGroupHelper.ShouldOffset(block.BlockId) && SlabGroupHelper.IsSlab(blockBelow.BlockId))
+        {
+            return -0.5d;
+        }
+        return 0;
     }
 
     /// <summary>

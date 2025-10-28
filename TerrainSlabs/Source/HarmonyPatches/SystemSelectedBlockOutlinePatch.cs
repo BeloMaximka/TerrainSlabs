@@ -4,8 +4,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
-using Vintagestory.API.MathTools;
-using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 
 namespace TerrainSlabs.Source.HarmonyPatches;
@@ -15,7 +13,7 @@ public static class SystemSelectedBlockOutlinePatch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(AABBIntersectionTestPatch), nameof(GetOffset));
+        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetValue));
 
         FieldInfo gameField = AccessTools.Field(typeof(SystemSelectedBlockOutline), "game");
         FieldInfo worldMapField = AccessTools.Field(gameField.FieldType, "WorldMap");
@@ -50,14 +48,5 @@ public static class SystemSelectedBlockOutlinePatch
                 new CodeInstruction(OpCodes.Add)
             )
             .InstructionEnumeration();
-    }
-
-    private static double GetOffset(IBlockAccessor accessor, BlockPos pos)
-    {
-        if (SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos)) && SlabGroupHelper.IsSlab(accessor.GetBlockBelow(pos).BlockId))
-        {
-            return -0.5d;
-        }
-        return 0d;
     }
 }

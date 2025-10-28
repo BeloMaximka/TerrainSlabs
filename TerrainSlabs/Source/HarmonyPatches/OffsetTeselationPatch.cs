@@ -28,7 +28,7 @@ public static class OffsetTeselationPatch
     )]
     public static IEnumerable<CodeInstruction> HandleOffsetBlocks(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(OffsetTeselationPatch), nameof(GetOffset));
+        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetFromBlocks));
 
         FieldInfo blockListField = AccessTools.Field(typeof(ChunkTesselator), "currentChunkBlocksExt");
         FieldInfo varsField = AccessTools.Field(typeof(ChunkTesselator), "vars");
@@ -61,15 +61,6 @@ public static class OffsetTeselationPatch
                 new CodeInstruction(OpCodes.Add)
             )
             .InstructionEnumeration();
-    }
-
-    private static double GetOffset(Block block, Block blockBelow)
-    {
-        if (SlabGroupHelper.ShouldOffset(block.BlockId) && SlabGroupHelper.IsSlab(blockBelow.BlockId))
-        {
-            return -0.5d;
-        }
-        return 0;
     }
 
     [HarmonyPrefix]

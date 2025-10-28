@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
-using Vintagestory.API.Common;
-using Vintagestory.API.MathTools;
-using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 
 namespace TerrainSlabs.Source.HarmonyPatches;
@@ -16,7 +13,7 @@ public static class BlockDamagePatch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(BlockDamagePatch), nameof(GetOffset));
+        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetValue));
 
         FieldInfo decalOriginField = AccessTools.Field(typeof(SystemRenderDecals), "decalOrigin");
         var blockDecalType = Type.GetType("Vintagestory.Client.NoObf.BlockDecal, VintagestoryLib");
@@ -51,14 +48,5 @@ public static class BlockDamagePatch
             .ThrowIfNotMatchForward("Could not find (float)decal.pos.Y - (float)this.decalOrigin.Y")
             .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc, localVariable.LocalIndex), new CodeInstruction(OpCodes.Add))
             .InstructionEnumeration();
-    }
-
-    private static double GetOffset(IBlockAccessor accessor, BlockPos pos)
-    {
-        if (SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos)) && SlabGroupHelper.IsSlab(accessor.GetBlockBelow(pos).BlockId))
-        {
-            return -0.5f;
-        }
-        return 0;
     }
 }
