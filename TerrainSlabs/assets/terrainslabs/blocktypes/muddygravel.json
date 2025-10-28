@@ -1,0 +1,61 @@
+{
+  "code": "muddygravel",
+  "class": "BlockTerrainSlab",
+  "behaviors": [
+    {
+      "name": "UnstableFallingSlab",
+      "properties": {
+        "fallingBlock": "game:muddygravel",
+        "fallSound": "game:effect/rockslide",
+        "dustIntensity": 0
+      }
+    }
+  ],
+  "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
+  "shape": { "base": "game:block/basic/slab/slab-down" },
+  "blockmaterial": "Soil",
+  "textures": {
+    "all": { "base": "game:block/soil/muddygravel*" }
+  },
+  "attributes": {
+    "mapColorCode": "land",
+    "preventsDecay": true
+  },
+  "replaceable": 400,
+  "fertility": 30,
+  "resistance": 2.2,
+  "faceCullMode": "FlushExceptTop",
+  "sideOpaque": {
+    "all": false,
+    "down": true
+  },
+  "sideSolid": {
+    "all": false,
+    "up": true,
+    "down": true
+  },
+  "emitSideAo": { "all": false },
+  "selectionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "collisionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "sounds": {
+    "place": "game:block/dirt",
+    "break": "game:block/dirt",
+    "hit": "game:block/dirt",
+    "walk": "game:walk/grass"
+  },
+  "drops": [
+    {
+      "type": "block",
+      "code": "game:muddygravel",
+      "quantity": { "avg": 1, "var": 0 }
+    }
+  ],
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
+    "rotation": { "x": -2, "y": 25, "z": -78 },
+    "scale": 0.4
+  }
+}

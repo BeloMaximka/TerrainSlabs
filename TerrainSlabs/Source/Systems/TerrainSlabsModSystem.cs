@@ -27,10 +27,12 @@ public class TerrainSlabsModSystem : ModSystem
 
     public override void Start(ICoreAPI api)
     {
-        api.RegisterBlockClass(nameof(BlockTerrainSlab), typeof(BlockTerrainSlab));
         api.RegisterBlockClass(nameof(BlockForestFloorSlab), typeof(BlockForestFloorSlab));
-        api.RegisterBlockClass(nameof(BlockSoilSlab), typeof(BlockTerrainSlab));
-        api.RegisterBlockClass(nameof(BlockSoilDepositSlab), typeof(BlockTerrainSlab));
+        api.RegisterBlockClass(nameof(BlockGlacierIceSlab), typeof(BlockGlacierIceSlab));
+        api.RegisterBlockClass(nameof(BlockSnowSlab), typeof(BlockSnowSlab));
+        api.RegisterBlockClass(nameof(BlockSoilDepositSlab), typeof(BlockSoilDepositSlab));
+        api.RegisterBlockClass(nameof(BlockSoilSlab), typeof(BlockSoilSlab));
+        api.RegisterBlockClass(nameof(BlockTerrainSlab), typeof(BlockTerrainSlab));
 
         api.RegisterBlockBehaviorClass("RestrictTopAttachment", typeof(BlockBehaviorRestrictTopAttachment));
         api.RegisterBlockBehaviorClass("UnstableFallingSlab", typeof(BlockBehaviorUnstableFallingSlab));

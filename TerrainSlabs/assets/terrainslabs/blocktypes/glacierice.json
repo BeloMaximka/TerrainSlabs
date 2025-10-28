@@ -1,0 +1,57 @@
+{
+  "code": "glacierice",
+  "class": "BlockGlacierIceSlab",
+  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "shape": { "base": "game:block/basic/slab/slab-down" },
+  "attributes": {
+    "canChisel": true
+  },
+  "renderpass": "transparent",
+  "creativeinventory": { "general": ["*"], "terrain": ["*"] },
+  "blockmaterial": "Ice",
+  "faceCullMode": "Callback",
+  "replaceable": 950,
+  "lightAbsorption": 0,
+  "vertexFlags": {
+    "zOffset": 4,
+    "glowLevel": 16
+  },
+  "textures": {
+    "all": { "base": "game:block/liquid/ice/glacier*" }
+  },
+  "resistance": 0.5,
+  "sideOpaque": {
+    "all": false
+  },
+  "sideSolid": {
+    "all": false,
+    "up": true,
+    "down": true
+  },
+  "emitSideAo": { "all": false },
+  "selectionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "collisionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "sounds": {
+    "walk": "game:walk/deepsnow",
+    "place": "game:block/snow",
+    "break": "game:block/snow",
+    "hit": "game:block/snow"
+  },
+  "drops": [
+    {
+      "type": "block",
+      "code": "game:glacierice",
+      "quantity": { "avg": 1, "var": 0 }
+    }
+  ],
+  "dragMultiplier": 0.02,
+  "materialDensity": 800,
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
+    "rotation": { "x": -2, "y": 25, "z": -78 },
+    "scale": 0.4
+  }
+}

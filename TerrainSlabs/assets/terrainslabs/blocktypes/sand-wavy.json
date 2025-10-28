@@ -1,11 +1,10 @@
 {
-  "code": "sand",
+  "code": "sandwavy",
   "class": "BlockTerrainSlab",
   "behaviors": [
     {
       "name": "UnstableFallingSlab",
       "properties": {
-        "fallingBlock": "game:sand-{rock}",
         "fallSound": "game:effect/rockslide",
         "dustIntensity": 1,
         "fallSidewaysChance": 0.75
@@ -13,29 +12,40 @@
     },
     { "name": "RestrictTopAttachment" }
   ],
-  "variantgroups": [{ "loadFromProperties": "block/rock", "code": "rock" }],
-  "creativeinventory": { "general": ["*"], "terrain": ["*"] },
-  "shape": {
-    "base": "game:block/basic/slab/slab-down",
-    "alternates": [
-      { "base": "game:block/basic/slab/slab-down", "rotateY": 90 },
-      { "base": "game:block/basic/slab/slab-down", "rotateY": 180 },
-      { "base": "game:block/basic/slab/slab-down", "rotateY": 270 }
-    ]
-  },
-  "drawtype": "Json",
-  "blockmaterial": "Sand",
-  "textures": {
-    "all": { "base": "game:block/stone/sand/{rock}" }
-  },
+  "variantgroups": [
+    {
+      "loadFromProperties": "block/rock",
+      "code": "rock"
+    }
+  ],
   "attributes": {
+    "handbook": { "exclude": true },
     "mapColorCode": "desert",
-    "pannable": true,
-    "pannedBlock": "sand-{rock}-3",
     "preventsDecay": true,
     "allowUnstablePlacement": true,
-    "handbook": { "groupBy": ["sand-*"] }
+    "pannable": true,
+    "pannedBlock": "game:sand-{rock}-3"
   },
+  "shape": { "base": "game:block/basic/slab/slab-down" },
+  "textures": {
+    "all": {
+      "base": "game:block/stone/sand/wavy/{rock}1",
+      "tiles": [{ "base": "game:block/sandwet/{rock}*" }],
+      "tilesWidth": 4
+    }
+  },
+  "creativeinventory": {
+    "general": ["*"],
+    "terrain": ["*"]
+  },
+  "drops": [
+    {
+      "type": "block",
+      "code": "game:sand-{rock}",
+      "quantity": { "avg": 1, "var": 0 }
+    }
+  ],
+  "blockmaterial": "Sand",
   "replaceable": 600,
   "fertility": 10,
   "resistance": 1.8,
@@ -58,19 +68,20 @@
     "hit": "game:block/sand",
     "walk": "game:walk/sand"
   },
-  "drops": [
-    {
-      "type": "block",
-      "code": "game:sand-{rock}",
-      "quantity": { "avg": 1, "var": 0 }
-    }
-  ],
   "heldTpIdleAnimation": "holdbothhandslarge",
   "heldRightReadyAnimation": "heldblockready",
   "heldTpUseAnimation": "twohandplaceblock",
   "tpHandTransform": {
-    "translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
-    "rotation": { "x": -2, "y": 25, "z": -78 },
+    "translation": {
+      "x": -1.23,
+      "y": -0.91,
+      "z": -0.8
+    },
+    "rotation": {
+      "x": -2,
+      "y": 25,
+      "z": -78
+    },
     "scale": 0.4
   }
 }

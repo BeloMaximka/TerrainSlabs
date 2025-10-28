@@ -50,7 +50,6 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         }
         pos.Y--;
 
-
         var decors = accessor.GetSubDecors(pos);
         if (decors is not null && decors.Count != 0)
         {
@@ -68,14 +67,14 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
     private bool HasExposedSide(BlockPos pos)
     {
         pos.X++;
-        if (IsExposeBlock(pos, BlockFacing.indexWEST))
+        if (TryHandleSideBlock(pos, BlockFacing.indexWEST))
         {
             pos.X--;
             return true;
         }
         pos.X -= 2;
 
-        if (IsExposeBlock(pos, BlockFacing.indexEAST))
+        if (TryHandleSideBlock(pos, BlockFacing.indexEAST))
         {
             pos.X++;
             return true;
@@ -83,14 +82,14 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         pos.X++;
 
         pos.Z++;
-        if (IsExposeBlock(pos, BlockFacing.indexNORTH))
+        if (TryHandleSideBlock(pos, BlockFacing.indexNORTH))
         {
             pos.Z--;
             return true;
         }
         pos.Z -= 2;
 
-        if (IsExposeBlock(pos, BlockFacing.indexSOUTH))
+        if (TryHandleSideBlock(pos, BlockFacing.indexSOUTH))
         {
             pos.Z++;
             return true;
@@ -105,9 +104,34 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
         return SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos));
     }
 
-    private bool IsExposeBlock(BlockPos pos, int faceIndex)
+    /// <summary>
+    /// Checks if side is "Exposed" enough to place a slab
+    /// Also makes beaches if it finds water
+    /// TODO: move water-related logic out and name it better
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="faceIndex"></param>
+    /// <returns></returns>
+    private bool TryHandleSideBlock(BlockPos pos, int faceIndex)
     {
-        Block block = accessor.GetBlock(pos);
-        return !SlabGroupHelper.IsSlab(block.BlockId) && !block.SideSolid[faceIndex] && block.MatterState != EnumMatterState.Liquid && block is not BlockMicroBlock;
+        Block solidBlock = accessor.GetBlock(pos, BlockLayersAccess.Solid);
+        Block liquidBlock = accessor.GetBlock(pos, BlockLayersAccess.Fluid);
+
+        if ( // beach generation
+            liquidBlock.BlockId != 0
+            && SlabGroupHelper.ShouldOffset(solidBlock.BlockId)
+            && accessor.GetBlockAbove(pos, 1, BlockLayersAccess.Solid).BlockId == 0
+            && terrainReplacementMap.TryGetValue(accessor.GetBlockBelow(pos).BlockId, out int slabId)
+        )
+        {
+            accessor.SetBlock(solidBlock.BlockId, pos.Up());
+            accessor.SetBlock(slabId, pos.Down());
+            return false;
+        }
+
+        return !SlabGroupHelper.IsSlab(solidBlock.BlockId)
+            && !solidBlock.SideSolid[faceIndex]
+            && liquidBlock.BlockId == 0
+            && solidBlock is not BlockMicroBlock;
     }
 }

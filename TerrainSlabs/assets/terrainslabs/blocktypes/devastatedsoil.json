@@ -1,0 +1,86 @@
+{
+  "code": "devastatedsoil",
+  "class": "BlockTerrainSlab",
+  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
+  "attributes": {
+    "canChisel": false,
+    "mapColorCode": "devastation"
+  },
+  "shape": {
+    "base": "game:block/basic/slab/slab-down",
+    "alternates": [
+      { "base": "game:block/basic/slab/slab-down", "rotateY": 90 },
+      { "base": "game:block/basic/slab/slab-down", "rotateY": 180 },
+      { "base": "game:block/basic/slab/slab-down", "rotateY": 270 }
+    ]
+  },
+  "renderpass": "Opaque",
+  "blockmaterial": "Other",
+  "variantgroups": [
+    {
+      "code": "coverage",
+      "states": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    }
+  ],
+  "texturesByType": {
+    "*-0": {
+      "all": { "base": "game:block/devastation/soil/normal*" }
+    },
+    "*": {
+      "up": {
+        "base": "game:block/devastation/soil/normal1",
+        "overlays": ["game:block/devastation/mesh{coverage}"],
+        "alternates": [
+          {
+            "base": "game:block/devastation/soil/normal2",
+            "overlays": ["game:block/devastation/mesh{coverage}"],
+            "rotation": 180
+          },
+          {
+            "base": "game:block/devastation/soil/normal3",
+            "overlays": ["game:block/devastation/mesh{coverage}"],
+            "rotation": 90
+          },
+          {
+            "base": "game:block/devastation/soil/normal4",
+            "overlays": ["game:block/devastation/mesh{coverage}"],
+            "rotation": 270
+          }
+        ]
+      },
+      "all": { "base": "game:block/devastation/soil/normal*" }
+    }
+  },
+  "requiredMiningTier": 99,
+  "replaceable": 400,
+  "resistance": 1.8,
+  "faceCullMode": "FlushExceptTop",
+  "sideOpaque": {
+    "all": false,
+    "down": true
+  },
+  "sideSolid": {
+    "all": false,
+    "up": true,
+    "down": true
+  },
+  "emitSideAo": { "all": false },
+  "selectionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "collisionbox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.5, "z2": 1 },
+  "sounds": {
+    "place": "game:block/dirt",
+    "break": "game:block/dirt",
+    "hit": "game:block/dirt",
+    "walk": "game:walk/grass"
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "drops": [],
+  "tpHandTransform": {
+    "translation": { "x": -1.23, "y": -0.91, "z": -0.8 },
+    "rotation": { "x": -2, "y": 25, "z": -78 },
+    "scale": 0.4
+  }
+}
