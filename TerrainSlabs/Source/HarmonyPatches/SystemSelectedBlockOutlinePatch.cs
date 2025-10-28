@@ -1,72 +1,63 @@
 ﻿using HarmonyLib;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 
 namespace TerrainSlabs.Source.HarmonyPatches;
 
-[HarmonyPatch]
+[HarmonyPatch(typeof(SystemSelectedBlockOutline), nameof(SystemSelectedBlockOutline.OnRenderFrame3DPost))]
 public static class SystemSelectedBlockOutlinePatch
 {
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(SystemSelectedBlockOutline), nameof(SystemSelectedBlockOutline.OnRenderFrame3DPost))]
-    public static bool OffsetSelectionBoxes(ClientMain ___game, WireframeCube ___cubeWireFrame)
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        if (!ClientSettings.SelectedBlockOutline)
-            return false;
-        float wireframethickness = ClientSettings.Wireframethickness;
-        if (!___game.ShouldRender2DOverlays || ___game.BlockSelection == null)
-            return false;
-        BlockPos pos = ___game.BlockSelection.Position;
-        if (___game.BlockSelection.DidOffset)
-            pos = pos.AddCopy(___game.BlockSelection.Face.Opposite);
+        MethodInfo method = AccessTools.Method(typeof(AABBIntersectionTestPatch), nameof(GetOffset));
 
-        // Our code
-        Block blockUnder = ___game.WorldMap.RelaxedBlockAccess.GetBlock(pos.Down());
-        pos.Up();
-        if (!SlabGroupHelper.IsSlab(blockUnder.BlockId))
-        {
-            return true;
-        }
-        Block solidBlock = ___game.WorldMap.RelaxedBlockAccess.GetBlock(pos);
-        if (!SlabGroupHelper.ShouldOffset(solidBlock))
-        {
-            return true;
-        }
-        // End
-        Block block = ___game.WorldMap.RelaxedBlockAccess.GetBlock(pos, 2);
-        Cuboidf[] cuboidfArray;
-        if (block.SideSolid.Any)
-        {
-            cuboidfArray = block.GetSelectionBoxes(___game.WorldMap.RelaxedBlockAccess, pos);
-        }
-        else
-        {
-            block = ___game.WorldMap.RelaxedBlockAccess.GetBlock(pos);
-            cuboidfArray = ___game.GetBlockIntersectionBoxes(pos);
-        }
-        if (cuboidfArray == null || cuboidfArray.Length == 0)
-            return false;
-        bool flag = block.DoParticalSelection((IWorldAccessor)___game, pos);
-        Vec4f selectionColor = block.GetSelectionColor((ICoreClientAPI)___game.api, pos);
-        double num1 = (double)pos.X + ___game.Player.Entity.CameraPosOffset.X;
-        double num2 = (double)pos.InternalY + ___game.Player.Entity.CameraPosOffset.Y - 0.5f; // our change
-        double num3 = (double)pos.Z + ___game.Player.Entity.CameraPosOffset.Z;
-        for (int index = 0; index < cuboidfArray.Length; ++index)
-        {
-            if (flag)
-                index = ___game.BlockSelection.SelectionBoxIndex;
-            if (cuboidfArray.Length <= index)
-                break;
-            Cuboidf cuboidf = cuboidfArray[index];
-            // I removed check for DecorSelectionBox, let's see what happens
-            ___cubeWireFrame.Render((ICoreClientAPI)___game.api, num1 + (double)cuboidf.X1, num2 + (double)cuboidf.Y1, num3 + (double)cuboidf.Z1, cuboidf.XSize, cuboidf.YSize, cuboidf.ZSize, 1.6f * wireframethickness, selectionColor);
-            if (flag)
-                break;
-        }
+        FieldInfo gameField = AccessTools.Field(typeof(SystemSelectedBlockOutline), "game");
+        FieldInfo worldMapField = AccessTools.Field(gameField.FieldType, "WorldMap");
+        FieldInfo relaxedField = AccessTools.Field(worldMapField.FieldType, "RelaxedBlockAccess");
 
-        return false;
+        MethodInfo blockSelectionGetter = AccessTools.PropertyGetter(gameField.FieldType, "BlockSelection");
+        FieldInfo positionGetter = AccessTools.Field(blockSelectionGetter.ReturnType, "Position");
+
+        MethodInfo entityGetter = AccessTools.PropertyGetter(typeof(IPlayer), "Entity");
+        FieldInfo cameraField = AccessTools.Field(entityGetter.ReturnType, "CameraPosOffset");
+        FieldInfo yField = AccessTools.Field(cameraField.FieldType, "Y");
+
+        return new CodeMatcher(instructions, generator)
+            .MatchEndForward(
+                new CodeMatch(OpCodes.Callvirt, entityGetter),
+                new CodeMatch(OpCodes.Ldfld, cameraField),
+                new CodeMatch(OpCodes.Ldfld, yField),
+                new CodeMatch(OpCodes.Add)
+            )
+            .ThrowIfNotMatchForward("Could not find this.game.Player.Entity.CameraPosOffset.Y")
+            .Advance(1)
+            .InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldfld, gameField),
+                new CodeInstruction(OpCodes.Ldfld, worldMapField),
+                new CodeInstruction(OpCodes.Ldfld, relaxedField),
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldfld, gameField),
+                new CodeInstruction(OpCodes.Callvirt, blockSelectionGetter),
+                new CodeInstruction(OpCodes.Ldfld, positionGetter),
+                new CodeInstruction(OpCodes.Call, method),
+                new CodeInstruction(OpCodes.Add)
+            )
+            .InstructionEnumeration();
+    }
+
+    private static double GetOffset(IBlockAccessor accessor, BlockPos pos)
+    {
+        if (SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos)) && SlabGroupHelper.IsSlab(accessor.GetBlockBelow(pos).BlockId))
+        {
+            return -0.5d;
+        }
+        return 0d;
     }
 }
