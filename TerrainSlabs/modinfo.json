@@ -1,13 +1,13 @@
 {
     "type": "code",
     "modid": "terrainslabs",
-    "name": "TerrainSlabs",
+    "name": "Terrain Slabs",
     "authors": [
-        "Unknown"
+        "BeloMaximka"
     ],
-    "description": "To be added",
-    "version": "1.0.0",
+    "description": "This mod slabs",
+    "version": "0.1.0",
     "dependencies": {
-        "game": ""
+        "game": "1.21.5"
     }
 }
