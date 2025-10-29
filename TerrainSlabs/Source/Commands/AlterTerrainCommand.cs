@@ -80,7 +80,7 @@ public static class AlterTerrainCommand
         position.Z -= range / 2;
         position.X -= range / 2;
 
-        int buffer = columnMode ? TerrainSlabsGlobalValues.YBufferForStructures : 0;
+        int buffer = columnMode ? TerrainSlabsGlobals.YBufferForStructures : 0;
         List<BlockPos> changedBlockPos = new(highlightBlocks ? range * range : 0);
         int replacedCount = 0;
         for (int x = 0; x < range; x++)

@@ -41,7 +41,7 @@ public class ServerSettings
     }
 }
 
-internal class TerrainSlabsConfigModSystem : ModSystem
+internal class ConfigSystem : ModSystem
 {
     private const string fileName = "terrainslabs-server.json";
 
@@ -80,7 +80,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
             : ServerSettings.OffsetBlacklist.Remove(wildcard);
         SaveConfig(sapi);
 
-        sapi.Network.GetChannel(TerrainSlabsGlobalValues.OffsetBlackListNetworkChannel)
+        sapi.Network.GetChannel(TerrainSlabsGlobals.OffsetBlackListNetworkChannel)
             .BroadcastPacket(new UpdateBlocklistMessage() { AddMode = addMode, Wildcard = wildcard });
 
         return count;
@@ -89,7 +89,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
     public void SaveConfig(ICoreServerAPI api)
     {
         api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
-        api.World.Config.SetString(TerrainSlabsGlobalValues.WorldConfigName, string.Join('|', ServerSettings.OffsetBlacklist));
+        api.World.Config.SetString(TerrainSlabsGlobals.WorldConfigName, string.Join('|', ServerSettings.OffsetBlacklist));
     }
 
     private void LoadConfig(ICoreServerAPI api)
@@ -108,7 +108,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
             Mod.Logger.Warning("Could not load config from {0}, loading default settings instead.", fileName);
             Mod.Logger.Warning(e);
         }
-        TerrainSlabsGlobalValues.DebugMode = ServerSettings.DebugMode;
+        TerrainSlabsGlobals.DebugMode = ServerSettings.DebugMode;
     }
 
     private void SubscribeToConfigChange(ICoreServerAPI sapi)

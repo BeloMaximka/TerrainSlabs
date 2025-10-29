@@ -22,7 +22,7 @@ public static class WorldGenUtils
                 var genHandlers = sapi.Event.GetRegisteredWorldGenHandlers("standard").OnChunkColumnGen[(int)EnumWorldGenPass.PreDone];
                 var accessor = provider.GetBlockAccessor(true);
 
-                var settings = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>().ServerSettings;
+                var settings = sapi.ModLoader.GetModSystem<ConfigSystem>().ServerSettings;
                 var generationDelegate = GetGenerationDelegate(settings.SmoothMode, sapi, accessor);
                 genHandlers.Add(generationDelegate);
 
@@ -86,7 +86,7 @@ public static class WorldGenUtils
 
 #if DEBUG
         sw.Stop();
-        if (TerrainSlabsGlobalValues.DebugMode)
+        if (TerrainSlabsGlobals.DebugMode)
         {
             api.Logger.Debug(
                 "[terrainslabs] Took {0} ms to smooth a chunk surface",
@@ -119,7 +119,7 @@ public static class WorldGenUtils
             {
                 blockPos.X = request.ChunkX * GlobalConstants.ChunkSize + x;
                 blockPos.Z = request.ChunkZ * GlobalConstants.ChunkSize + z;
-                blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos) + TerrainSlabsGlobalValues.YBufferForStructures;
+                blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos) + TerrainSlabsGlobals.YBufferForStructures;
 
                 while (blockPos.Y > 10)
                 {
@@ -131,7 +131,7 @@ public static class WorldGenUtils
 
 #if DEBUG
         sw.Stop();
-        if (TerrainSlabsGlobalValues.DebugMode)
+        if (TerrainSlabsGlobals.DebugMode)
         {
             api.Logger.Debug(
                 "[terrainslabs] Took {0} ms to smooth a chunk column",

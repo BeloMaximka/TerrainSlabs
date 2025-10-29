@@ -10,7 +10,7 @@ using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source.Systems;
 
-public class TerrainSlabsModSystem : ModSystem
+public class MainSystem : ModSystem
 {
     private Harmony harmonyInstance = null!;
 
@@ -46,7 +46,7 @@ public class TerrainSlabsModSystem : ModSystem
 
         if (api is ICoreClientAPI capi)
         {
-            string[] blackList = capi.World.Config.GetString(TerrainSlabsGlobalValues.WorldConfigName, string.Empty).Split('|');
+            string[] blackList = capi.World.Config.GetString(TerrainSlabsGlobals.WorldConfigName, string.Empty).Split('|');
             SlabHelper.InitBlacklist(capi, blackList);
         }
     }

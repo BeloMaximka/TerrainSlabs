@@ -13,14 +13,14 @@ public class NetworkSystem : ModSystem
     public override void StartClientSide(ICoreClientAPI api)
     {
         capi = api;
-        api.Network.RegisterChannel(TerrainSlabsGlobalValues.OffsetBlackListNetworkChannel)
+        api.Network.RegisterChannel(TerrainSlabsGlobals.OffsetBlackListNetworkChannel)
             .RegisterMessageType(typeof(UpdateBlocklistMessage))
             .SetMessageHandler<UpdateBlocklistMessage>(OnUpdateBlacklistRequest);
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
-        api.Network.RegisterChannel(TerrainSlabsGlobalValues.OffsetBlackListNetworkChannel)
+        api.Network.RegisterChannel(TerrainSlabsGlobals.OffsetBlackListNetworkChannel)
             .RegisterMessageType(typeof(UpdateBlocklistMessage));
     }
 

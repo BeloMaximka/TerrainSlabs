@@ -25,7 +25,7 @@ public static class ChangeGenerationModeCommand
         {
             return TextCommandResult.Error($"Must be called on server");
         }
-        TerrainSlabsConfigModSystem configSystem = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>();
+        ConfigSystem configSystem = sapi.ModLoader.GetModSystem<ConfigSystem>();
 
         if (!TerrainSmoothMode.TryParse((string)args.Parsers[0].GetValue(), out TerrainSmoothMode value))
         {

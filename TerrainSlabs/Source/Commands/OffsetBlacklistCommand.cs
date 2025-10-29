@@ -42,7 +42,7 @@ public static class OffsetBlacklistCommand
             return TextCommandResult.Error($"Should be called on server");
         }
         string wildcard = (string)args.Parsers[0].GetValue();
-        var configSystem = sapi.ModLoader.GetModSystem<TerrainSlabsConfigModSystem>();
+        var configSystem = sapi.ModLoader.GetModSystem<ConfigSystem>();
 
         int count = configSystem.UpdateBlacklist(sapi, wildcard, addMode);
         return TextCommandResult.Success($"Updated {count} blocks.");
