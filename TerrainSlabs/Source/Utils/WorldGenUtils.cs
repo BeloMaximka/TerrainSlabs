@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using TerrainSlabs.Source.Systems;
+using TerrainSlabs.Source.Utils.WorldGen;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
@@ -56,14 +57,14 @@ public static class WorldGenUtils
 
     private static ChunkColumnGenerationDelegate GetSmoothSurfaceDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
     {
-        TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
-        return (request) => SmoothTerrainChunkSurface(sapi, request, slabReplacer, blockAccessor);
+        TerrainSmoother smoother = new(sapi, blockAccessor);
+        return (request) => SmoothTerrainChunkSurface(sapi, request, smoother, blockAccessor);
     }
 
     private static void SmoothTerrainChunkSurface(
         ICoreAPI api,
         IChunkColumnGenerateRequest request,
-        TerrainSlabReplacer slabReplacer,
+        TerrainSmoother smoother,
         IBlockAccessor blockAccessor
     )
     {
@@ -79,7 +80,7 @@ public static class WorldGenUtils
                 blockPos.X = request.ChunkX * GlobalConstants.ChunkSize + x;
                 blockPos.Z = request.ChunkZ * GlobalConstants.ChunkSize + z;
                 blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos);
-                slabReplacer.TryReplaceWithSlab(blockPos);
+                smoother.TryReplace(blockPos);
             }
         }
 
@@ -97,14 +98,14 @@ public static class WorldGenUtils
 
     private static ChunkColumnGenerationDelegate GetSmoothColumnDelegate(ICoreServerAPI sapi, IBlockAccessor blockAccessor)
     {
-        TerrainSlabReplacer slabReplacer = new(sapi, blockAccessor);
-        return (request) => SmoothTerrainChunkColumn(sapi, request, slabReplacer, blockAccessor);
+        TerrainSmoother smoother = new(sapi, blockAccessor);
+        return (request) => SmoothTerrainChunkColumn(sapi, request, smoother, blockAccessor);
     }
 
     private static void SmoothTerrainChunkColumn(
         ICoreAPI api,
         IChunkColumnGenerateRequest request,
-        TerrainSlabReplacer slabReplacer,
+        TerrainSmoother smoother,
         IBlockAccessor blockAccessor
     )
     {
@@ -122,7 +123,7 @@ public static class WorldGenUtils
 
                 while (blockPos.Y > 10)
                 {
-                    slabReplacer.TryReplaceWithSlab(blockPos);
+                    smoother.TryReplace(blockPos);
                     blockPos.Y--;
                 }
             }

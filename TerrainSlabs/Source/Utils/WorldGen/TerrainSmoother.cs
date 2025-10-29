@@ -4,43 +4,13 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 
-namespace TerrainSlabs.Source.Utils;
+namespace TerrainSlabs.Source.Utils.WorldGen;
 
-public static class TerrainReplaceUtils
+public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainReplacer
 {
-    public static Dictionary<int, int> GetTerrainReplacementMap(ICoreAPI api) => GetBlockToReplaceMap(api, "TSblocksToReplace");
+    private readonly Dictionary<int, int> terrainReplacementMap = GetTerrainReplacementMap(api);
 
-    private static Dictionary<int, int> GetBlockToReplaceMap(ICoreAPI api, string cacheKey)
-    {
-        return ObjectCacheUtil.GetOrCreate(
-            api,
-            cacheKey,
-            () =>
-            {
-                string wildcard = $"terrainslabs:*";
-                Dictionary<int, int> result = [];
-                foreach (var resultBlock in api.World.SearchBlocks(wildcard))
-                {
-                    AssetLocation originalCode = new("game", resultBlock.Code.Path);
-                    Block? originalBlock = api.World.GetBlock(originalCode);
-                    if (originalBlock is null)
-                    {
-                        api.Logger.Warning("Unable to find slab block alternative with code {0}", originalCode);
-                        continue;
-                    }
-                    result.Add(originalBlock.Id, resultBlock.Id);
-                }
-                return result;
-            }
-        );
-    }
-}
-
-public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
-{
-    private readonly Dictionary<int, int> terrainReplacementMap = TerrainReplaceUtils.GetTerrainReplacementMap(api);
-
-    public bool TryReplaceWithSlab(BlockPos pos)
+    public bool TryReplace(BlockPos pos)
     {
         pos.Y++;
         if (!ShouldOffset(pos))
@@ -133,5 +103,30 @@ public class TerrainSlabReplacer(ICoreAPI api, IBlockAccessor accessor)
             && !solidBlock.SideSolid[faceIndex]
             && liquidBlock.BlockId == 0
             && solidBlock is not BlockMicroBlock;
+    }
+
+    private static Dictionary<int, int> GetTerrainReplacementMap(ICoreAPI api)
+    {
+        return ObjectCacheUtil.GetOrCreate(
+            api,
+            "TSblocksToSmooth",
+            () =>
+            {
+                string wildcard = $"terrainslabs:*";
+                Dictionary<int, int> result = [];
+                foreach (var resultBlock in api.World.SearchBlocks(wildcard))
+                {
+                    AssetLocation originalCode = new("game", resultBlock.Code.Path);
+                    Block? originalBlock = api.World.GetBlock(originalCode);
+                    if (originalBlock is null)
+                    {
+                        api.Logger.Warning("Unable to find slab block alternative with code {0}", originalCode);
+                        continue;
+                    }
+                    result.Add(originalBlock.Id, resultBlock.Id);
+                }
+                return result;
+            }
+        );
     }
 }
