@@ -41,7 +41,7 @@ public class TerrainSlabsModSystem : ModSystem
 
     public override void AssetsFinalize(ICoreAPI api)
     {
-        SlabGroupHelper.InitFlags(api);
+        SlabHelper.InitFlags(api);
     }
 
     public override void StartServerSide(ICoreServerAPI api)

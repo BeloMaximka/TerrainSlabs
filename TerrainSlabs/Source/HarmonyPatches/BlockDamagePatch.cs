@@ -13,7 +13,7 @@ public static class BlockDamagePatch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetValue));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetValue));
 
         FieldInfo decalOriginField = AccessTools.Field(typeof(SystemRenderDecals), "decalOrigin");
         var blockDecalType = Type.GetType("Vintagestory.Client.NoObf.BlockDecal, VintagestoryLib");

@@ -69,7 +69,7 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetUvMapOffset(TextureAtlasPosition atlas, int slabId, int flags)
     {
-        if (SlabGroupHelper.IsSlab(slabId))
+        if (SlabHelper.IsSlab(slabId))
         {
             bool isTop = (flags & BlockFacing.ALLFACES[BlockFacing.indexUP].NormalPackedFlags) != 0;
             return isTop ? atlas.y2 : atlas.y2 - (atlas.y2 - atlas.y1) / 2;
@@ -79,6 +79,6 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetYMutiplier(int slabId)
     {
-        return SlabGroupHelper.IsSlab(slabId) ? 0.5f : 1f;
+        return SlabHelper.IsSlab(slabId) ? 0.5f : 1f;
     }
 }

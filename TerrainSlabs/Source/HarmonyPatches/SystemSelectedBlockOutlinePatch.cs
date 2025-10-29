@@ -13,7 +13,7 @@ public static class SystemSelectedBlockOutlinePatch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetValue));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetValue));
 
         FieldInfo gameField = AccessTools.Field(typeof(SystemSelectedBlockOutline), "game");
         FieldInfo worldMapField = AccessTools.Field(gameField.FieldType, "WorldMap");

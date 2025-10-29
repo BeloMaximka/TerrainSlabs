@@ -14,7 +14,7 @@ public static class AABBIntersectionTestPatch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabGroupHelper), nameof(SlabGroupHelper.GetYOffsetValue));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetValue));
         FieldInfo bsTesterField = AccessTools.Field(typeof(AABBIntersectionTest), "bsTester");
         MethodInfo accessorGetter = AccessTools.PropertyGetter(typeof(IWorldIntersectionSupplier), "blockAccessor");
         MethodInfo internalYGetter = AccessTools.PropertyGetter(typeof(BlockPos), nameof(BlockPos.InternalY));

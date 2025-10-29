@@ -71,7 +71,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
 
     private bool ShouldOffset(BlockPos pos)
     {
-        return SlabGroupHelper.ShouldOffset(accessor.GetBlockId(pos));
+        return SlabHelper.ShouldOffset(accessor.GetBlockId(pos));
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
 
         if ( // beach generation
             liquidBlock.BlockId != 0
-            && SlabGroupHelper.ShouldOffset(solidBlock.BlockId)
+            && SlabHelper.ShouldOffset(solidBlock.BlockId)
             && accessor.GetBlockAbove(pos, 1, BlockLayersAccess.Solid).BlockId == 0
             && terrainReplacementMap.TryGetValue(accessor.GetBlockBelow(pos).BlockId, out int slabId)
         )
@@ -99,7 +99,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
             return false;
         }
 
-        return !SlabGroupHelper.IsSlab(solidBlock.BlockId)
+        return !SlabHelper.IsSlab(solidBlock.BlockId)
             && !solidBlock.SideSolid[faceIndex]
             && liquidBlock.BlockId == 0
             && solidBlock is not BlockMicroBlock;

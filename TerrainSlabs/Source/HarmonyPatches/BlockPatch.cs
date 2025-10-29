@@ -21,7 +21,7 @@ public static class BlockPatch
         }
 
         pos.Down();
-        if (SlabGroupHelper.IsSlab(blockAccessor.GetBlock(pos).BlockId) && SlabGroupHelper.ShouldOffset(__instance))
+        if (SlabHelper.IsSlab(blockAccessor.GetBlock(pos).BlockId) && SlabHelper.ShouldOffset(__instance))
         {
             __result = OffsetCache.GetValue(
                 __result,

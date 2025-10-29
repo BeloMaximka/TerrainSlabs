@@ -17,6 +17,6 @@ public class BlockBehaviorRestrictTopAttachment(Block block) : BlockBehavior(blo
     {
         handling = EnumHandling.PreventSubsequent;
 
-        return SlabGroupHelper.ShouldOffset(block.BlockId);
+        return SlabHelper.ShouldOffset(block.BlockId);
     }
 }

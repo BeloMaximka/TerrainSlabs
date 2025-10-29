@@ -9,7 +9,7 @@ using Vintagestory.GameContent.Mechanics;
 
 namespace TerrainSlabs.Source.Utils;
 
-public static class SlabGroupHelper
+public static class SlabHelper
 {
     private static BitArray isSlab = null!;
     static BitArray shoulfOffset = null!;
@@ -58,7 +58,7 @@ public static class SlabGroupHelper
 
     public static double GetYOffsetFromBlocks(Block block, Block blockBelow)
     {
-        if (SlabGroupHelper.ShouldOffset(block.BlockId) && SlabGroupHelper.IsSlab(blockBelow.BlockId))
+        if (SlabHelper.ShouldOffset(block.BlockId) && SlabHelper.IsSlab(blockBelow.BlockId))
         {
             return -0.5d;
         }

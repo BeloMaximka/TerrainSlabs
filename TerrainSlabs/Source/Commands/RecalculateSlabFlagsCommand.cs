@@ -21,7 +21,7 @@ public static class RecalculateSlabFlagsCommand
 
     private static TextCommandResult OnHandle(TextCommandCallingArgs args)
     {
-        SlabGroupHelper.InitFlags(args.Caller.Entity.Api);
+        SlabHelper.InitFlags(args.Caller.Entity.Api);
         return TextCommandResult.Success("Updated flag cache.");
     }
 }
