@@ -4,6 +4,7 @@ using TerrainSlabs.Source.BlockBehaviors;
 using TerrainSlabs.Source.Blocks;
 using TerrainSlabs.Source.Commands;
 using TerrainSlabs.Source.Utils;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
@@ -42,6 +43,12 @@ public class TerrainSlabsModSystem : ModSystem
     public override void AssetsFinalize(ICoreAPI api)
     {
         SlabHelper.InitFlags(api);
+
+        if (api is ICoreClientAPI capi)
+        {
+            string[] blackList = capi.World.Config.GetString(TerrainSlabsGlobalValues.WorldConfigName, string.Empty).Split('|');
+            SlabHelper.InitBlacklist(capi, blackList);
+        }
     }
 
     public override void StartServerSide(ICoreServerAPI api)
@@ -50,6 +57,7 @@ public class TerrainSlabsModSystem : ModSystem
 
         AlterTerrainCommand.Register(api);
         SmoothBlockCommand.Register(api);
+        OffsetBlacklistCommand.Register(api);
     }
 
     public override void Dispose()

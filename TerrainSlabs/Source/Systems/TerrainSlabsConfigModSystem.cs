@@ -1,8 +1,12 @@
 ﻿using ConfigLib;
 using System;
+using System.Linq;
 using TerrainSlabs.Source.Commands;
+using TerrainSlabs.Source.Network;
+using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 
 namespace TerrainSlabs.Source.Systems;
 
@@ -26,9 +30,12 @@ public class ServerSettings
         set => SetField(ref smoothMode, value, SmoothModeChanged);
     }
 
+    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "anvil-*", "forge"];
+
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
-        if (Equals(field, value)) return;
+        if (Equals(field, value))
+            return;
         field = value;
         onChanged?.Invoke(value);
     }
@@ -36,9 +43,7 @@ public class ServerSettings
 
 internal class TerrainSlabsConfigModSystem : ModSystem
 {
-    private const string fileName = "terrainslabs_server.json";
-
-    public override bool ShouldLoad(EnumAppSide forSide) => forSide == EnumAppSide.Server;
+    private const string fileName = "terrainslabs-server.json";
 
     public ServerSettings ServerSettings { get; private set; } = new();
 
@@ -51,11 +56,40 @@ internal class TerrainSlabsConfigModSystem : ModSystem
         {
             SubscribeToConfigChange(api);
         }
+
+        SlabHelper.InitBlacklist(api, ServerSettings.OffsetBlacklist);
+    }
+
+    public int UpdateBlacklist(ICoreServerAPI sapi, string wildcard, bool addMode)
+    {
+        int count = 0;
+        foreach (Block block in sapi.World.SearchBlocks(wildcard))
+        {
+            if (addMode)
+            {
+                SlabHelper.AddToOffsetBlacklist(block.Id);
+            }
+            else
+            {
+                SlabHelper.RemoveFromOffsetBlacklist(sapi, block);
+            }
+            count++;
+        }
+        ServerSettings.OffsetBlacklist = addMode
+            ? ServerSettings.OffsetBlacklist.Append(wildcard)
+            : ServerSettings.OffsetBlacklist.Remove(wildcard);
+        SaveConfig(sapi);
+
+        sapi.Network.GetChannel(TerrainSlabsGlobalValues.OffsetBlackListNetworkChannel)
+            .BroadcastPacket(new UpdateBlocklistMessage() { AddMode = addMode, Wildcard = wildcard });
+
+        return count;
     }
 
     public void SaveConfig(ICoreServerAPI api)
     {
         api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
+        api.World.Config.SetString(TerrainSlabsGlobalValues.WorldConfigName, string.Join('|', ServerSettings.OffsetBlacklist));
     }
 
     private void LoadConfig(ICoreServerAPI api)
@@ -67,10 +101,7 @@ internal class TerrainSlabsConfigModSystem : ModSystem
             {
                 ServerSettings = settings;
             }
-            else
-            {
-                api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
-            }
+            SaveConfig(api);
         }
         catch (Exception e)
         {

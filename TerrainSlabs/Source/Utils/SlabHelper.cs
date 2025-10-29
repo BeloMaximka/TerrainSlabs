@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -11,8 +13,26 @@ namespace TerrainSlabs.Source.Utils;
 
 public static class SlabHelper
 {
+    private static readonly HashSet<int> offsetBlacklist = [];
     private static BitArray isSlab = null!;
-    static BitArray shoulfOffset = null!;
+    private static BitArray shoulfOffset = null!;
+
+    public static void InitBlacklist(ICoreAPI api, IEnumerable<string> blacklist)
+    {
+        foreach (string wildcard in blacklist)
+        {
+            Block[] blocks = api.World.SearchBlocks(wildcard);
+            if (blocks.Length == 0)
+            {
+                api.Logger.Warning("No blocks found for offsset blacklisting by code {0}", wildcard);
+                continue;
+            }
+            foreach (int id in blocks.Select(block => block.Id))
+            {
+                AddToOffsetBlacklist(id);
+            }
+        }
+    }
 
     public static void InitFlags(ICoreAPI api)
     {
@@ -29,6 +49,18 @@ public static class SlabHelper
                 shoulfOffset[block.BlockId] = true;
             }
         }
+    }
+
+    public static void AddToOffsetBlacklist(int blockId)
+    {
+        offsetBlacklist.Add(blockId);
+        shoulfOffset[blockId] = false;
+    }
+
+    public static void RemoveFromOffsetBlacklist(ICoreAPI api, Block block)
+    {
+        offsetBlacklist.Remove(block.Id);
+        shoulfOffset[block.Id] = ShouldOffset(api, block);
     }
 
     public static bool IsSlab(int blockId)
@@ -86,11 +118,6 @@ public static class SlabHelper
             || block is BlockMicroBlock
             || block is BlockFullCoating
         )
-        {
-            return false;
-        }
-
-        if (block.Code.Domain == "game" && block.Code.Path.StartsWith("lognarrow")) // TODO: Move to config
         {
             return false;
         }
