@@ -68,15 +68,17 @@ public static class AlterTerrainCommand
     private static TextCommandResult Handle(TextCommandCallingArgs args, bool columnMode, bool reverse)
     {
         Stopwatch sw = Stopwatch.StartNew();
+        ICoreAPI api = args.Caller.Entity.Api;
+        string fallingBlocksKey = "allowfallingblocks";
+        bool allowFallingBlocks = api.World.Config.GetBool(fallingBlocksKey);
+        api.World.Config.SetBool(fallingBlocksKey, false);
         int range = (int)args.Parsers[0].GetValue();
         bool highlightBlocks = (bool)args.Parsers[1].GetValue();
         range = 1 + range * 2;
-        var bulkAccessor = args.Caller.Entity.Api.World.GetBlockAccessorBulkMinimalUpdate(true);
+        var bulkAccessor = api.World.GetBlockAccessorBulkMinimalUpdate(true);
         var position = args.Caller.Entity.Pos.AsBlockPos.Copy();
 
-        ITerrainReplacer replacer = reverse
-            ? new TerrainUnsmoother(args.Caller.Entity.Api, bulkAccessor)
-            : new TerrainSmoother(args.Caller.Entity.Api, bulkAccessor);
+        ITerrainReplacer replacer = reverse ? new TerrainUnsmoother(api, bulkAccessor) : new TerrainSmoother(api, bulkAccessor);
         position.Z -= range / 2;
         position.X -= range / 2;
 
@@ -130,6 +132,7 @@ public static class AlterTerrainCommand
             args.Caller.Entity.Api.World.HighlightBlocks(args.Caller.Player, 1, changedBlockPos);
         }
 
+        api.World.Config.SetBool(fallingBlocksKey, allowFallingBlocks);
         sw.Stop();
         return TextCommandResult.Success($"Replaced {replacedCount} blocks in {sw.ElapsedMilliseconds} ms");
     }
