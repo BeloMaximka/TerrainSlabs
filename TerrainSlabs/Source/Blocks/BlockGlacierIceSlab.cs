@@ -36,13 +36,6 @@ public class BlockGlacierIceSlab : Block
 
     public override bool OnFallOnto(IWorldAccessor world, BlockPos pos, Block block, TreeAttribute blockEntityAttributes)
     {
-        if (fullBlock is not null)
-        {
-            world.BlockAccessor.SetBlock(fullBlock?.BlockId ?? BlockId, pos);
-            world.BlockAccessor.SetBlock(block.Id, pos.Up());
-            return true;
-        }
-
-        return base.OnFallOnto(world, pos, block, blockEntityAttributes);
+        return BlockTerrainSlab.OnFallOnto(this, fullBlock, world, pos, block, blockEntityAttributes);
     }
 }
