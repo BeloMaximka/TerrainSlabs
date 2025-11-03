@@ -74,6 +74,11 @@ public class BlockTerrainSlab : Block
             return;
         }
 
+        if (be is BlockEntityAnvil)
+        {
+            Traverse.Create(be).Field("voxYOff").SetValue(0.625f);
+        }
+
         foreach (var behavior in be.Behaviors)
         {
             if (behavior is BEBehaviorAnimatable animatable)
