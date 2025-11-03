@@ -119,6 +119,11 @@ public static class SlabHelper
             return false;
         }
 
+        if (block.Variant.TryGetValue("part", out string _))
+        {
+            return false;
+        }
+
         foreach (var beBehavior in block.BlockEntityBehaviors)
         {
             if (beBehavior.Name == "Door")
