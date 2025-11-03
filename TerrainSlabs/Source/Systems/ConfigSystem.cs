@@ -1,5 +1,4 @@
-﻿using ConfigLib;
-using System;
+﻿using System;
 using System.Linq;
 using TerrainSlabs.Source.Commands;
 using TerrainSlabs.Source.Network;
@@ -51,11 +50,6 @@ internal class ConfigSystem : ModSystem
     {
         LoadConfig(api);
         ChangeGenerationModeCommand.Register(api);
-
-        if (api.ModLoader.IsModEnabled("configlib"))
-        {
-            SubscribeToConfigChange(api);
-        }
 
         SlabHelper.InitBlacklist(api, ServerSettings.OffsetBlacklist);
     }
@@ -109,21 +103,5 @@ internal class ConfigSystem : ModSystem
             Mod.Logger.Warning(e);
         }
         TerrainSlabsGlobals.DebugMode = ServerSettings.DebugMode;
-    }
-
-    private void SubscribeToConfigChange(ICoreServerAPI sapi)
-    {
-        ConfigLibModSystem system = sapi.ModLoader.GetModSystem<ConfigLibModSystem>();
-
-        var config = system.GetConfig(Mod.Info.ModID);
-        config?.AssignSettingsValues(ServerSettings);
-
-        system.SettingChanged += (domain, config, setting) =>
-        {
-            if (domain != Mod.Info.ModID)
-                return;
-            setting.AssignSettingValue(ServerSettings);
-            SaveConfig(sapi);
-        };
     }
 }
