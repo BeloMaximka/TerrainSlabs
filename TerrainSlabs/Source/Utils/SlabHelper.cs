@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Vintagestory.API.Common;
@@ -122,8 +121,7 @@ public static class SlabHelper
 
         foreach (var beBehavior in block.BlockEntityBehaviors)
         {
-            Type? type = api.ClassRegistry.GetBlockEntityBehaviorClass(beBehavior.Name);
-            if (type is not null && typeof(BEBehaviorAnimatable).IsAssignableFrom(type))
+            if (beBehavior.Name == "Door")
             {
                 return false;
             }

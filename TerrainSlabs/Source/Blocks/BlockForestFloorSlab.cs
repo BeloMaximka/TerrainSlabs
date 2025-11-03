@@ -28,12 +28,18 @@ public class BlockForestFloorSlab : BlockForestFloor
         return 0;
     }
 
+    public override void OnBlockBroken(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropQuantityMultiplier = 1)
+    {
+        BlockTerrainSlab.FixAnimatableOffset(world, pos);
+        base.OnBlockBroken(world, pos, byPlayer, dropQuantityMultiplier);
+    }
+
     public override bool CanAttachBlockAt(
         IBlockAccessor blockAccessor,
         Block block,
         BlockPos pos,
         BlockFacing blockFace,
-        Cuboidi attachmentArea = null
+        Cuboidi? attachmentArea = null
     )
     {
         if (blockFace == BlockFacing.UP)
