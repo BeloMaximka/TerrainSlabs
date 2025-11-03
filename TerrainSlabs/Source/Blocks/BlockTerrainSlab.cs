@@ -26,6 +26,22 @@ public class BlockTerrainSlab : Block
         return 0;
     }
 
+    public override bool CanAttachBlockAt(
+        IBlockAccessor blockAccessor,
+        Block block,
+        BlockPos pos,
+        BlockFacing blockFace,
+        Cuboidi attachmentArea = null
+    )
+    {
+        if (blockFace == BlockFacing.UP)
+        {
+            return SlabHelper.ShouldOffset(block.Id);
+        }
+
+        return base.CanAttachBlockAt(blockAccessor, block, pos, blockFace, attachmentArea);
+    }
+
     public override bool CanAcceptFallOnto(IWorldAccessor world, BlockPos pos, Block fallingBlock, TreeAttribute blockEntityAttributes)
     {
         if (fullBlock is not null)
@@ -40,7 +56,14 @@ public class BlockTerrainSlab : Block
         return OnFallOnto(this, fullBlock, world, pos, block, blockEntityAttributes);
     }
 
-    public static bool OnFallOnto(Block slab, Block? fullBlock, IWorldAccessor world, BlockPos pos, Block block, TreeAttribute blockEntityAttributes)
+    public static bool OnFallOnto(
+        Block slab,
+        Block? fullBlock,
+        IWorldAccessor world,
+        BlockPos pos,
+        Block block,
+        TreeAttribute blockEntityAttributes
+    )
     {
         if (!SlabHelper.ShouldOffset(block.Id) && fullBlock is not null)
         {

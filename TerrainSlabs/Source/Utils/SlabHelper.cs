@@ -108,8 +108,7 @@ public static class SlabHelper
         }
 
         if (
-            block is BlockClayForm
-            || block is BlockMPBase
+            block is BlockMPBase
             || block is IBlockItemFlow
             || block is ITreeGenerator
             || block is BlockFruitTreePart

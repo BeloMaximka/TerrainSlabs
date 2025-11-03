@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Common;
+﻿using TerrainSlabs.Source.Utils;
+using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
@@ -25,6 +26,22 @@ public class BlockForestFloorSlab : BlockForestFloor
     public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos)
     {
         return 0;
+    }
+
+    public override bool CanAttachBlockAt(
+        IBlockAccessor blockAccessor,
+        Block block,
+        BlockPos pos,
+        BlockFacing blockFace,
+        Cuboidi attachmentArea = null
+    )
+    {
+        if (blockFace == BlockFacing.UP)
+        {
+            return SlabHelper.ShouldOffset(block.Id);
+        }
+
+        return base.CanAttachBlockAt(blockAccessor, block, pos, blockFace, attachmentArea);
     }
 
     public override bool CanAcceptFallOnto(IWorldAccessor world, BlockPos pos, Block fallingBlock, TreeAttribute blockEntityAttributes)
