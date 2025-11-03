@@ -21,6 +21,11 @@ public class BlockSoilSlab : BlockSoil
         }
     }
 
+    public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos)
+    {
+        return 0;
+    }
+
     public override bool CanAcceptFallOnto(IWorldAccessor world, BlockPos pos, Block fallingBlock, TreeAttribute blockEntityAttributes)
     {
         if (fullBlock is not null)
