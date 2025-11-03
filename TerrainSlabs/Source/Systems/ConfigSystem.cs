@@ -29,7 +29,7 @@ public class ServerSettings
         set => SetField(ref smoothMode, value, SmoothModeChanged);
     }
 
-    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "anvil-*", "forge", "firepit-*"];
+    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "anvil-*", "forge", "firepit-*", "undertangledboughs:*"];
 
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
