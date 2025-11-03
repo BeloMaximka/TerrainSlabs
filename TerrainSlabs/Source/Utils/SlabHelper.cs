@@ -19,10 +19,10 @@ public static class SlabHelper
 
     public static void InitBlacklist(ICoreAPI api, IEnumerable<string> blacklist)
     {
-        foreach (string wildcard in blacklist)
+        foreach (AssetLocation wildcard in blacklist)
         {
             Block[] blocks = api.World.SearchBlocks(wildcard);
-            if (blocks.Length == 0)
+            if (blocks.Length == 0 && api.ModLoader.IsModEnabled(wildcard.Domain))
             {
                 api.Logger.Warning("No blocks found for offsset blacklisting by code {0}", wildcard);
                 continue;
