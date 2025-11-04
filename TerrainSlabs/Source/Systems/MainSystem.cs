@@ -3,6 +3,7 @@ using System.Linq;
 using TerrainSlabs.Source.BlockBehaviors;
 using TerrainSlabs.Source.Blocks;
 using TerrainSlabs.Source.Commands;
+using TerrainSlabs.Source.HarmonyPatches;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -22,6 +23,7 @@ public class MainSystem : ModSystem
         if (!harmonyInstance.GetPatchedMethods().Any())
         {
             harmonyInstance.PatchAll();
+            RenderersPatch.PatchAllRenderers(harmonyInstance);
         }
     }
 

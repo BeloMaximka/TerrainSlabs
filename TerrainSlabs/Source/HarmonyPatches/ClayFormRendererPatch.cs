@@ -14,52 +14,6 @@ namespace TerrainSlabs.Source.HarmonyPatches;
 public static class ClayFormRendererPatch
 {
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(ClayFormRenderer), nameof(ClayFormRenderer.OnRenderFrame))]
-    public static bool OffserForSlabs(
-        KnappingRenderer __instance,
-        ICoreClientAPI ___api,
-        MeshRef ___workItemMeshRef,
-        int ___texId,
-        BlockPos ___pos,
-        Matrixf ___ModelMat,
-        float deltaTime,
-        EnumRenderStage stage
-    )
-    {
-        if (___workItemMeshRef == null)
-            return false;
-        if (stage == EnumRenderStage.AfterFinalComposition)
-        {
-            Traverse.Create(__instance).Method("RenderRecipeOutLine").GetValue();
-            return false;
-        }
-
-        if (!SlabHelper.IsSlab(___api.World.BlockAccessor.GetBlockBelow(___pos).Id))
-        {
-            return true;
-        }
-
-        IRenderAPI rpi = ___api.Render;
-        IClientWorldAccessor worldAccess = ___api.World;
-        Vec3d camPos = worldAccess.Player.Entity.CameraPos;
-
-        rpi.GlDisableCullFace();
-        IStandardShaderProgram prog = rpi.PreparedStandardShader(___pos.X, ___pos.Y, ___pos.Z);
-        rpi.BindTexture2d(___texId);
-
-        prog.ModelMatrix = ___ModelMat.Identity().Translate(___pos.X - camPos.X, ___pos.Y - camPos.Y - 0.5f, ___pos.Z - camPos.Z).Values;
-        prog.ViewMatrix = rpi.CameraMatrixOriginf;
-        prog.ProjectionMatrix = rpi.CurrentProjectionMatrix;
-
-        rpi.RenderMesh(___workItemMeshRef);
-
-        prog.ModelMatrix = rpi.CurrentModelviewMatrix;
-        prog.Stop();
-
-        return false;
-    }
-
-    [HarmonyPrefix]
     [HarmonyPatch(typeof(ClayFormRenderer), "RenderRecipeOutLine")]
     public static bool OffsetSelectionForSlabs(
         Vec4f ___outLineColorMul,

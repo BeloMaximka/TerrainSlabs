@@ -32,7 +32,7 @@ public static class AnimatablePatch
         typeof(MultiTextureMeshRef),
         typeof(EnumRenderStage)
     )]
-    public static void OffsetAnimatableOnSlab(AnimatableRenderer __instance, ref Vec3d ___pos, ICoreClientAPI ___capi)
+    public static void OffsetAnimatableOnSlab(ref Vec3d ___pos, ICoreClientAPI ___capi)
     {
         BlockPos pos = ___pos.AsBlockPos;
         if (
