@@ -28,9 +28,15 @@ public class BlockTerrainSlab : Block
         return 0;
     }
 
+    public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack? byItemStack = null)
+    {
+        FixAnimatableOffset(world, blockPos, -0.5f);
+        base.OnBlockPlaced(world, blockPos, byItemStack);
+    }
+
     public override void OnBlockBroken(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropQuantityMultiplier = 1)
     {
-        FixAnimatableOffset(world, pos);
+        FixAnimatableOffset(world, pos, 0.5f);
         base.OnBlockBroken(world, pos, byPlayer, dropQuantityMultiplier);
     }
 
@@ -64,7 +70,7 @@ public class BlockTerrainSlab : Block
         return OnFallOnto(this, fullBlock, world, pos, block, blockEntityAttributes);
     }
 
-    public static void FixAnimatableOffset(IWorldAccessor world, BlockPos pos)
+    public static void FixAnimatableOffset(IWorldAccessor world, BlockPos pos, float offset)
     {
         BlockEntity? be = world.BlockAccessor.GetBlockEntity(pos.Up());
         pos.Down();
@@ -81,7 +87,7 @@ public class BlockTerrainSlab : Block
                 Vec3d? animPos = Traverse.Create(animatable.animUtil.renderer).Field("pos").GetValue<Vec3d>();
                 if (animPos is not null)
                 {
-                    animPos.Y += 0.5f;
+                    animPos.Y += offset;
                 }
 
                 return;
