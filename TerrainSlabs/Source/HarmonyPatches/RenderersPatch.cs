@@ -15,7 +15,7 @@ public static class RenderersPatch
 {
     public static void PatchAllRenderers(Harmony harmony)
     {
-        Type[] targets =
+        Type[] onRenderFrameTargets =
         [
             typeof(KnappingRenderer),
             typeof(FirepitContentsRenderer),
@@ -25,10 +25,17 @@ public static class RenderersPatch
             typeof(PotInFirepitRenderer),
         ];
 
+        Type[] renderRecipeOutLineTargets = [typeof(KnappingRenderer), typeof(ClayFormRenderer), typeof(AnvilWorkItemRenderer)];
+
         MethodInfo transpiler = AccessTools.Method(typeof(RenderersPatch), nameof(HandleOffsetBlocks));
-        foreach (var target in targets)
+        foreach (var target in onRenderFrameTargets)
         {
             var original = AccessTools.Method(target, "OnRenderFrame");
+            harmony.Patch(original, transpiler: new HarmonyMethod(transpiler));
+        }
+        foreach (var target in renderRecipeOutLineTargets)
+        {
+            var original = AccessTools.Method(target, "RenderRecipeOutLine");
             harmony.Patch(original, transpiler: new HarmonyMethod(transpiler));
         }
     }
@@ -41,19 +48,31 @@ public static class RenderersPatch
         }
 
         MethodInfo matrixIdentityMethod = AccessTools.Method(typeof(Matrixf), nameof(Matrixf.Identity));
+        MethodInfo matrixSetMethod = AccessTools.Method(typeof(Matrixf), nameof(Matrixf.Set), [typeof(float[])]);
+
+        CodeMatcher matcher = new(instructions);
+        InsertAfter(matcher, rendererType, matrixIdentityMethod);
+        InsertAfter(matcher, rendererType, matrixSetMethod);
+
+        return matcher.InstructionEnumeration();
+    }
+
+    private static void InsertAfter(CodeMatcher matcher, Type rendererType, MethodInfo target)
+    {
         FieldInfo apiField = AccessTools.Field(rendererType, "api");
         apiField ??= AccessTools.Field(rendererType, "capi");
 
-        CodeMatcher matcher = new(instructions);
-        while (true) // append to all matrix.Identity()
+        matcher.Start(); // reset to beginning for each search
+
+        while (true) // append to all matrix.Identity/Set()
         {
-            matcher.MatchEndForward(CodeMatch.Calls(matrixIdentityMethod));
+            matcher.MatchEndForward(CodeMatch.Calls(target));
             if (matcher.IsInvalid)
                 break;
 
             matcher
                 .Advance(1)
-                // Call OffsetMatrix(matrix, this.api, this.pos) after matrix.Identity()
+                // Call OffsetMatrix(matrix, this.api, this.pos) after matrix.Identity/Set()
                 .InsertAndAdvance(
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldfld, apiField),
@@ -62,8 +81,6 @@ public static class RenderersPatch
                     CodeInstruction.Call(typeof(RenderersPatch), nameof(OffsetMatrix))
                 );
         }
-
-        return matcher.InstructionEnumeration();
     }
 
     private static Matrixf OffsetMatrix(Matrixf matrix, ICoreClientAPI api, BlockPos pos)
