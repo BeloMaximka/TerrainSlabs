@@ -5,12 +5,17 @@ using System.Reflection;
 using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace TerrainSlabs.Source.HarmonyPatches;
 
 public static class WorldAccessorParticlesPatch
 {
+    [ThreadStatic]
+    private static BlockPos? cachedPos;
+
     public static void PatchAllParticleCode(Harmony harmony)
     {
         (Type, string)[] targets =
@@ -76,8 +81,15 @@ public static class WorldAccessorParticlesPatch
 
     private static void OffsetParticle(IWorldAccessor accessor, IParticlePropertiesProvider particles)
     {
-        if (SlabHelper.IsSlab(accessor.BlockAccessor.GetBlockId(particles.Pos.AsBlockPos.Down())))
+        cachedPos ??= new(Dimensions.NormalWorld);
+        cachedPos.Set((int)particles.Pos.X, (int)particles.Pos.Y - 1, (int)particles.Pos.Z);
+        if (SlabHelper.IsSlab(accessor.BlockAccessor.GetBlockId(cachedPos)))
         {
+            if (particles is AdvancedParticleProperties advancedParticle)
+            {
+                advancedParticle.basePos.Y -= 0.5;
+                return;
+            }
             if (particles is SimpleParticleProperties simpleParticle)
             {
                 simpleParticle.MinPos.Y -= 0.5;
