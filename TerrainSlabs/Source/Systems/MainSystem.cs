@@ -24,6 +24,7 @@ public class MainSystem : ModSystem
         {
             harmonyInstance.PatchAll();
             RenderersPatch.PatchAllRenderers(harmonyInstance);
+            WorldAccessorParticlesPatch.PatchAllParticleCode(harmonyInstance);
         }
     }
 
