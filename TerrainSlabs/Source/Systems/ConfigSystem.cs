@@ -18,6 +18,10 @@ public enum TerrainSmoothMode
 
 public class ServerSettings
 {
+    public const int ActualVersion = 1;
+
+    public int Version { get; set; } = 0;
+
     public bool DebugMode { get; set; } = false;
 
     private TerrainSmoothMode smoothMode = TerrainSmoothMode.Column;
@@ -29,7 +33,7 @@ public class ServerSettings
         set => SetField(ref smoothMode, value, SmoothModeChanged);
     }
 
-    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "anvil-*", "forge", "firepit-*", "undertangledboughs:*"];
+    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "undertangledboughs:*"];
 
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
@@ -91,10 +95,11 @@ internal class ConfigSystem : ModSystem
         try
         {
             ServerSettings settings = api.LoadModConfig<ServerSettings>(fileName);
-            if (settings is not null)
+            if (settings is not null && settings.Version == ServerSettings.ActualVersion)
             {
                 ServerSettings = settings;
             }
+            ServerSettings.Version = ServerSettings.ActualVersion;
             SaveConfig(api);
         }
         catch (Exception e)
