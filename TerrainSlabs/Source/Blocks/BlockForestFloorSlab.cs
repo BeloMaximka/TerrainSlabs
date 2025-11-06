@@ -23,6 +23,16 @@ public class BlockForestFloorSlab : BlockForestFloor
         }
     }
 
+    public override string GetHeldItemName(ItemStack itemStack)
+    {
+        return fullBlock?.GetHeldItemName(itemStack) ?? base.GetHeldItemName(itemStack);
+    }
+
+    public override string GetPlacedBlockName(IWorldAccessor world, BlockPos pos)
+    {
+        return fullBlock?.GetPlacedBlockName(world, pos) ?? base.GetPlacedBlockName(world, pos);
+    }
+
     public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos)
     {
         return 0;

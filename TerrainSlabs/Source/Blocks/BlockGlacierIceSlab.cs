@@ -21,6 +21,16 @@ public class BlockGlacierIceSlab : Block
         }
     }
 
+    public override string GetHeldItemName(ItemStack itemStack)
+    {
+        return fullBlock?.GetHeldItemName(itemStack) ?? base.GetHeldItemName(itemStack);
+    }
+
+    public override string GetPlacedBlockName(IWorldAccessor world, BlockPos pos)
+    {
+        return fullBlock?.GetPlacedBlockName(world, pos) ?? base.GetPlacedBlockName(world, pos);
+    }
+
     public override bool ShouldMergeFace(int facingIndex, Block neighbourBlock, int intraChunkIndex3d)
     {
         return neighbourBlock == this || neighbourBlock == fullBlock;

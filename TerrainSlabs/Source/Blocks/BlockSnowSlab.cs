@@ -10,7 +10,6 @@ namespace TerrainSlabs.Source.Blocks;
 public class BlockSnowSlab : Block
 {
     private Block? fullBlock;
-
     private readonly Cuboidf[] fullBox = [new(0f, 0f, 0f, 1f, 0.5f, 1f)];
 
     public override void OnLoaded(ICoreAPI api)
@@ -23,6 +22,16 @@ public class BlockSnowSlab : Block
         {
             api.Logger.Warning("Unable to get full block by code {0}", fullBlockCode);
         }
+    }
+
+    public override string GetHeldItemName(ItemStack itemStack)
+    {
+        return fullBlock?.GetHeldItemName(itemStack) ?? base.GetHeldItemName(itemStack);
+    }
+
+    public override string GetPlacedBlockName(IWorldAccessor world, BlockPos pos)
+    {
+        return fullBlock?.GetPlacedBlockName(world, pos) ?? base.GetPlacedBlockName(world, pos);
     }
 
     public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos)
