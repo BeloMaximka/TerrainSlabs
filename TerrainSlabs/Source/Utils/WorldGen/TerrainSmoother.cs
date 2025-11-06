@@ -20,12 +20,6 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
         }
         pos.Y--;
 
-        var decors = accessor.GetSubDecors(pos);
-        if (decors is not null && decors.Count != 0)
-        {
-            return false;
-        }
-
         if (terrainReplacementMap.TryGetValue(accessor.GetBlockId(pos), out int slabId) && HasExposedSide(pos))
         {
             accessor.SetBlock(slabId, pos);
