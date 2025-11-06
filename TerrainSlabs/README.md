@@ -5,9 +5,6 @@
 
 # TODO
 
-- Add packed glacier ice
-
 # Bugs
 
-- Right-clicking on stone creates floating knapping surface
 - Structures made of stones are affected in unpleasant ways
