@@ -12,6 +12,7 @@ namespace TerrainSlabs.Source.HarmonyPatches;
 [HarmonyPatch]
 public static class OffsetTeselationPatch
 {
+    // TODO: fix offset for decors
     [HarmonyTranspiler]
     [HarmonyPatch(
         typeof(ChunkTesselator),
