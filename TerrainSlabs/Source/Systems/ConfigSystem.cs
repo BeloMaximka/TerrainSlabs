@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using TerrainSlabs.Source.Commands;
-using TerrainSlabs.Source.Network;
-using TerrainSlabs.Source.Utils;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
-using Vintagestory.API.Util;
 
 namespace TerrainSlabs.Source.Systems;
 
@@ -18,7 +15,7 @@ public enum TerrainSmoothMode
 
 public class ServerSettings
 {
-    public const int ActualVersion = 1;
+    public const int ActualVersion = 2;
 
     public int Version { get; set; } = 0;
 
@@ -33,7 +30,8 @@ public class ServerSettings
         set => SetField(ref smoothMode, value, SmoothModeChanged);
     }
 
-    public string[] OffsetBlacklist { get; set; } = ["lognarrow-*", "undertangledboughs:*"];
+    public string[] OffsetBlacklist { get; set; } =
+    ["*:lognarrow*", "*:*fence*", "*:*segment*", "*:palisade*", "clutter", "wattle*", "undertangledboughs:*"];
 
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
@@ -54,34 +52,11 @@ internal class ConfigSystem : ModSystem
     {
         LoadConfig(api);
         ChangeGenerationModeCommand.Register(api);
-
-        SlabHelper.InitBlacklist(api, ServerSettings.OffsetBlacklist);
     }
 
-    public int UpdateBlacklist(ICoreServerAPI sapi, string wildcard, bool addMode)
+    public override void StartClientSide(ICoreClientAPI api)
     {
-        int count = 0;
-        foreach (Block block in sapi.World.SearchBlocks(wildcard))
-        {
-            if (addMode)
-            {
-                SlabHelper.AddToOffsetBlacklist(block.Id);
-            }
-            else
-            {
-                SlabHelper.RemoveFromOffsetBlacklist(sapi, block);
-            }
-            count++;
-        }
-        ServerSettings.OffsetBlacklist = addMode
-            ? ServerSettings.OffsetBlacklist.Append(wildcard)
-            : ServerSettings.OffsetBlacklist.Remove(wildcard);
-        SaveConfig(sapi);
-
-        sapi.Network.GetChannel(TerrainSlabsGlobals.OffsetBlackListNetworkChannel)
-            .BroadcastPacket(new UpdateBlocklistMessage() { AddMode = addMode, Wildcard = wildcard });
-
-        return count;
+        ServerSettings.OffsetBlacklist = api.World.Config.GetString(TerrainSlabsGlobals.WorldConfigName, string.Empty).Split('|');
     }
 
     public void SaveConfig(ICoreServerAPI api)

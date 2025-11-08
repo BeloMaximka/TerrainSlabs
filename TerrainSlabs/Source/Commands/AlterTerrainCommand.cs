@@ -82,7 +82,6 @@ public static class AlterTerrainCommand
         position.Z -= range / 2;
         position.X -= range / 2;
 
-        int buffer = columnMode ? TerrainSlabsGlobals.YBufferForStructures : 0;
         List<BlockPos> changedBlockPos = new(highlightBlocks ? range * range : 0);
         int replacedCount = 0;
         for (int x = 0; x < range; x++)
@@ -95,7 +94,7 @@ public static class AlterTerrainCommand
                     continue;
                 }
 
-                position.Y = bulkAccessor.GetTerrainMapheightAt(position) + buffer + 1;
+                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
 
                 if (replacer.TryReplace(position))
                 {

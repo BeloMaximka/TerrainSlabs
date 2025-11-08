@@ -26,7 +26,6 @@ public static class SmoothBlockCommand
         BlockPos position = ((Vec3d)args.Parsers[0].GetValue()).AsBlockPos;
         IBlockAccessor accessor = args.Caller.Entity.Api.World.BlockAccessor;
         TerrainSmoother smoother = new(args.Caller.Entity.Api, accessor);
-        position.Y = accessor.GetTerrainMapheightAt(position);
         smoother.TryReplace(position);
 
         return TextCommandResult.Success("Done.");

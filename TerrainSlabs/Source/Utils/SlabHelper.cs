@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TerrainSlabs.Source.Systems;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -12,29 +13,12 @@ namespace TerrainSlabs.Source.Utils;
 
 public static class SlabHelper
 {
-    private static readonly HashSet<int> offsetBlacklist = [];
     private static BitArray isSlab = null!;
     private static BitArray shoulfOffset = null!;
 
-    public static void InitBlacklist(ICoreAPI api, IEnumerable<string> blacklist)
-    {
-        foreach (AssetLocation wildcard in blacklist)
-        {
-            Block[] blocks = api.World.SearchBlocks(wildcard);
-            if (blocks.Length == 0 && api.ModLoader.IsModEnabled(wildcard.Domain))
-            {
-                api.Logger.Warning("No blocks found for offsset blacklisting by code {0}", wildcard);
-                continue;
-            }
-            foreach (int id in blocks.Select(block => block.Id))
-            {
-                AddToOffsetBlacklist(id);
-            }
-        }
-    }
-
     public static void InitFlags(ICoreAPI api)
     {
+        var blacklist = api.ModLoader.GetModSystem<ConfigSystem>().ServerSettings.OffsetBlacklist.Select(item => (AssetLocation)item);
         isSlab = new(api.World.Blocks.Count);
         shoulfOffset = new(api.World.Blocks.Count);
         foreach (Block block in api.World.Blocks)
@@ -43,23 +27,11 @@ public static class SlabHelper
             {
                 isSlab[block.BlockId] = true;
             }
-            else if (ShouldOffset(api, block))
+            else if (ShouldOffset(api, block, blacklist))
             {
                 shoulfOffset[block.BlockId] = true;
             }
         }
-    }
-
-    public static void AddToOffsetBlacklist(int blockId)
-    {
-        offsetBlacklist.Add(blockId);
-        shoulfOffset[blockId] = false;
-    }
-
-    public static void RemoveFromOffsetBlacklist(ICoreAPI api, Block block)
-    {
-        offsetBlacklist.Remove(block.Id);
-        shoulfOffset[block.Id] = ShouldOffset(api, block);
     }
 
     public static bool IsSlab(int blockId)
@@ -99,7 +71,7 @@ public static class SlabHelper
     /// <summary>
     /// This check is expensive
     /// </summary>
-    private static bool ShouldOffset(ICoreAPI api, Block block)
+    private static bool ShouldOffset(ICoreAPI api, Block block, IEnumerable<AssetLocation> blacklist)
     {
         if (block.SideSolid.Any)
         {
@@ -130,6 +102,11 @@ public static class SlabHelper
             {
                 return false;
             }
+        }
+
+        if (blacklist.Any(item => WildcardUtil.Match(item, block.Code)))
+        {
+            return false;
         }
 
         return true;

@@ -119,7 +119,7 @@ public static class WorldGenUtils
             {
                 blockPos.X = request.ChunkX * GlobalConstants.ChunkSize + x;
                 blockPos.Z = request.ChunkZ * GlobalConstants.ChunkSize + z;
-                blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos) + TerrainSlabsGlobals.YBufferForStructures;
+                blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos);
 
                 while (blockPos.Y > 10)
                 {
