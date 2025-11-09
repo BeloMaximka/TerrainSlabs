@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
+using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
 #pragma warning disable S101 // Types should be named in PascalCase
 
 namespace TerrainSlabs.Source.HarmonyPatches;
 
-[HarmonyPatch(typeof(AABBIntersectionTest), nameof(AABBIntersectionTest.RayIntersectsBlockSelectionBox))]
+[HarmonyPatch]
 public static class AABBIntersectionTestPatch
 {
-    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+    [HarmonyTranspiler]
+    [HarmonyPatch(typeof(AABBIntersectionTest), nameof(AABBIntersectionTest.RayIntersectsBlockSelectionBox))]
+    public static IEnumerable<CodeInstruction> OffsetSelectionBox(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
         MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetValue));
         FieldInfo bsTesterField = AccessTools.Field(typeof(AABBIntersectionTest), "bsTester");
@@ -39,5 +42,43 @@ public static class AABBIntersectionTestPatch
             .ThrowIfNotMatchForward("Could not find pos.InternalY")
             .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc, localVariable.LocalIndex), new CodeInstruction(OpCodes.Add))
             .InstructionEnumeration();
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(
+        typeof(AABBIntersectionTest),
+        nameof(AABBIntersectionTest.GetSelectedBlock),
+        typeof(float),
+        typeof(BlockFilter),
+        typeof(bool)
+    )]
+    public static void CheckBlockAboveSlab(
+        AABBIntersectionTest __instance,
+        ref BlockSelection? __result,
+        ref Block ___blockIntersected,
+        BlockFilter? filter,
+        bool testCollide
+    )
+    {
+        if (__result is null || __instance.ray.dir.Y > 0 || !SlabHelper.IsSlab(___blockIntersected.BlockId))
+        {
+            return;
+        }
+
+        BlockPos pos = __instance.pos;
+        pos.Up();
+        if (!__instance.RayIntersectsBlockSelectionBox(pos, filter, testCollide))
+        {
+            return;
+        }
+
+        __result = new BlockSelection()
+        {
+            Face = __instance.hitOnBlockFace,
+            Position = pos.CopyAndCorrectDimension(),
+            HitPosition = __instance.hitPosition.SubCopy((double)pos.X, (double)pos.InternalY, (double)pos.Z),
+            SelectionBoxIndex = __instance.hitOnSelectionBox,
+            Block = ___blockIntersected,
+        };
     }
 }
