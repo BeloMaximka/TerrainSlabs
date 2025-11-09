@@ -3,6 +3,7 @@ using System.Linq;
 using TerrainSlabs.Source.BlockBehaviors;
 using TerrainSlabs.Source.Blocks;
 using TerrainSlabs.Source.Commands;
+using TerrainSlabs.Source.Compatibility;
 using TerrainSlabs.Source.HarmonyPatches;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
@@ -25,6 +26,8 @@ public class MainSystem : ModSystem
             RenderersPatch.PatchAllRenderers(harmonyInstance);
             WorldAccessorParticlesPatch.PatchAllParticleCode(harmonyInstance);
             ParticlesManagerPatch.PatchAllParticleCode(harmonyInstance);
+
+            CatchLedgePatch.ApplyIfEnabled(api, harmonyInstance);
         }
     }
 
