@@ -1,7 +1,13 @@
 {
   "code": "cob",
   "class": "BlockSoilSlab",
-  "variantgroups": [{ "loadFromProperties": "abstract/grasscoverage" }],
+  "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
+    { "loadFromProperties": "abstract/grasscoverage" }
+  ],
   "behaviors": [{ "name": "RestrictTopAttachment" }],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },

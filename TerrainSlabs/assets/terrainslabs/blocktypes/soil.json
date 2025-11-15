@@ -2,6 +2,10 @@
   "code": "soil",
   "class": "BlockSoilSlab",
   "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
     { "loadFromProperties": "abstract/fertility" },
     { "loadFromProperties": "abstract/grasscoverage" }
   ],

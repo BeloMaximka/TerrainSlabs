@@ -13,7 +13,13 @@
     },
     { "name": "RestrictTopAttachment" }
   ],
-  "variantgroups": [{ "loadFromProperties": "block/rock", "code": "rock" }],
+  "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
+    { "loadFromProperties": "block/rock", "code": "rock" }
+  ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": {
     "base": "game:block/basic/slab/slab-down",

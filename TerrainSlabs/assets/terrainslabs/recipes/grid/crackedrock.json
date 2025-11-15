@@ -13,7 +13,7 @@
     },
     "output": {
       "type": "block",
-      "code": "terrainslabs:crackedrock-{rock}",
+      "code": "terrainslabs:crackedrock-game-{rock}",
       "quantity": 2
     }
   },
@@ -25,7 +25,7 @@
     "ingredients": {
       "B": {
         "type": "block",
-        "code": "terrainslabs:crackedrock-*",
+        "code": "terrainslabs:crackedrock-game-*",
         "name": "rock"
       }
     },

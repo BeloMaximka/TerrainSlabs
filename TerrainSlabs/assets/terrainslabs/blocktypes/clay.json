@@ -2,6 +2,10 @@
   "code": "rawclay",
   "class": "BlockSoilDepositSlab",
   "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
     { "code": "type", "states": ["blue", "red", "fire"] },
     { "code": "grasscoverage", "states": ["none", "verysparse"] }
   ],

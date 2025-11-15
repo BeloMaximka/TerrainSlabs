@@ -6,8 +6,8 @@
         "BeloMaximka"
     ],
     "description": "This mod slabs",
-    "version": "1.0.3",
-    "dependencies": {
-        "game": "1.21.0"
-    }
+    "version": "1.0.4",
+  "dependencies": {
+    "game": "1.21.0"
+  }
 }

@@ -29,7 +29,7 @@
     },
     "output": {
       "type": "block",
-      "code": "terrainslabs:gravel-{rock}",
+      "code": "terrainslabs:gravel-game-{rock}",
       "quantity": 2
     }
   },
@@ -41,7 +41,7 @@
     "ingredients": {
       "B": {
         "type": "block",
-        "code": "terrainslabs:gravel-*",
+        "code": "terrainslabs:gravel-game-*",
         "name": "rock",
         "allowedVariants": [
           "andesite",

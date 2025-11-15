@@ -110,7 +110,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
                 Dictionary<int, int> result = [];
                 foreach (var resultBlock in api.World.SearchBlocks(wildcard))
                 {
-                    AssetLocation originalCode = new("game", resultBlock.Code.Path);
+                    AssetLocation originalCode = resultBlock.Code.UseFirstPartAsDomain();
                     Block? originalBlock = api.World.GetBlock(originalCode);
                     if (originalBlock is null)
                     {

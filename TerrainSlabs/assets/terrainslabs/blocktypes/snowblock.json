@@ -1,6 +1,12 @@
 {
   "code": "snowblock",
   "class": "BlockSnowSlab",
+  "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    }
+  ],
   "behaviors": [{ "name": "RestrictTopAttachment" }],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },

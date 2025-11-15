@@ -13,7 +13,7 @@
     },
     "output": {
       "type": "block",
-      "code": "terrainslabs:soil-{fertility}-none",
+      "code": "terrainslabs:soil-game-{fertility}-none",
       "quantity": 2
     }
   },
@@ -25,7 +25,7 @@
     "ingredients": {
       "B": {
         "type": "block",
-        "code": "terrainslabs:soil-*-none",
+        "code": "terrainslabs:soil-game-*-none",
         "name": "fertility"
       }
     },

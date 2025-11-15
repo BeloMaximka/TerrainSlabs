@@ -21,6 +21,10 @@
     }
   },
   "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
     { "code": "rock", "loadFromProperties": "block/rockwithdeposit" }
   ],
   "creativeinventory": {

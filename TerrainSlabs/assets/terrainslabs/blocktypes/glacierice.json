@@ -1,6 +1,12 @@
 {
   "code": "glacierice",
   "class": "BlockGlacierIceSlab",
+  "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    }
+  ],
   "behaviors": [{ "name": "RestrictTopAttachment" }],
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "attributes": {

@@ -39,7 +39,7 @@ internal class TerrainUnsmoother(ICoreAPI api, IBlockAccessor accessor) : ITerra
                 Dictionary<int, int> result = [];
                 foreach (var resultBlock in api.World.SearchBlocks(wildcard))
                 {
-                    AssetLocation originalCode = new("game", resultBlock.Code.Path);
+                    AssetLocation originalCode = resultBlock.Code.UseFirstPartAsDomain();
                     Block? originalBlock = api.World.GetBlock(originalCode);
                     if (originalBlock is null)
                     {

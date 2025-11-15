@@ -1,6 +1,12 @@
 {
   "code": "muddygravel",
   "class": "BlockTerrainSlab",
+  "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    }
+  ],
   "behaviors": [
     {
       "name": "UnstableFallingSlab",

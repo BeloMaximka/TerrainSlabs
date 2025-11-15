@@ -16,7 +16,7 @@ public class BlockSnowSlab : Block
     {
         base.OnLoaded(api);
 
-        AssetLocation fullBlockCode = new("game", Code.Path);
+        AssetLocation fullBlockCode = Code.UseFirstPartAsDomain();
         fullBlock = api.World.GetBlock(fullBlockCode);
         if (fullBlock is null)
         {

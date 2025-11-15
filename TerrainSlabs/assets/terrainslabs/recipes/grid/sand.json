@@ -29,7 +29,7 @@
     },
     "output": {
       "type": "block",
-      "code": "terrainslabs:sand-{rock}",
+      "code": "terrainslabs:sand-game-{rock}",
       "quantity": 2
     }
   },
@@ -41,7 +41,7 @@
     "ingredients": {
       "B": {
         "type": "block",
-        "code": "terrainslabs:sand-*",
+        "code": "terrainslabs:sand-game-*",
         "name": "rock",
         "allowedVariants": [
           "andesite",

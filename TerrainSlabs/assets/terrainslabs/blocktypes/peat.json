@@ -3,6 +3,10 @@
   "class": "BlockSoilDepositSlab",
   "behaviors": [{ "name": "RestrictTopAttachment" }],
   "variantgroups": [
+    {
+      "code": "domain",
+      "states": ["game"]
+    },
     { "code": "grasscoverage", "states": ["none", "verysparse"] }
   ],
   "attributes": {

@@ -12,7 +12,7 @@
     },
     "output": {
       "type": "block",
-      "code": "terrainslabs:glacierice",
+      "code": "terrainslabs:glacierice-game",
       "quantity": 2
     }
   },
@@ -24,7 +24,7 @@
     "ingredients": {
       "B": {
         "type": "block",
-        "code": "terrainslabs:glacierice"
+        "code": "terrainslabs:glacierice-game"
       }
     },
     "output": {
