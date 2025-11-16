@@ -1,0 +1,92 @@
+[
+  {
+    "op": "addmerge",
+    "path": "/terrainslabs:v1.0.4",
+    "value": [
+      "/bir remapq terrainslabs:crackedrock-game-dolostone terrainslabs:crackedrock-dolostone force",
+      "/bir remapq terrainslabs:gravel-game-dolostone terrainslabs:gravel-dolostone force",
+      "/bir remapq terrainslabs:rock-game-dolostone terrainslabs:rock-dolostone force",
+      "/bir remapq terrainslabs:sandwavy-game-dolostone terrainslabs:sandwavy-dolostone force",
+      "/bir remapq terrainslabs:sand-game-dolostone terrainslabs:sand-dolostone force",
+
+      "/bir remapq terrainslabs:crackedrock-game-siltstone terrainslabs:crackedrock-siltstone force",
+      "/bir remapq terrainslabs:gravel-game-siltstone terrainslabs:gravel-siltstone force",
+      "/bir remapq terrainslabs:rock-game-siltstone terrainslabs:rock-siltstone force",
+      "/bir remapq terrainslabs:sandwavy-game-siltstone terrainslabs:sandwavy-siltstone force",
+      "/bir remapq terrainslabs:sand-game-siltstone terrainslabs:sand-siltstone force",
+
+      "/bir remapq terrainslabs:crackedrock-game-mudstone terrainslabs:crackedrock-mudstone force",
+      "/bir remapq terrainslabs:gravel-game-mudstone terrainslabs:gravel-mudstone force",
+      "/bir remapq terrainslabs:rock-game-mudstone terrainslabs:rock-mudstone force",
+      "/bir remapq terrainslabs:sandwavy-game-mudstone terrainslabs:sandwavy-mudstone force",
+      "/bir remapq terrainslabs:sand-game-mudstone terrainslabs:sand-mudstone force",
+
+      "/bir remapq terrainslabs:crackedrock-game-quartzite terrainslabs:crackedrock-quartzite force",
+      "/bir remapq terrainslabs:gravel-game-quartzite terrainslabs:gravel-quartzite force",
+      "/bir remapq terrainslabs:rock-game-quartzite terrainslabs:rock-quartzite force",
+      "/bir remapq terrainslabs:sandwavy-game-quartzite terrainslabs:sandwavy-quartzite force",
+      "/bir remapq terrainslabs:sand-game-quartzite terrainslabs:sand-quartzite force",
+
+      "/bir remapq terrainslabs:crackedrock-game-gneiss terrainslabs:crackedrock-gneiss force",
+      "/bir remapq terrainslabs:gravel-game-gneiss terrainslabs:gravel-gneiss force",
+      "/bir remapq terrainslabs:rock-game-gneiss terrainslabs:rock-gneiss force",
+      "/bir remapq terrainslabs:sandwavy-game-gneiss terrainslabs:sandwavy-gneiss force",
+      "/bir remapq terrainslabs:sand-game-gneiss terrainslabs:sand-gneiss force",
+
+      "/bir remapq terrainslabs:crackedrock-game-schist terrainslabs:crackedrock-schist force",
+      "/bir remapq terrainslabs:gravel-game-schist terrainslabs:gravel-schist force",
+      "/bir remapq terrainslabs:rock-game-schist terrainslabs:rock-schist force",
+      "/bir remapq terrainslabs:sandwavy-game-schist terrainslabs:sandwavy-schist force",
+      "/bir remapq terrainslabs:sand-game-schist terrainslabs:sand-schist force",
+
+      "/bir remapq terrainslabs:crackedrock-game-migmatite terrainslabs:crackedrock-migmatite force",
+      "/bir remapq terrainslabs:gravel-game-migmatite terrainslabs:gravel-migmatite force",
+      "/bir remapq terrainslabs:rock-game-migmatite terrainslabs:rock-migmatite force",
+      "/bir remapq terrainslabs:sandwavy-game-migmatite terrainslabs:sandwavy-migmatite force",
+      "/bir remapq terrainslabs:sand-game-migmatite terrainslabs:sand-migmatite force",
+
+      "/bir remapq terrainslabs:crackedrock-game-amphibolite terrainslabs:crackedrock-amphibolite force",
+      "/bir remapq terrainslabs:gravel-game-amphibolite terrainslabs:gravel-amphibolite force",
+      "/bir remapq terrainslabs:rock-game-amphibolite terrainslabs:rock-amphibolite force",
+      "/bir remapq terrainslabs:sandwavy-game-amphibolite terrainslabs:sandwavy-amphibolite force",
+      "/bir remapq terrainslabs:sand-game-amphibolite terrainslabs:sand-amphibolite force",
+
+      "/bir remapq terrainslabs:crackedrock-game-rhyolite terrainslabs:crackedrock-rhyolite force",
+      "/bir remapq terrainslabs:gravel-game-rhyolite terrainslabs:gravel-rhyolite force",
+      "/bir remapq terrainslabs:rock-game-rhyolite terrainslabs:rock-rhyolite force",
+      "/bir remapq terrainslabs:sandwavy-game-rhyolite terrainslabs:sandwavy-rhyolite force",
+      "/bir remapq terrainslabs:sand-game-rhyolite terrainslabs:sand-rhyolite force",
+
+      "/bir remapq terrainslabs:crackedrock-game-pumice terrainslabs:crackedrock-pumice force",
+      "/bir remapq terrainslabs:gravel-game-pumice terrainslabs:gravel-pumice force",
+      "/bir remapq terrainslabs:rock-game-pumice terrainslabs:rock-pumice force",
+      "/bir remapq terrainslabs:sandwavy-game-pumice terrainslabs:sandwavy-pumice force",
+      "/bir remapq terrainslabs:sand-game-pumice terrainslabs:sand-pumice force",
+
+      "/bir remapq terrainslabs:crackedrock-game-diorite terrainslabs:crackedrock-diorite force",
+      "/bir remapq terrainslabs:gravel-game-diorite terrainslabs:gravel-diorite force",
+      "/bir remapq terrainslabs:rock-game-diorite terrainslabs:rock-diorite force",
+      "/bir remapq terrainslabs:sandwavy-game-diorite terrainslabs:sandwavy-diorite force",
+      "/bir remapq terrainslabs:sand-game-diorite terrainslabs:sand-diorite force",
+
+      "/bir remapq terrainslabs:crackedrock-game-gabbro terrainslabs:crackedrock-gabbro force",
+      "/bir remapq terrainslabs:gravel-game-gabbro terrainslabs:gravel-gabbro force",
+      "/bir remapq terrainslabs:rock-game-gabbro terrainslabs:rock-gabbro force",
+      "/bir remapq terrainslabs:sandwavy-game-gabbro terrainslabs:sandwavy-gabbro force",
+      "/bir remapq terrainslabs:sand-game-gabbro terrainslabs:sand-gabbro force",
+
+      "/bir remapq terrainslabs:crackedrock-game-jade terrainslabs:crackedrock-jade force",
+      "/bir remapq terrainslabs:gravel-game-jade terrainslabs:gravel-jade force",
+      "/bir remapq terrainslabs:rock-game-jade terrainslabs:rock-jade force",
+      "/bir remapq terrainslabs:sandwavy-game-jade terrainslabs:sandwavy-jade force",
+      "/bir remapq terrainslabs:sand-game-jade terrainslabs:sand-jade force",
+
+      "/bir remapq terrainslabs:crackedrock-game-jasper terrainslabs:crackedrock-jasper force",
+      "/bir remapq terrainslabs:gravel-game-jasper terrainslabs:gravel-jasper force",
+      "/bir remapq terrainslabs:rock-game-jasper terrainslabs:rock-jasper force",
+      "/bir remapq terrainslabs:sandwavy-game-jasper terrainslabs:sandwavy-jasper force",
+      "/bir remapq terrainslabs:sand-game-jasper terrainslabs:sand-jasper force"
+    ],
+    "file": "game:config/remaps.json"
+  }
+]
