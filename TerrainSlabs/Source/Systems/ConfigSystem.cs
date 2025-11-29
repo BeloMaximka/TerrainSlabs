@@ -15,7 +15,7 @@ public enum TerrainSmoothMode
 
 public class ServerSettings
 {
-    public const int ActualVersion = 2;
+    public const int ActualVersion = 3;
 
     public int Version { get; set; } = 0;
 
@@ -31,7 +31,7 @@ public class ServerSettings
     }
 
     public string[] OffsetBlacklist { get; set; } =
-    ["*:lognarrow*", "*:*fence*", "*:*segment*", "*:palisade*", "clutter", "wattle*", "undertangledboughs:*"];
+    ["*:lognarrow*", "*:*fence*", "*:*segment*", "*:palisade*", "clutter", "wattle*", "*:utb*"];
 
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
