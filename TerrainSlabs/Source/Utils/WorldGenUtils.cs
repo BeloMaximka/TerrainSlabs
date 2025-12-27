@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using TerrainSlabs.Source.Systems;
 using TerrainSlabs.Source.Utils.WorldGen;
 using Vintagestory.API.Common;
@@ -120,9 +122,11 @@ public static class WorldGenUtils
                 blockPos.X = request.ChunkX * GlobalConstants.ChunkSize + x;
                 blockPos.Z = request.ChunkZ * GlobalConstants.ChunkSize + z;
                 blockPos.Y = blockAccessor.GetTerrainMapheightAt(blockPos);
+                var yLevels = GetStructureYLevels(request, blockPos.X, blockPos.Z);
 
                 while (blockPos.Y > 10)
                 {
+                    MoveLowerThanStructure(yLevels, blockPos);
                     smoother.TryReplace(blockPos);
                     blockPos.Y--;
                 }
@@ -139,5 +143,27 @@ public static class WorldGenUtils
             );
         }
 #endif
+    }
+
+    private static List<Cuboidi> GetStructureYLevels(IChunkColumnGenerateRequest request, int x, int z)
+    {
+        return request
+            .Chunks[0]
+            .MapChunk.MapRegion.GeneratedStructures.Where(structure =>
+                x >= structure.Location.X1 && x <= structure.Location.X2 && z >= structure.Location.Z1 && z <= structure.Location.Z2
+            )
+            .Select(s => s.Location)
+            .ToList();
+    }
+
+    private static void MoveLowerThanStructure(List<Cuboidi> yLevels, BlockPos pos)
+    {
+        foreach (var location in yLevels)
+        {
+            if (pos.Y >= location.Y1 && pos.Y <= location.Y2)
+            {
+                pos.Y = location.Y1 - 1;
+            }
+        }
     }
 }
