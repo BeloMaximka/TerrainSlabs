@@ -37,7 +37,7 @@ public static class AnimatablePatch
         BlockPos pos = ___pos.AsBlockPos;
         if (
             SlabHelper.ShouldOffset(___capi.World.BlockAccessor.GetBlockId(pos))
-            && SlabHelper.IsSlab(___capi.World.BlockAccessor.GetBlockId(pos.Down()))
+            && SlabHelper.IsSlab(___capi.World.BlockAccessor.GetBlock(pos.Down(), BlockLayersAccess.MostSolid).BlockId)
         )
         {
             ___pos.Y -= 0.5f;

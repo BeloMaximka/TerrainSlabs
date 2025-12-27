@@ -42,6 +42,7 @@ public class MainSystem : ModSystem
 
         api.RegisterBlockBehaviorClass("RestrictTopAttachment", typeof(BlockBehaviorRestrictTopAttachment));
         api.RegisterBlockBehaviorClass("UnstableFallingSlab", typeof(BlockBehaviorUnstableFallingSlab));
+        api.RegisterBlockBehaviorClass("FixAnimatable", typeof(BlockBehaviorFixAnimatable));
 
         RecalculateSlabFlagsCommand.Register(api);
     }

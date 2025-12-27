@@ -7,7 +7,10 @@
       "states": ["game"]
     }
   ],
-  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "behaviors": [
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
+  ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "blockmaterial": "Snow",

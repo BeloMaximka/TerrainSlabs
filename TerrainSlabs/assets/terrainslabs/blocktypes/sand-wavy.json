@@ -10,7 +10,8 @@
         "fallSidewaysChance": 0.75
       }
     },
-    { "name": "RestrictTopAttachment" }
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
   ],
   "variantgroups": [
     {

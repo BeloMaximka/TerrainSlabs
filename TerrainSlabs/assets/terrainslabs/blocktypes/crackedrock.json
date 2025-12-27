@@ -6,7 +6,8 @@
       "name": "UnstableRock",
       "properties": { "collapsedBlock": "game:crackedrock-{rock}" }
     },
-    { "name": "RestrictTopAttachment" }
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
   ],
   "storageFlags": 5,
   "attributes": {

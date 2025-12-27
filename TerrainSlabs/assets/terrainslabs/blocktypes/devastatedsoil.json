@@ -1,7 +1,10 @@
 {
   "code": "devastatedsoil",
   "class": "BlockTerrainSlab",
-  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "behaviors": [
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
+  ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "attributes": {
     "canChisel": false,

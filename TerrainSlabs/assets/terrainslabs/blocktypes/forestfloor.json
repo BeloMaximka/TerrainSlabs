@@ -10,7 +10,8 @@
   ],
   "behaviors": [
     { "name": "MyceliumHost" },
-    { "name": "RestrictTopAttachment" }
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
   ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },

@@ -27,7 +27,7 @@ public static class SlabHelper
             {
                 isSlab[block.BlockId] = true;
             }
-            else if (ShouldOffset(api, block, blacklist))
+            else if (ShouldOffset(block, blacklist))
             {
                 shoulfOffset[block.BlockId] = true;
             }
@@ -56,12 +56,21 @@ public static class SlabHelper
 
     public static double GetYOffsetValue(IBlockAccessor accessor, BlockPos pos)
     {
-        return GetYOffsetFromBlocks(accessor.GetBlock(pos), accessor.GetBlockBelow(pos));
+        return GetYOffsetFromBlocks(accessor.GetBlock(pos), accessor.GetBlockBelow(pos, 1, BlockLayersAccess.MostSolid));
     }
 
     public static double GetYOffsetFromBlocks(Block block, Block blockBelow)
     {
-        if (SlabHelper.ShouldOffset(block.BlockId) && SlabHelper.IsSlab(blockBelow.BlockId))
+        if (ShouldOffset(block.BlockId) && IsSlab(blockBelow.BlockId))
+        {
+            return -0.5d;
+        }
+        return 0;
+    }
+
+    public static double GetYOffsetFromBlocksWithFluids(Block block, Block blockBelow, Block fluidBlockBelow)
+    {
+        if (!fluidBlockBelow.SideSolid[BlockFacing.indexUP] && ShouldOffset(block.BlockId) && IsSlab(blockBelow.BlockId))
         {
             return -0.5d;
         }
@@ -71,7 +80,7 @@ public static class SlabHelper
     /// <summary>
     /// This check is expensive
     /// </summary>
-    private static bool ShouldOffset(ICoreAPI api, Block block, IEnumerable<AssetLocation> blacklist)
+    private static bool ShouldOffset(Block block, IEnumerable<AssetLocation> blacklist)
     {
         if (block.SideSolid.Any)
         {

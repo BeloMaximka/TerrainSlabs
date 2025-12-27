@@ -22,7 +22,7 @@ public static class DecorOverlayPatch
 {
     [HarmonyTranspiler]
     [HarmonyPatch(typeof(SurfaceLayerTesselator), nameof(SurfaceLayerTesselator.DrawBlockFace))]
-    private static IEnumerable<CodeInstruction> FixDecorForSlabs2(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+    public static IEnumerable<CodeInstruction> FixDecorForSlabs(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
         CodeMatcher matcher = new CodeMatcher(instructions, generator)
             .DeclareLocal(typeof(DecorOffset), out LocalBuilder decorOffset)

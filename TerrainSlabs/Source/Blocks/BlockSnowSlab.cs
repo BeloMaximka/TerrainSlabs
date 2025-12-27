@@ -39,18 +39,6 @@ public class BlockSnowSlab : Block
         return 0;
     }
 
-    public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack? byItemStack = null)
-    {
-        BlockTerrainSlab.FixAnimatableOffset(world, blockPos, -0.5f);
-        base.OnBlockPlaced(world, blockPos, byItemStack);
-    }
-
-    public override void OnBlockBroken(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropQuantityMultiplier = 1)
-    {
-        BlockTerrainSlab.FixAnimatableOffset(world, pos, 0.5f);
-        base.OnBlockBroken(world, pos, byPlayer, dropQuantityMultiplier);
-    }
-
     public override bool CanAttachBlockAt(
         IBlockAccessor blockAccessor,
         Block block,

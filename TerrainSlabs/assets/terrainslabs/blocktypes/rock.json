@@ -28,7 +28,8 @@
         }
       }
     },
-    { "name": "RestrictTopAttachment" }
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
   ],
   "storageFlags": 5,
   "attributes": {

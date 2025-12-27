@@ -15,7 +15,8 @@
         "fallSound": "game:effect/rockslide",
         "dustIntensity": 0
       }
-    }
+    },
+    { "name": "FixAnimatable" }
   ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },

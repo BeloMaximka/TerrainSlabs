@@ -9,7 +9,10 @@
     { "code": "type", "states": ["blue", "red", "fire"] },
     { "code": "grasscoverage", "states": ["none", "verysparse"] }
   ],
-  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "behaviors": [
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
+  ],
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "drawtype": "TopSoil",
   "renderpass": "TopSoil",

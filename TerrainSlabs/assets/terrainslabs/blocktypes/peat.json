@@ -1,7 +1,10 @@
 {
   "code": "peat",
   "class": "BlockSoilDepositSlab",
-  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "behaviors": [
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
+  ],
   "variantgroups": [
     {
       "code": "domain",

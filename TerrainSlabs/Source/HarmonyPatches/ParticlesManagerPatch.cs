@@ -69,7 +69,7 @@ public static class ParticlesManagerPatch
     {
         cachedPos ??= new(Dimensions.NormalWorld);
         cachedPos.Set((int)particles.Pos.X, (int)particles.Pos.Y - 1, (int)particles.Pos.Z);
-        if (SlabHelper.IsSlab(manager.BlockAccess.GetBlockId(cachedPos)))
+        if (SlabHelper.IsSlab(manager.BlockAccess.GetBlock(cachedPos, BlockLayersAccess.MostSolid).BlockId))
         {
             if (particles is AdvancedParticleProperties advancedParticle)
             {

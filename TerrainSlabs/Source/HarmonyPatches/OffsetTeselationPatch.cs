@@ -26,9 +26,10 @@ public static class OffsetTeselationPatch
     )]
     public static IEnumerable<CodeInstruction> HandleOffsetBlocks(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetFromBlocks));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetFromBlocksWithFluids));
 
         FieldInfo blockListField = AccessTools.Field(typeof(ChunkTesselator), "currentChunkBlocksExt");
+        FieldInfo fluidBlockListField = AccessTools.Field(typeof(ChunkTesselator), "currentChunkFluidBlocksExt");
         FieldInfo varsField = AccessTools.Field(typeof(ChunkTesselator), "vars");
         FieldInfo extIndex3dField = AccessTools.Field(varsField.FieldType, "extIndex3d");
         FieldInfo lyField = AccessTools.Field(varsField.FieldType, "ly");
@@ -44,7 +45,9 @@ public static class OffsetTeselationPatch
             .ThrowIfNotMatchForward("Could not find this.vars.finalY = (float) this.vars.ly")
             .Advance(1)
             .InsertAndAdvance(
+                // current block
                 new CodeInstruction(OpCodes.Ldarg_1),
+                // block below
                 new CodeInstruction(OpCodes.Ldarg_0),
                 new CodeInstruction(OpCodes.Ldfld, blockListField),
                 new CodeInstruction(OpCodes.Ldarg_0),
@@ -55,6 +58,18 @@ public static class OffsetTeselationPatch
                 new CodeInstruction(OpCodes.Ldelem_I4),
                 new CodeInstruction(OpCodes.Add),
                 new CodeInstruction(OpCodes.Ldelem_Ref),
+                // fluid block below
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldfld, fluidBlockListField),
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldfld, varsField),
+                new CodeInstruction(OpCodes.Ldfld, extIndex3dField),
+                new CodeInstruction(OpCodes.Ldsfld, moveIndexField),
+                new CodeInstruction(OpCodes.Ldc_I4_5),
+                new CodeInstruction(OpCodes.Ldelem_I4),
+                new CodeInstruction(OpCodes.Add),
+                new CodeInstruction(OpCodes.Ldelem_Ref),
+                // call method
                 new CodeInstruction(OpCodes.Call, method),
                 new CodeInstruction(OpCodes.Add)
             )

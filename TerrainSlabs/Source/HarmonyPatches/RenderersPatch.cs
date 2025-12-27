@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Client;
+using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
@@ -85,7 +86,7 @@ public static class RenderersPatch
 
     private static Matrixf OffsetMatrix(Matrixf matrix, ICoreClientAPI api, BlockPos pos)
     {
-        if (SlabHelper.IsSlab(api.World.BlockAccessor.GetBlockBelow(pos).BlockId))
+        if (SlabHelper.IsSlab(api.World.BlockAccessor.GetBlockBelow(pos, 1, BlockLayersAccess.MostSolid).BlockId))
         {
             matrix.Translate(0, -0.5f, 0);
         }

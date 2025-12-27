@@ -8,7 +8,10 @@
     },
     { "loadFromProperties": "abstract/grasscoverage" }
   ],
-  "behaviors": [{ "name": "RestrictTopAttachment" }],
+  "behaviors": [
+    { "name": "RestrictTopAttachment" },
+    { "name": "FixAnimatable" }
+  ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "drawtype": "TopSoil",
