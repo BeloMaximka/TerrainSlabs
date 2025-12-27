@@ -4,7 +4,10 @@
   "behaviors": [
     {
       "name": "UnstableRock",
-      "properties": { "collapsedBlock": "game:crackedrock-{rock}" }
+      "properties": {
+        "collapsedBlock": "game:crackedrock-{rock}",
+        "fallSound": "game:effect/rockslide"
+      }
     },
     { "name": "RestrictTopAttachment" },
     { "name": "FixAnimatable" }

@@ -7,6 +7,7 @@
       "propertiesByType": {
         "@rock-(claystone|sandstone|shale|conglomerate|limestone|chert|chalk)": {
           "collapsedBlock": "game:crackedrock-{rock}",
+          "fallSound": "game:effect/rockslide",
           "collapseChance": 0.5,
           "maxSupportDistance": 2,
           "maxCollapseDistance": 1,
@@ -14,6 +15,7 @@
         },
         "@rock-(bauxite|slate|phyllite)": {
           "collapsedBlock": "game:crackedrock-{rock}",
+          "fallSound": "game:effect/rockslide",
           "collapseChance": 0.25,
           "maxSupportDistance": 4,
           "maxCollapseDistance": 2,
@@ -21,6 +23,7 @@
         },
         "*": {
           "collapsedBlock": "game:crackedrock-{rock}",
+          "fallSound": "game:effect/rockslide",
           "collapseChance": 0.2,
           "maxSupportDistance": 6,
           "maxCollapseDistance": 3,
