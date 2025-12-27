@@ -1,14 +1,14 @@
 [
   {
-    "op": "move",
-	"frompath": "/attributes/panningDrops/@(bonysoil|bonysoil-.*)",
+    "op": "copy",
+    "frompath": "/attributes/panningDrops/@(bonysoil|bonysoil-.*)",
     "path": "/attributes/panningDrops/@(.+:)?(bonysoil|bonysoil-.*)",
     "file": "game:blocktypes/wood/pan.json",
     "side": "Server"
   },
   {
-    "op": "move",
-	"frompath": "/attributes/panningDrops/@(sand|gravel|sandwavy)-.*",
+    "op": "copy",
+    "frompath": "/attributes/panningDrops/@(sand|gravel|sandwavy)-.*",
     "path": "/attributes/panningDrops/@(.+:)?(sand|gravel|sandwavy)-.*",
     "file": "game:blocktypes/wood/pan.json",
     "side": "Server"

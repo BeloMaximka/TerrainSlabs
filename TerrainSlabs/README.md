@@ -7,4 +7,4 @@
 
 # Bugs
 
-- Structures made of stones are affected in unpleasant ways
+- Panning drops from other mods like Better Ruins are not added to terrain slabs (had to use "copy" operation to avoid JSON patching errors)
