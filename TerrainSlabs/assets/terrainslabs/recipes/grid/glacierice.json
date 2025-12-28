@@ -3,7 +3,7 @@
     "ingredientPattern": "B,B",
     "width": 2,
     "height": 1,
-    "shapeless": true,
+    "shapeless": false,
     "ingredients": {
       "B": {
         "type": "block",
@@ -20,7 +20,7 @@
     "ingredientPattern": "B",
     "width": 1,
     "height": 1,
-    "shapeless": true,
+    "shapeless": false,
     "ingredients": {
       "B": {
         "type": "block",
