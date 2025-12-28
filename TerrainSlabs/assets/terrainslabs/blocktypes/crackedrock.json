@@ -9,7 +9,8 @@
         "fallSound": "game:effect/rockslide"
       }
     },
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "storageFlags": 5,

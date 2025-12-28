@@ -31,7 +31,8 @@
         }
       }
     },
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "storageFlags": 5,

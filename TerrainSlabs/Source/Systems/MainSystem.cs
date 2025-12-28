@@ -40,9 +40,10 @@ public class MainSystem : ModSystem
         api.RegisterBlockClass(nameof(BlockSoilSlab), typeof(BlockSoilSlab));
         api.RegisterBlockClass(nameof(BlockTerrainSlab), typeof(BlockTerrainSlab));
 
-        api.RegisterBlockBehaviorClass("RestrictTopAttachment", typeof(BlockBehaviorRestrictTopAttachment));
+        api.RegisterBlockBehaviorClass("SlabTopPlacement", typeof(BlockBehaviorSlabTopPlacement));
         api.RegisterBlockBehaviorClass("UnstableFallingSlab", typeof(BlockBehaviorUnstableFallingSlab));
         api.RegisterBlockBehaviorClass("FixAnimatable", typeof(BlockBehaviorFixAnimatable));
+        api.RegisterBlockBehaviorClass("NameFromFullBlock", typeof(BlockBehaviorNameFromFullBlock));
 
         RecalculateSlabFlagsCommand.Register(api);
     }

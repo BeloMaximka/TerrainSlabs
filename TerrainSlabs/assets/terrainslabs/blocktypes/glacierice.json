@@ -8,7 +8,8 @@
     }
   ],
   "behaviors": [
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "shape": { "base": "game:block/basic/slab/slab-down" },

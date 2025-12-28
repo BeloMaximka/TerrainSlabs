@@ -21,40 +21,9 @@ public class BlockGlacierIceSlab : Block
         }
     }
 
-    public override string GetHeldItemName(ItemStack itemStack)
-    {
-        return fullBlock?.GetHeldItemName(itemStack) ?? base.GetHeldItemName(itemStack);
-    }
-
-    public override string GetPlacedBlockName(IWorldAccessor world, BlockPos pos)
-    {
-        return fullBlock?.GetPlacedBlockName(world, pos) ?? base.GetPlacedBlockName(world, pos);
-    }
-
     public override bool ShouldMergeFace(int facingIndex, Block neighbourBlock, int intraChunkIndex3d)
     {
         return neighbourBlock == this || neighbourBlock == fullBlock;
-    }
-
-    public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos)
-    {
-        return 0;
-    }
-
-    public override bool CanAttachBlockAt(
-        IBlockAccessor blockAccessor,
-        Block block,
-        BlockPos pos,
-        BlockFacing blockFace,
-        Cuboidi? attachmentArea = null
-    )
-    {
-        if (blockFace == BlockFacing.UP)
-        {
-            return SlabHelper.ShouldOffset(block.Id);
-        }
-
-        return base.CanAttachBlockAt(blockAccessor, block, pos, blockFace, attachmentArea);
     }
 
     public override bool CanAcceptFallOnto(IWorldAccessor world, BlockPos pos, Block fallingBlock, TreeAttribute blockEntityAttributes)

@@ -16,6 +16,8 @@
         "dustIntensity": 0
       }
     },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },

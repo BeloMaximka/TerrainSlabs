@@ -10,7 +10,8 @@
   ],
   "behaviors": [
     { "name": "MyceliumHost" },
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },

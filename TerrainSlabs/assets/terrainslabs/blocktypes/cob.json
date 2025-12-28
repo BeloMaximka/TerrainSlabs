@@ -9,7 +9,8 @@
     { "loadFromProperties": "abstract/grasscoverage" }
   ],
   "behaviors": [
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },

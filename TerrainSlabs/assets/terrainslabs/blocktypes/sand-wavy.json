@@ -10,7 +10,8 @@
         "fallSidewaysChance": 0.75
       }
     },
-    { "name": "RestrictTopAttachment" },
+    { "name": "NameFromFullBlock" },
+    { "name": "SlabTopPlacement" },
     { "name": "FixAnimatable" }
   ],
   "variantgroups": [
