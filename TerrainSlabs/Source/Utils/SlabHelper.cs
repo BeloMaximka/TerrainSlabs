@@ -62,11 +62,7 @@ public static class SlabHelper
 
     public static double GetYOffsetFromBlocks(Block block, Block blockBelow)
     {
-        if (
-            IsSlab(blockBelow.BlockId)
-            && ShouldOffset(block.BlockId)
-            && block.DrawType != EnumDrawType.SurfaceLayer // fix decor offset
-        )
+        if (IsSlab(blockBelow.BlockId) && ShouldOffset(block.BlockId))
         {
             return -0.5d;
         }
@@ -75,12 +71,7 @@ public static class SlabHelper
 
     public static double GetYOffsetFromBlocksWithFluids(Block block, Block blockBelow, Block fluidBlockBelow)
     {
-        if (
-            IsSlab(blockBelow.BlockId)
-            && ShouldOffset(block.BlockId)
-            && block.DrawType != EnumDrawType.SurfaceLayer // fix decor offset
-            && !fluidBlockBelow.SideSolid[BlockFacing.indexUP]
-        )
+        if (IsSlab(blockBelow.BlockId) && ShouldOffset(block.BlockId) && !fluidBlockBelow.SideSolid[BlockFacing.indexUP])
         {
             return -0.5d;
         }
@@ -94,6 +85,24 @@ public static class SlabHelper
     {
         if (block.SideSolid.Any)
         {
+            return false;
+        }
+
+        if (block.DrawType == EnumDrawType.SurfaceLayer)
+        {
+            // decors
+            return false;
+        }
+
+        if (block is BlockGroundAndSideAttachable && !block.Code.Path.EndsWith("up"))
+        {
+            // torches, oil lamps etc
+            return false;
+        }
+
+        if (block.BlockBehaviors.Any(behavior => behavior is BlockBehaviorHorizontalAttachable))
+        {
+            // toolracks, shelves etc
             return false;
         }
 
