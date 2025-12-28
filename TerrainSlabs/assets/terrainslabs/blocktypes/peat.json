@@ -2,9 +2,7 @@
   "code": "peat",
   "class": "BlockSoilDepositSlab",
   "behaviors": [
-    { "name": "NameFromFullBlock" },
-    { "name": "SlabTopPlacement" },
-    { "name": "FixAnimatable" }
+    { "name": "NameFromFullBlock" }
   ],
   "variantgroups": [
     {
@@ -70,7 +68,6 @@
   },
   "sideSolid": {
     "all": false,
-    "up": true,
     "down": true
   },
   "emitSideAo": { "all": false },

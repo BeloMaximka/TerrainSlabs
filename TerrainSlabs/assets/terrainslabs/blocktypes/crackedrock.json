@@ -9,9 +9,7 @@
         "fallSound": "game:effect/rockslide"
       }
     },
-    { "name": "NameFromFullBlock" },
-    { "name": "SlabTopPlacement" },
-    { "name": "FixAnimatable" }
+    { "name": "NameFromFullBlock" }
   ],
   "storageFlags": 5,
   "attributes": {
@@ -162,7 +160,6 @@
   },
   "sideSolid": {
     "all": false,
-    "up": true,
     "down": true
   },
   "emitSideAo": { "all": false },

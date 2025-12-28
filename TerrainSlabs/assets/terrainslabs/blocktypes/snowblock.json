@@ -8,9 +8,7 @@
     }
   ],
   "behaviors": [
-    { "name": "NameFromFullBlock" },
-    { "name": "SlabTopPlacement" },
-    { "name": "FixAnimatable" }
+    { "name": "NameFromFullBlock" }
   ],
   "creativeinventory": { "general": ["*"], "terrain": ["*"] },
   "shape": { "base": "game:block/basic/slab/slab-down" },
@@ -42,7 +40,6 @@
   },
   "sideSolid": {
     "all": false,
-    "up": true,
     "down": true
   },
   "emitSideAo": { "all": false },

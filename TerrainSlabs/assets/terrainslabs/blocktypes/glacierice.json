@@ -8,9 +8,7 @@
     }
   ],
   "behaviors": [
-    { "name": "NameFromFullBlock" },
-    { "name": "SlabTopPlacement" },
-    { "name": "FixAnimatable" }
+    { "name": "NameFromFullBlock" }
   ],
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "attributes": {
@@ -35,7 +33,6 @@
   },
   "sideSolid": {
     "all": false,
-    "up": true,
     "down": true
   },
   "emitSideAo": { "all": false },

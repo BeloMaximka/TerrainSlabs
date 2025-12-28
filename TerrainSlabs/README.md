@@ -12,6 +12,7 @@
 - Stackable ground storage (fireclay bricks, firewood etc) is floating on slabs
 - Snowed grass ontop of lake ice with a terrain slab should be inside the ice, but has its snow layer on top of the ice
 - Bamboo and redwood don't replace the slabs underneath them with full blocks when they grow from a sapling
+- Collision boxes are not offset for blocks that override GetCollisionBoxes() (BlockGroundStorage for example)
 
 # Test cases
 

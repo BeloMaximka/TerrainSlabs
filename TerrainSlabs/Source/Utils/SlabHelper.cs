@@ -24,7 +24,7 @@ public static class SlabHelper
         shoulfOffset = new(api.World.Blocks.Count);
         foreach (Block block in api.World.Blocks)
         {
-            if (block.Code.Domain == "terrainslabs")
+            if (block.Shape.Base.Path == "block/basic/slab/slab-down")
             {
                 isSlab[block.BlockId] = true;
             }

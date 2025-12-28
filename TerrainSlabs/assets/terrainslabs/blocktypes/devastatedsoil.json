@@ -2,9 +2,7 @@
   "code": "devastatedsoil",
   "class": "BlockTerrainSlab",
   "behaviors": [
-    { "name": "NameFromFullBlock" },
-    { "name": "SlabTopPlacement" },
-    { "name": "FixAnimatable" }
+    { "name": "NameFromFullBlock" }
   ],
   "creativeinventory": { "general": ["*"], "flora": ["*"], "terrain": ["*"] },
   "attributes": {
@@ -70,7 +68,6 @@
   },
   "sideSolid": {
     "all": false,
-    "up": true,
     "down": true
   },
   "emitSideAo": { "all": false },

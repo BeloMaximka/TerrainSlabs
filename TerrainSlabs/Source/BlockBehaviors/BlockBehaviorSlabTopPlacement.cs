@@ -18,7 +18,6 @@ public class BlockBehaviorSlabTopPlacement(Block block) : BlockBehavior(block)
         if (blockFace == BlockFacing.UP)
         {
             handling = EnumHandling.PreventSubsequent;
-
             return SlabHelper.ShouldOffset(block.Id);
         }
 
@@ -28,6 +27,6 @@ public class BlockBehaviorSlabTopPlacement(Block block) : BlockBehavior(block)
     public override float GetLiquidBarrierHeightOnSide(BlockFacing face, BlockPos pos, ref EnumHandling handled)
     {
         handled = EnumHandling.PreventSubsequent;
-        return 0;
+        return 0f;
     }
 }
