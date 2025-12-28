@@ -63,7 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PlaceOnSlabs\PlaceOnSlabs\PlaceOnSlabs.csproj" />
+    <ProjectReference Include="..\PlaceOnSlabs\PlaceOnSlabs\PlaceOnSlabs.csproj" Private="false"/>
   </ItemGroup>
 
 </Project>

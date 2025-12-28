@@ -69,7 +69,7 @@ internal class ConfigSystem : ModSystem
         }
         catch (Exception e)
         {
-            Mod.Logger.Warning("Could not load config from {0}, loading default settings instead.", fileName);
+            Mod.Logger.Warning("[terrainslabs] Could not load config from {0}, loading default settings instead.", fileName);
             Mod.Logger.Warning(e);
         }
         TerrainSlabsGlobals.DebugMode = ServerSettings.DebugMode;

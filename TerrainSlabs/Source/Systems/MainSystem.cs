@@ -43,7 +43,7 @@ public class MainSystem : ModSystem
     {
         WorldGenUtils.RegisterSlabReplacementWorldGenEvent(api);
 
-        AlterTerrainCommand.Register(api);
+        SmoothTerrainCommand.Register(api);
         SmoothBlockCommand.Register(api);
     }
 

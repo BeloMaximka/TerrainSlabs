@@ -43,7 +43,7 @@ internal class TerrainUnsmoother(ICoreAPI api, IBlockAccessor accessor) : ITerra
                     Block? originalBlock = api.World.GetBlock(originalCode);
                     if (originalBlock is null)
                     {
-                        api.Logger.Warning("Unable to find slab block alternative with code {0}", originalCode);
+                        api.Logger.Warning("[terrainslabs] Unable to find slab block alternative with code {0}", originalCode);
                         continue;
                     }
                     result.Add(resultBlock.Id, originalBlock.Id);

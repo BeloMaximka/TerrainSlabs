@@ -8,7 +8,7 @@ using Vintagestory.API.Server;
 
 namespace TerrainSlabs.Source.Commands;
 
-public static class AlterTerrainCommand
+public static class SmoothTerrainCommand
 {
     public static void Register(ICoreServerAPI api)
     {
