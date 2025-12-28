@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TerrainSlabs.Source.Systems;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -61,7 +62,11 @@ public static class SlabHelper
 
     public static double GetYOffsetFromBlocks(Block block, Block blockBelow)
     {
-        if (ShouldOffset(block.BlockId) && IsSlab(blockBelow.BlockId))
+        if (
+            IsSlab(blockBelow.BlockId)
+            && ShouldOffset(block.BlockId)
+            && block.DrawType != EnumDrawType.SurfaceLayer // fix decor offset
+        )
         {
             return -0.5d;
         }
@@ -70,7 +75,12 @@ public static class SlabHelper
 
     public static double GetYOffsetFromBlocksWithFluids(Block block, Block blockBelow, Block fluidBlockBelow)
     {
-        if (!fluidBlockBelow.SideSolid[BlockFacing.indexUP] && ShouldOffset(block.BlockId) && IsSlab(blockBelow.BlockId))
+        if (
+            IsSlab(blockBelow.BlockId)
+            && ShouldOffset(block.BlockId)
+            && block.DrawType != EnumDrawType.SurfaceLayer // fix decor offset
+            && !fluidBlockBelow.SideSolid[BlockFacing.indexUP]
+        )
         {
             return -0.5d;
         }

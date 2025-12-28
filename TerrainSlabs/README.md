@@ -8,6 +8,10 @@
 # Bugs
 
 - Panning drops from other mods like Better Ruins are not added to terrain slabs (had to use "copy" operation to avoid JSON patching errors)
+- Incorrect break overlay when breaking an ice lake block with a terrain slab inside
+- Stackable ground storage (fireclay bricks, firewood etc) is floating on slabs
+- Snowed grass ontop of lake ice with a terrain slab should be inside the ice, but has its snow layer on top of the ice
+- Bamboo and redwood don't replace the slabs underneath them with full blocks when they grow from a sapling
 
 # Test cases
 
@@ -32,3 +36,12 @@
 **Expected**: chest should be placed ontop of ice
 **Expected**: chest should move down after breaking the ice 
 **Expected**: animations should be played on the correct y-level
+
+## Test suit: decors
+### Verify decor offset
+#### Steps
+1. Place a terrain slab 
+2. Place a full block above it
+3. Place a decor layer block on the side of the full block
+
+**Expected**: decor should fully cover the side of the full block and not be offset lower/higher
