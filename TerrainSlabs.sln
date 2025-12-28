@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainSlabs", "TerrainSlabs\TerrainSlabs.csproj", "{3F22525B-450E-4271-A972-2B8F60DBC4CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeBuild", "ZZCakeBuild\CakeBuild.csproj", "{17830DDD-6AE2-4A9C-984B-AF5DA77FFFE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceOnSlabs", "PlaceOnSlabs\PlaceOnSlabs\PlaceOnSlabs.csproj", "{4D948DC2-B0CF-9F4B-7203-24ECB482A529}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{17830DDD-6AE2-4A9C-984B-AF5DA77FFFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17830DDD-6AE2-4A9C-984B-AF5DA77FFFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17830DDD-6AE2-4A9C-984B-AF5DA77FFFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D948DC2-B0CF-9F4B-7203-24ECB482A529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D948DC2-B0CF-9F4B-7203-24ECB482A529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D948DC2-B0CF-9F4B-7203-24ECB482A529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D948DC2-B0CF-9F4B-7203-24ECB482A529}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

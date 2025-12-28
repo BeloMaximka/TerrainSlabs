@@ -1,6 +1,5 @@
 ﻿using System;
 using TerrainSlabs.Source.Commands;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
@@ -30,9 +29,6 @@ public class ServerSettings
         set => SetField(ref smoothMode, value, SmoothModeChanged);
     }
 
-    public string[] OffsetBlacklist { get; set; } =
-    ["*:lognarrow*", "*:*fence*", "*:*segment*", "*:palisade*", "clutter", "wattle*", "*:utb*"];
-
     private static void SetField<T>(ref T field, T value, Action<T>? onChanged)
     {
         if (Equals(field, value))
@@ -54,15 +50,9 @@ internal class ConfigSystem : ModSystem
         ChangeGenerationModeCommand.Register(api);
     }
 
-    public override void StartClientSide(ICoreClientAPI api)
-    {
-        ServerSettings.OffsetBlacklist = api.World.Config.GetString(TerrainSlabsGlobals.WorldConfigName, string.Empty).Split('|');
-    }
-
     public void SaveConfig(ICoreServerAPI api)
     {
         api.StoreModConfig<ServerSettings>(ServerSettings, fileName);
-        api.World.Config.SetString(TerrainSlabsGlobals.WorldConfigName, string.Join('|', ServerSettings.OffsetBlacklist));
     }
 
     private void LoadConfig(ICoreServerAPI api)
