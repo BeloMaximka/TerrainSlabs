@@ -14,7 +14,7 @@
   "shape": { "base": "game:block/basic/slab/slab-down" },
   "blockmaterial": "Snow",
   "attributes": {
-    "snowballableDecrementedBlockCode": "snowlayer-3"
+    "snowballableDecrementedBlockCode": "game:snowlayer-3"
   },
   "textures": {
     "all": {
