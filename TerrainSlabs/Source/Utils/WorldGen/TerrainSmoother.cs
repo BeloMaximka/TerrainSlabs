@@ -84,6 +84,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
 
         if ( // beach generation
             liquidBlock.BlockId != 0
+            && solidBlock.EntityClass == null // TODO: figure out how to move blocks with BlockEntities
             && SlabHelper.ShouldOffset(solidBlock.BlockId)
             && accessor.GetBlockAbove(pos, 1, BlockLayersAccess.Solid).BlockId == 0
             && terrainReplacementMap.TryGetValue(accessor.GetBlockBelow(pos).BlockId, out int slabId)
