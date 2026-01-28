@@ -94,7 +94,7 @@ public static class SmoothTerrainCommand
                     continue;
                 }
 
-                position.Y = bulkAccessor.GetTerrainMapheightAt(position);
+                position.Y = bulkAccessor.GetTerrainMapheightAt(position) + 1; // +1 so we revert beaches
 
                 if (replacer.TryReplace(position))
                 {

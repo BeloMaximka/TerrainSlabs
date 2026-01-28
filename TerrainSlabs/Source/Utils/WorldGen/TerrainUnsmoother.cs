@@ -15,7 +15,7 @@ internal class TerrainUnsmoother(ICoreAPI api, IBlockAccessor accessor) : ITerra
         {
             if (accessor.GetBlock(pos, BlockLayersAccess.Fluid).BlockId != 0)
             {
-                accessor.SetBlock(accessor.GetBlockAbove(pos).BlockId, pos);
+                accessor.SetBlock(accessor.GetBlockAbove(pos, 1, BlockLayersAccess.Solid).BlockId, pos);
                 accessor.SetBlock(0, pos.Up());
                 pos.Down();
             }
