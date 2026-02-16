@@ -23,6 +23,7 @@ public class MainSystem : ModSystem
         {
             harmonyInstance.PatchAll();
             CatchLedgePatch.ApplyIfEnabled(api, harmonyInstance);
+            DanaTweaksPatch.ApplyIfEnabled(api, harmonyInstance);
         }
     }
 
