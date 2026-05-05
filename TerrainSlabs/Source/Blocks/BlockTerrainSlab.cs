@@ -45,7 +45,7 @@ public class BlockTerrainSlab : Block
         TreeAttribute blockEntityAttributes
     )
     {
-        if (!SlabHelper.ShouldOffset(block.Id) && fullBlock is not null)
+        if (!SlabHelper.shouldOffset[block.Id] && fullBlock is not null)
         {
             world.BlockAccessor.SetBlock(fullBlock?.BlockId ?? slab.BlockId, pos);
         }

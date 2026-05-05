@@ -34,6 +34,6 @@ public static class CatchLedgePatch
 
     private static void IsFullCubePostfix(ref bool __result, Block b)
     {
-        __result = __result || SlabHelper.IsSlab(b.BlockId);
+        __result = __result || SlabHelper.offset[b.BlockId] > 0;
     }
 }

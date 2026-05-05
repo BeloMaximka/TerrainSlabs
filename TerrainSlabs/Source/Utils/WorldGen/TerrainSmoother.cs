@@ -66,7 +66,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
 
     private bool ShouldOffset(BlockPos pos)
     {
-        return SlabHelper.ShouldOffset(accessor.GetBlockId(pos));
+        return SlabHelper.shouldOffset[accessor.GetBlockId(pos)];
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
         if ( // beach generation
             liquidBlock.BlockId != 0
             && solidBlock.EntityClass == null // TODO: figure out how to move blocks with BlockEntities
-            && SlabHelper.ShouldOffset(solidBlock.BlockId)
+            && SlabHelper.shouldOffset[solidBlock.BlockId]
             && accessor.GetBlockAbove(pos, 1, BlockLayersAccess.Solid).BlockId == 0
             && terrainReplacementMap.TryGetValue(accessor.GetBlockBelow(pos).BlockId, out int slabId)
         )
@@ -95,7 +95,7 @@ public class TerrainSmoother(ICoreAPI api, IBlockAccessor accessor) : ITerrainRe
             return false;
         }
 
-        return !SlabHelper.IsSlab(solidBlock.BlockId)
+        return SlabHelper.offset[solidBlock.BlockId] == 0
             && !solidBlock.SideSolid[faceIndex]
             && liquidBlock.BlockId == 0
             && solidBlock is not BlockMicroBlock;
