@@ -6,8 +6,8 @@
     "BeloMaximka"
   ],
   "description": "Lets you place stuff on slabs",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "dependencies": {
-    "game": "1.22.0"
+    "game": "1.22.2"
   }
 }
