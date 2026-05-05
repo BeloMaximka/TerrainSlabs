@@ -25,6 +25,7 @@ public static class RenderersPatch
             typeof(ClayFormRenderer),
             typeof(PotInFirepitRenderer),
             typeof(IngotMoldRenderer),
+            typeof(BlockEntitySignRenderer)
         ];
 
         // Containers Bundle compatibility
@@ -73,6 +74,9 @@ public static class RenderersPatch
 
         matcher.Start(); // reset to beginning for each search
 
+        // We want to handle an edge case for wall sign but don't want to waste CPU for other renderers
+        string patchMethodName = rendererType == typeof(BlockEntitySignRenderer) ? nameof(OffsetMatrixForSigns) : nameof(OffsetMatrix);
+
         while (true) // append to all matrix.Identity/Set()
         {
             matcher.MatchEndForward(CodeMatch.Calls(target));
@@ -87,17 +91,28 @@ public static class RenderersPatch
                     new CodeInstruction(OpCodes.Ldfld, apiField),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     CodeInstruction.LoadField(rendererType, "pos"),
-                    CodeInstruction.Call(typeof(RenderersPatch), nameof(OffsetMatrix))
+                    CodeInstruction.Call(typeof(RenderersPatch), patchMethodName)
                 );
         }
     }
 
+    private static Matrixf OffsetMatrixForSigns(Matrixf matrix, ICoreClientAPI api, BlockPos pos)
+    {
+        var signCode = api.World.BlockAccessor.GetBlock(pos).Code.Path;
+        // fast check for wall signs, sign-[w]all
+        //                            01234 5 678
+        if (signCode.Length >= 6 && signCode[5] == 'w')
+        {
+            return matrix; // wall signs are blacklisted so we don't want to offset anything
+        }
+
+        return OffsetMatrix(matrix, api, pos);
+    }
+
     private static Matrixf OffsetMatrix(Matrixf matrix, ICoreClientAPI api, BlockPos pos)
     {
-        if (SlabHelper.IsSlab(api.World.BlockAccessor.GetBlockBelow(pos, 1, BlockLayersAccess.MostSolid).BlockId))
-        {
-            matrix.Translate(0, -0.5f, 0);
-        }
+        double offset = SlabHelper.GetYOffset(api.World.BlockAccessor.GetBlockBelow(pos, 1, BlockLayersAccess.MostSolid).BlockId);
+        matrix.Translate(0, offset, 0);
         return matrix;
     }
 }

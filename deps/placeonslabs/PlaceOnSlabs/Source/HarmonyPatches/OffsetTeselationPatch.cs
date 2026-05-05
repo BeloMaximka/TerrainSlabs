@@ -25,7 +25,7 @@ public static class OffsetTeselationPatch
     )]
     public static IEnumerable<CodeInstruction> HandleOffsetBlocks(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetFromBlocksWithFluids));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetPlacementYOffsetAtPosWithFluids));
 
         FieldInfo blockListField = AccessTools.Field(typeof(ChunkTesselator), "currentChunkBlocksExt");
         FieldInfo fluidBlockListField = AccessTools.Field(typeof(ChunkTesselator), "currentChunkFluidBlocksExt");
@@ -120,6 +120,6 @@ public static class OffsetTeselationPatch
 
     private static bool ShouldIgnoreCulling(int indexBelow, Block[] blocks)
     {
-        return indexBelow >= 0 && indexBelow < blocks.Length && SlabHelper.IsSlab(blocks[indexBelow].BlockId);
+        return indexBelow >= 0 && indexBelow < blocks.Length && SlabHelper.offset[blocks[indexBelow].BlockId] > 0;
     }
 }

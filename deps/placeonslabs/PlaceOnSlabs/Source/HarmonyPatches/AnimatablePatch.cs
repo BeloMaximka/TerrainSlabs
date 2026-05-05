@@ -25,12 +25,9 @@ public static class AnimatablePatch
     public static void OffsetAnimatableOnSlab(ref Vec3d ___pos, ICoreClientAPI ___capi)
     {
         BlockPos pos = ___pos.AsBlockPos;
-        if (
-            SlabHelper.ShouldOffset(___capi.World.BlockAccessor.GetBlockId(pos))
-            && SlabHelper.IsSlab(___capi.World.BlockAccessor.GetBlock(pos.Down(), BlockLayersAccess.MostSolid).BlockId)
-        )
+        if (SlabHelper.shouldOffset[___capi.World.BlockAccessor.GetBlockId(pos)])
         {
-            ___pos.Y -= 0.5f;
+            ___pos.Y += SlabHelper.GetYOffsetFloat(___capi.World.BlockAccessor.GetBlock(pos.Down(), BlockLayersAccess.MostSolid).BlockId);
         }
     }
 }

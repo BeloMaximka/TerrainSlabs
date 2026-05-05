@@ -83,17 +83,15 @@ public static class WorldAccessorParticlesPatch
     {
         cachedPos ??= new(Dimensions.NormalWorld);
         cachedPos.Set((int)particles.Pos.X, (int)particles.Pos.Y - 1, (int)particles.Pos.Z);
-        if (SlabHelper.IsSlab(accessor.BlockAccessor.GetBlockId(cachedPos)))
+        double offset = SlabHelper.GetYOffset(accessor.BlockAccessor.GetBlockId(cachedPos));
+        if (particles is AdvancedParticleProperties advancedParticle)
         {
-            if (particles is AdvancedParticleProperties advancedParticle)
-            {
-                advancedParticle.basePos.Y -= 0.5;
-                return;
-            }
-            if (particles is SimpleParticleProperties simpleParticle)
-            {
-                simpleParticle.MinPos.Y -= 0.5;
-            }
+            advancedParticle.basePos.Y -= offset;
+            return;
+        }
+        if (particles is SimpleParticleProperties simpleParticle)
+        {
+            simpleParticle.MinPos.Y -= offset;
         }
     }
 }

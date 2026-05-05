@@ -17,7 +17,7 @@ public static class AABBIntersectionTestPatch
     [HarmonyPatch(typeof(AABBIntersectionTest), nameof(AABBIntersectionTest.RayIntersectsBlockSelectionBox))]
     public static IEnumerable<CodeInstruction> OffsetSelectionBox(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetYOffsetValue));
+        MethodInfo method = AccessTools.Method(typeof(SlabHelper), nameof(SlabHelper.GetPlacementYOffsetAtPos));
         FieldInfo bsTesterField = AccessTools.Field(typeof(AABBIntersectionTest), "bsTester");
         MethodInfo accessorGetter = AccessTools.PropertyGetter(typeof(IWorldIntersectionSupplier), "blockAccessor");
         MethodInfo internalYGetter = AccessTools.PropertyGetter(typeof(BlockPos), nameof(BlockPos.InternalY));
@@ -60,7 +60,7 @@ public static class AABBIntersectionTestPatch
         bool testCollide
     )
     {
-        if (__result is null || __instance.ray.dir.Y > 0 || !SlabHelper.IsSlab(___blockIntersected.BlockId))
+        if (__result is null || __instance.ray.dir.Y > 0 || SlabHelper.offset[___blockIntersected.BlockId] == 0)
         {
             return;
         }

@@ -10,10 +10,11 @@ using Vintagestory.API.MathTools;
 
 namespace PlaceOnSlabs.Source.HarmonyPatches;
 
+// I really hope there's more performant way
 [HarmonyPatch]
 public static class BlockOffsetCollisionPatch
 {
-    private static readonly ConditionalWeakTable<Cuboidf[], Cuboidf[]> OffsetCache = [];
+    private static readonly ConditionalWeakTable<Tuple<uint, Cuboidf[]>, Cuboidf[]> OffsetCache = [];
 
     public static void PatchAllBlocks(Harmony harmony)
     {
@@ -24,7 +25,7 @@ public static class BlockOffsetCollisionPatch
         blockAndSubclasses.AddRange(
             AppDomain
                 .CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.GetTypes())
+                .SelectMany(SafeGetTypes)
                 .Where(t => t.IsSubclassOf(blockAndSubclasses[0]))
         );
 
@@ -48,6 +49,26 @@ public static class BlockOffsetCollisionPatch
         }
     }
 
+
+    // Some types might trigger client assemblies that may be missing on the server
+    // We can just ignore errors related to that
+    // Not a great approach performance wise but blame C# for using exceptions for error handling
+    private static IEnumerable<Type> SafeGetTypes(Assembly assembly)
+    {
+        try
+        {
+            return assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            return ex.Types.Where(t => t != null)!;
+        }
+        catch
+        {
+            return [];
+        }
+    }
+
     private static void OffsetColisionBox(Block __instance, ref Cuboidf[] __result, object[] __args)
     {
         // we use __args because Harmony is strict about parameter names
@@ -57,17 +78,32 @@ public static class BlockOffsetCollisionPatch
             return;
         }
 
+        // Offset can be potentially applied multiple times because both leaf and base methods are patched
+        // So some method can call base.GetCollisionBoxes() and trigger this behavior twice
+        // But we cant omit patching base methods because they can be used separately
+        // This check is not perfect but should work most of the time
+        for (int i = 0; i < __result.Length; i++)
+        {
+            if (__result[i].Y1 < 0) // probably lowered into negative by this patch
+            {
+                return;
+            }
+        }
+
         pos.Down();
-        if (SlabHelper.IsSlab(blockAccessor.GetBlock(pos).BlockId) && SlabHelper.ShouldOffset(__instance))
+        int blockId = blockAccessor.GetBlock(pos).BlockId;
+        float offset = SlabHelper.GetYOffsetFloat(blockId);
+        if (offset < 0 && SlabHelper.shouldOffset[__instance.BlockId])
         {
             __result = OffsetCache.GetValue(
-                __result,
+                new(SlabHelper.offset[blockId], __result),
                 original =>
                 {
-                    var arr = new Cuboidf[original.Length];
-                    for (int i = 0; i < original.Length; i++)
+                    var box = original.Item2;
+                    var arr = new Cuboidf[box.Length];
+                    for (int i = 0; i < box.Length; i++)
                     {
-                        arr[i] = original[i].OffsetCopy(0, -0.5f, 0);
+                        arr[i] = box[i].OffsetCopy(0, offset, 0);
                     }
                     return arr;
                 }

@@ -20,7 +20,7 @@ public static class BlockEntitySaplingPatch
         }
 
         Block blockBelow = __instance.Api.World.BlockAccessor.GetBlockBelow(__instance.Pos);
-        if (!SlabHelper.IsSlab(blockBelow))
+        if (SlabHelper.offset[blockBelow.BlockId] == 0)
         {
             return;
         }

@@ -40,7 +40,7 @@ public class MainSystem : ModSystem
     {
         SlabHelper.InitFlags(api);
 
-        foreach (var block in api.World.Blocks.Where(block => SlabHelper.IsSlab(block.Id)))
+        foreach (var block in api.World.Blocks.Where(block => SlabHelper.offset[block.BlockId] > 0))
         {
             BlockBehavior[] oldBehaviors = block.BlockBehaviors;
             block.BlockBehaviors = new BlockBehavior[block.BlockBehaviors.Length + 2];

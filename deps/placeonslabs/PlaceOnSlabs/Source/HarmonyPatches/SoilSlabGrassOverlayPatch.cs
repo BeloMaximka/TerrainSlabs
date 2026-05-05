@@ -102,7 +102,7 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetUvMapTopHalfOffset(TextureAtlasPosition atlas, int slabId, int flags)
     {
-        if (SlabHelper.IsSlab(slabId))
+        if (SlabHelper.offset[slabId] > 0)
         {
             bool isTop = (flags & BlockFacing.ALLFACES[BlockFacing.indexUP].NormalPackedFlags) != 0;
             return isTop ? atlas.y2 : atlas.y2 - (atlas.y2 - atlas.y1) / 2;
@@ -112,7 +112,7 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetUvMapBottomHalfOffset(TextureAtlasPosition atlas, int slabId, int flags)
     {
-        if (SlabHelper.IsSlab(slabId))
+        if (SlabHelper.offset[slabId] > 0)
         {
             bool isTop = (flags & BlockFacing.ALLFACES[BlockFacing.indexUP].NormalPackedFlags) != 0;
             return isTop ? atlas.y1 : atlas.y2 - (atlas.y2 - atlas.y1) / 2;
@@ -122,6 +122,6 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetYMutiplier(int slabId)
     {
-        return SlabHelper.IsSlab(slabId) ? 0.5f : 1f;
+        return 1f - SlabHelper.GetYOffsetFloat(slabId);
     }
 }

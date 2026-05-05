@@ -18,7 +18,7 @@ public class BlockBehaviorSlabTopPlacement(Block block) : BlockBehavior(block)
         if (blockFace == BlockFacing.UP)
         {
             handling = EnumHandling.PreventSubsequent;
-            return SlabHelper.ShouldOffset(block.Id);
+            return SlabHelper.shouldOffset[block.BlockId];
         }
 
         return base.CanAttachBlockAt(world, block, pos, blockFace, ref handling, attachmentArea);

@@ -31,6 +31,6 @@ public static class SnowLayerDuplicationPatch
 
     private static bool IsNotNullOrSlab(Block? block, ClientMain game, BlockPos pos)
     {
-        return block != null && !SlabHelper.IsSlab(game.blockAccessor.GetBlockBelow(pos).BlockId);
+        return block != null && SlabHelper.offset[game.blockAccessor.GetBlockBelow(pos).BlockId] == 0;
     }
 }
