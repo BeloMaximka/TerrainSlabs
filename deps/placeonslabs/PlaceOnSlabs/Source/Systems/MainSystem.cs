@@ -3,6 +3,7 @@ using PlaceOnSlabs.Source.BlockBehaviors;
 using PlaceOnSlabs.Source.Commands;
 using PlaceOnSlabs.Source.HarmonyPatches;
 using PlaceOnSlabs.Source.Utils;
+using System;
 using System.Linq;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -20,11 +21,18 @@ public class MainSystem : ModSystem
         harmonyInstance = new(Mod.Info.ModID);
         if (!harmonyInstance.GetPatchedMethods().Any())
         {
-            harmonyInstance.PatchAll();
-            RenderersPatch.PatchAllRenderers(harmonyInstance);
-            BlockOffsetCollisionPatch.PatchAllBlocks(harmonyInstance);
-            WorldAccessorParticlesPatch.PatchAllParticleCode(harmonyInstance);
-            ParticlesManagerPatch.PatchAllParticleCode(harmonyInstance);
+            try
+            {
+                harmonyInstance.PatchAll();
+                RenderersPatch.PatchAllRenderers(harmonyInstance);
+                BlockOffsetCollisionPatch.PatchAllBlocks(harmonyInstance, api);
+                WorldAccessorParticlesPatch.PatchAllParticleCode(harmonyInstance);
+                ParticlesManagerPatch.PatchAllParticleCode(harmonyInstance);
+            }
+            catch (Exception exception)
+            {
+                api.Logger.Error("[placeonslabs] Patching failed, the mod won't work: {0}", exception);
+            }
         }
     }
 

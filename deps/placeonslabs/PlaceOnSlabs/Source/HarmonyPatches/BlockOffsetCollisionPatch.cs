@@ -16,7 +16,7 @@ public static class BlockOffsetCollisionPatch
 {
     private static readonly ConditionalWeakTable<Tuple<uint, Cuboidf[]>, Cuboidf[]> OffsetCache = [];
 
-    public static void PatchAllBlocks(Harmony harmony)
+    public static void PatchAllBlocks(Harmony harmony, ICoreAPI api)
     {
         MethodInfo postfix = AccessTools.Method(typeof(BlockOffsetCollisionPatch), nameof(OffsetColisionBox));
         List<Type> blockAndSubclasses = [typeof(Block)];
@@ -45,7 +45,17 @@ public static class BlockOffsetCollisionPatch
                 continue;
             }
 
-            harmony.Patch(implementedMethod, postfix: new HarmonyMethod(postfix));
+            try
+            {
+                harmony.Patch(implementedMethod, postfix: new HarmonyMethod(postfix));
+            }
+            catch (Exception exception)
+            {
+                api.Logger.Warning("[placeonslabs] Failed patching {0}.{1}, expect potential issues with this block: {2}\n",
+                    implementedMethod.DeclaringType,
+                    implementedMethod.Name,
+                    exception);
+            }
         }
     }
 
