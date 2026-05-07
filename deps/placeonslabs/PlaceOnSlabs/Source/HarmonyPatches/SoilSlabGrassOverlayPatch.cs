@@ -122,6 +122,6 @@ public static class SoilSlabGrassOverlayPatch
 
     private static float GetYMutiplier(int slabId)
     {
-        return 1f - SlabHelper.GetYOffsetFloat(slabId);
+        return 1f + SlabHelper.GetYOffsetFloat(slabId);
     }
 }
