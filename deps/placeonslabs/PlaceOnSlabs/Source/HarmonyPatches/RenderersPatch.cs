@@ -25,6 +25,7 @@ public static class RenderersPatch
             typeof(ClayFormRenderer),
             typeof(PotInFirepitRenderer),
             typeof(IngotMoldRenderer),
+            typeof(ToolMoldRenderer),
             typeof(BlockEntitySignRenderer)
         ];
 
