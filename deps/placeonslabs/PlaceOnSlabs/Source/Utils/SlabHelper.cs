@@ -38,13 +38,13 @@ public static class Offsets
 public static class SlabHelper
 {
     // Per block
-    public static PackedOffsetArray offset = null!;
+    public static byte[] offset = null!;
     public static BitArray shouldOffset = null!;
 
     public static void InitFlags(ICoreAPI api)
     {
         var blacklist = api.ModLoader.GetModSystem<ConfigSystem>().ServerSettings.OffsetBlacklist.Select(item => (AssetLocation)item);
-        offset = new(api.World.Blocks.Count);
+        offset = new byte[api.World.Blocks.Count];
         shouldOffset = new(api.World.Blocks.Count);
         foreach (Block block in api.World.Blocks)
         {
