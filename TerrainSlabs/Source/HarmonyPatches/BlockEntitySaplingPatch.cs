@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using PlaceOnSlabs.Source.Utils;
+using TerrainSlabs.Source.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
@@ -25,11 +26,13 @@ public static class BlockEntitySaplingPatch
             return;
         }
 
-        Block? fullBlock = __instance.Api.World.GetBlock(blockBelow.Code.Path);
+
+        AssetLocation fullBlockCode = blockBelow.Code.UseFirstPartAsDomain();
+        Block? fullBlock = __instance.Api.World.GetBlock(fullBlockCode);
         if (fullBlock is null)
         {
             __instance.Api.Logger.Warning(
-                "Could not get full block {0} to replace slab when growing tree {1}",
+                "[terrainslabs] Could not get full block {0} to replace slab when growing tree {1}, the tree will appear floating!",
                 blockBelow.Code.Path,
                 __instance.Block.Code
             );
