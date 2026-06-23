@@ -52,4 +52,13 @@ public class BlockSnowSlab : Block
     {
         return BlockTerrainSlab.OnFallOnto(this, fullBlock, world, pos, block, blockEntityAttributes);
     }
+
+    public override Block GetSnowCoveredVariant(BlockPos pos, float snowLevel)
+    {
+        if (snowLevel <= 0) return api.World.Blocks[0];
+        if ((int)snowLevel == 4) return this;
+        // The next line is possible null reference but I have no idea how the game expects me to handle it 
+        // Also this line is idetical to BlockSnow.cs
+        return api.World.GetBlock("game:snowlayer-" + (int)snowLevel)!; 
+    }
 }

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="deps/placeonslabs/PlaceOnSlabs/PlaceOnSlabs.csproj" />
+  <Project Path="TerrainSlabs/TerrainSlabs.csproj" />
+  <Project Path="ZZCakeBuild/CakeBuild.csproj" />
+</Solution>

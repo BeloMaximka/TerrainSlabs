@@ -50,20 +50,16 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="modinfo.json">
+<ItemGroup>
+  <Content Include="modinfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  </Content>
+</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="modicon.png">
+<ItemGroup>
+  <Content Include="modicon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\deps\placeonslabs\PlaceOnSlabs\PlaceOnSlabs.csproj" Private="false"/>
-  </ItemGroup>
+  </Content>
+</ItemGroup>
 
 </Project>
